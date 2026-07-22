@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Avaliação Postural — HumanCore CIT</title>
+<style>
+  :root {
+    --bg: #0f1115;
+    --card: #ffffff;
+    --texto: #1a1a1a;
+    --texto-suave: #5b6270;
+    --primaria: #1f8a5c;
+    --primaria-escura: #166b46;
+    --borda: #d8dce2;
+    --erro: #b3261e;
+    --aviso-bg: #fff4e5;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--texto);
+    padding: 0 0 60px;
+  }
+  header {
+    padding: 28px 20px 16px;
+    text-align: center;
+    color: #fff;
+  }
+  header h1 { font-size: 20px; margin: 0 0 4px; }
+  header p { margin: 0; color: #b7bdc7; font-size: 14px; }
+  main { max-width: 640px; margin: 0 auto; padding: 0 16px; }
+  .cartao {
+    background: var(--card);
+    border-radius: 14px;
+    padding: 20px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+  }
+  .cartao h2 { font-size: 16px; margin: 0 0 14px; }
+  .campo { margin-bottom: 16px; }
+  .campo label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+  .campo .dica { font-size: 12px; color: var(--texto-suave); margin-top: 4px; }
+  input[type="text"], input[type="number"], input[type="tel"], textarea, select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--borda);
+    border-radius: 8px;
+    font-size: 15px;
+    font-family: inherit;
+  }
+  textarea { resize: vertical; min-height: 70px; }
+  .opcoes { display: flex; gap: 10px; flex-wrap: wrap; }
+  .opcoes label {
+    display: flex; align-items: center; gap: 6px;
+    border: 1px solid var(--borda); border-radius: 8px;
+    padding: 8px 14px; font-size: 14px; font-weight: 400; cursor: pointer;
+  }
+  .opcoes input { margin: 0; }
+  input[type="file"] {
+    width: 100%; padding: 10px; border: 1px dashed var(--borda); border-radius: 8px; background: #fafbfc;
+  }
+  .escondido { display: none !important; }
+  button[type="submit"] {
+    width: 100%; padding: 14px; border: none; border-radius: 10px;
+    background: var(--primaria); color: #fff; font-size: 16px; font-weight: 600;
+    cursor: pointer;
+  }
+  button[type="submit"]:active { background: var(--primaria-escura); }
+  button[type="submit"]:disabled { opacity: 0.6; cursor: default; }
+  .parq-item { border-top: 1px solid #eee; padding-top: 12px; margin-top: 12px; }
+  .parq-item:first-child { border-top: none; padding-top: 0; margin-top: 0; }
+  #mensagem {
+    display: none; margin: 20px 16px; padding: 14px 16px; border-radius: 10px; font-size: 14px;
+  }
+  #mensagem.sucesso { display: block; background: #e6f4ea; color: #1e5b34; }
+  #mensagem.erro { display: block; background: #fdecea; color: var(--erro); }
+  #mensagem.progresso { display: block; background: var(--aviso-bg); color: #7a4b00; }
+  #tela-obrigado { display: none; text-align: center; color: #fff; padding: 60px 20px; }
+  #tela-obrigado h2 { font-size: 22px; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Avaliação Postural</h1>
+  <p>HumanCore · Método CIT</p>
+</header>
+
+<main>
+  <div id="mensagem"></div>
+
+  <form id="form-avaliacao">
+    <section class="cartao">
+      <h2>Dados Pessoais</h2>
+      <div class="campo">
+        <label for="idade">Idade</label>
+        <input type="number" id="idade" required />
+      </div>
+      <div class="campo">
+        <label for="altura">Altura (cm)</label>
+        <input type="number" id="altura" required />
+      </div>
+      <div class="campo">
+        <label for="peso">Peso (kg)</label>
+        <input type="number" id="peso" required />
+      </div>
+      <div class="campo">
+        <label for="profissao">Profissão</label>
+        <input type="text" id="profissao" />
+      </div>
+    </section>
+
+    <section class="cartao">
+      <h2>Objetivos e Rotina</h2>
+      <div class="campo">
+        <label for="objetivo">Qual seu principal objetivo com o treino?</label>
+        <textarea id="objetivo" required></textarea>
+      </div>
+      <div class="campo">
+        <label for="desafio">Qual sua maior dificuldade ou desafio hoje?</label>
+        <textarea id="desafio"></textarea>
+      </div>
+      <div class="campo">
+        <label for="dias_treino">Quantos dias por semana você pode treinar?</label>
+        <select id="dias_treino" required>
+          <option value="">Selecione</option>
+          <option>1</option><option>2</option><option>3</option><option>4</option>
+          <option>5</option><option>6</option><option>7</option>
+        </select>
+      </div>
+      <div class="campo">
+        <label for="min_treino">Quantos minutos por sessão você tem disponível?</label>
+        <select id="min_treino" required>
+          <option value="">Selecione</option>
+          <option>15</option><option>30</option><option>45</option><option>60</option><option>90</option>
+        </select>
+      </div>
+      <div class="campo">
+        <label>Onde você vai treinar?</label>
+        <div class="opcoes" data-grupo="local_treino">
+          <label><input type="radio" name="local_treino" value="Casa" required /> Casa</label>
+          <label><input type="radio" name="local_treino" value="Academia" /> Academia</label>
+          <label><input type="radio" name="local_treino" value="Ambos" /> Ambos</label>
+        </div>
+      </div>
+    </section>
+
+    <section class="cartao">
+      <h2>Saúde e Histórico</h2>
+      <div class="campo">
+        <label>Você tem ou já teve alguma lesão, dor ou cirurgia relevante?</label>
+        <div class="opcoes" data-grupo="lesao">
+          <label><input type="radio" name="lesao" value="Sim" required /> Sim</label>
+          <label><input type="radio" name="lesao" value="Não" /> Não</label>
+        </div>
+      </div>
+      <div class="campo escondido" id="bloco-detalhe-lesao">
+        <label for="detalhe_lesao">Descreva (região, quando ocorreu, tratamento)</label>
+        <textarea id="detalhe_lesao"></textarea>
+      </div>
+      <div class="campo">
+        <label>Você possui algum exame de imagem (RM, RX, ultrassom) da coluna ou articulações?</label>
+        <div class="opcoes" data-grupo="tem_exame">
+          <label><input type="radio" name="tem_exame" value="Sim" required /> Sim</label>
+          <label><input type="radio" name="tem_exame" value="Não" /> Não</label>
+        </div>
+      </div>
+    </section>
+
+    <section class="cartao">
+      <h2>Questionário PAR-Q</h2>
+      <div id="bloco-parq"></div>
+    </section>
+
+    <section class="cartao">
+      <h2>Fotos Posturais</h2>
+      <p class="dica">Use roupas justas ou de banho, fundo neutro, boa iluminação e fique descalço(a).</p>
+      <div class="campo">
+        <label for="foto_frontal">Foto Frontal (de frente, braços relaxados)</label>
+        <input type="file" id="foto_frontal" accept="image/*" required />
+      </div>
+      <div class="campo">
+        <label for="foto_lateral">Foto Lateral (perfil)</label>
+        <input type="file" id="foto_lateral" accept="image/*" required />
+      </div>
+      <div class="campo">
+        <label for="foto_posterior">Foto Posterior (de costas)</label>
+        <input type="file" id="foto_posterior" accept="image/*" required />
+      </div>
+    </section>
+
+    <section class="cartao escondido" id="bloco-exames">
+      <h2>Exames</h2>
+      <div class="campo">
+        <label for="exames">Envie o(s) laudo(s)/exame(s) (PDF ou foto)</label>
+        <input type="file" id="exames" accept="image/*,application/pdf" multiple />
+      </div>
+    </section>
+
+    <section class="cartao">
+      <h2>Consentimento</h2>
+      <div class="campo">
+        <label style="display:flex; align-items:flex-start; gap:8px; font-weight:400;">
+          <input type="checkbox" id="consentimento_lgpd" required style="margin-top:3px;" />
+          <span>Autorizo o uso dos meus dados e imagens exclusivamente para a elaboração da minha avaliação postural e do meu treino, conforme a LGPD.</span>
+        </label>
+      </div>
+    </section>
+
+    <button type="submit" id="botao-enviar">Enviar avaliação</button>
+  </form>
+
+  <div id="tela-obrigado">
+    <h2>Recebemos sua avaliação! 🎉</h2>
+    <p>Seu professor vai revisar e te enviar o resultado em breve.</p>
+  </div>
+</main>
+
+<script type="module">
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+
+// Chave publica (anon/publishable) - segura para expor no navegador, protegida por RLS.
+const SUPABASE_URL = "https://eyvmakflvvwkujzrlfco.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_euGSZs-c7kXBPO9M0RExzA_FdzP5M1W";
+const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+const params = new URLSearchParams(location.search);
+const token = params.get("token");
+const idComprador = params.get("id_comprador") ?? "";
+const nomeOculto = params.get("nome_oculto") ?? "";
+const telefoneOculto = params.get("telefone_oculto") ?? "";
+
+const PERGUNTAS_PARQ = [
+  "Seu médico já disse que você possui algum problema de coração e recomendou atividade física apenas sob supervisão médica?",
+  "Você sente dores no peito quando pratica atividade física?",
+  "No último mês, você sentiu dores no peito quando não estava praticando atividade física?",
+  "Você perde o equilíbrio devido a tontura ou já perdeu a consciência?",
+  "Você tem algum problema ósseo ou articular que poderia ser agravado por atividade física?",
+  "Seu médico já recomendou o uso de medicamentos para pressão arterial ou problema cardíaco?",
+  "Você sabe de alguma outra razão pela qual não deveria praticar atividade física por conta própria?",
+];
+
+const blocoParq = document.getElementById("bloco-parq");
+PERGUNTAS_PARQ.forEach((pergunta, i) => {
+  const div = document.createElement("div");
+  div.className = "campo parq-item";
+  div.innerHTML = `
+    <label>${pergunta}</label>
+    <div class="opcoes" data-grupo="parq_${i + 1}">
+      <label><input type="radio" name="parq_${i + 1}" value="Sim" required /> Sim</label>
+      <label><input type="radio" name="parq_${i + 1}" value="Não" /> Não</label>
+    </div>`;
+  blocoParq.appendChild(div);
+});
+
+const mensagemEl = document.getElementById("mensagem");
+function mostrarMensagem(texto, tipo) {
+  mensagemEl.textContent = texto;
+  mensagemEl.className = tipo;
+}
+
+if (!token) {
+  mostrarMensagem("Link inválido ou incompleto. Peça um novo link para o seu professor.", "erro");
+  document.getElementById("form-avaliacao").classList.add("escondido");
+}
+
+// Mostrar/escoder campos condicionais
+document.querySelectorAll('input[name="lesao"]').forEach((r) =>
+  r.addEventListener("change", (e) => {
+    document.getElementById("bloco-detalhe-lesao").classList.toggle("escondido", e.target.value !== "Sim");
+  }),
+);
+document.querySelectorAll('input[name="tem_exame"]').forEach((r) =>
+  r.addEventListener("change", (e) => {
+    document.getElementById("bloco-exames").classList.toggle("escondido", e.target.value !== "Sim");
+  }),
+);
+
+// Salvar/restaurar respostas de texto no localStorage (retomada no mesmo aparelho)
+const CHAVE_LOCAL = `avaliacao_rascunho_${token}`;
+function salvarRascunho() {
+  const dados = {};
+  document.querySelectorAll("input[type=text], input[type=number], textarea, select").forEach((el) => {
+    if (el.id) dados[el.id] = el.value;
+  });
+  document.querySelectorAll("input[type=radio]:checked, input[type=checkbox]:checked").forEach((el) => {
+    dados[el.name || el.id] = el.value ?? true;
+  });
+  localStorage.setItem(CHAVE_LOCAL, JSON.stringify(dados));
+}
+function restaurarRascunho() {
+  const salvo = localStorage.getItem(CHAVE_LOCAL);
+  if (!salvo) return;
+  const dados = JSON.parse(salvo);
+  Object.entries(dados).forEach(([chave, valor]) => {
+    const porId = document.getElementById(chave);
+    if (porId && (porId.type === "text" || porId.type === "number" || porId.tagName === "TEXTAREA" || porId.tagName === "SELECT")) {
+      porId.value = valor;
+      porId.dispatchEvent(new Event("change"));
+      return;
+    }
+    const porNome = document.querySelector(`input[name="${chave}"][value="${valor}"]`);
+    if (porNome) {
+      porNome.checked = true;
+      porNome.dispatchEvent(new Event("change"));
+    }
+  });
+}
+if (token) {
+  restaurarRascunho();
+  document.getElementById("form-avaliacao").addEventListener("input", salvarRascunho);
+}
+
+function valorGrupo(nome) {
+  const marcado = document.querySelector(`input[name="${nome}"]:checked`);
+  return marcado ? marcado.value : "";
+}
+
+function coletarRespostas() {
+  return [
+    ["Qual seu nome completo?", nomeOculto],
+    ["Idade", document.getElementById("idade").value],
+    ["Altura (cm)", document.getElementById("altura").value],
+    ["Peso (kg)", document.getElementById("peso").value],
+    ["Profissão", document.getElementById("profissao").value],
+    ["Qual seu principal objetivo com o treino?", document.getElementById("objetivo").value],
+    ["Qual sua maior dificuldade ou desafio hoje?", document.getElementById("desafio").value],
+    ["Quantos dias por semana você pode treinar?", document.getElementById("dias_treino").value],
+    ["Quantos minutos por sessão você tem disponível?", document.getElementById("min_treino").value],
+    ["Onde você vai treinar?", valorGrupo("local_treino")],
+    ["Você tem ou já teve alguma lesão, dor ou cirurgia relevante?", valorGrupo("lesao")],
+    ["Detalhe da lesão", document.getElementById("detalhe_lesao").value],
+    ["Você possui algum exame de imagem da coluna ou articulações?", valorGrupo("tem_exame")],
+    ...PERGUNTAS_PARQ.map((pergunta, i) => [`PAR-Q ${i + 1}: ${pergunta}`, valorGrupo(`parq_${i + 1}`)]),
+  ];
+}
+
+function extensao(arquivo) {
+  const partes = arquivo.name.split(".");
+  return partes.length > 1 ? partes.pop().toLowerCase() : "jpg";
+}
+
+const TAMANHO_MAX = 15 * 1024 * 1024; // 15MB
+
+async function subirArquivo(arquivo, caminho) {
+  if (arquivo.size > TAMANHO_MAX) {
+    throw new Error(`Arquivo "${arquivo.name}" é maior que 15MB. Envie um arquivo menor.`);
+  }
+  const { error } = await supabase.storage.from("uploads").upload(caminho, arquivo, { upsert: true });
+  if (error) throw new Error(`Falha ao enviar "${arquivo.name}": ${error.message}`);
+  return caminho;
+}
+
+document.getElementById("form-avaliacao").addEventListener("submit", async (evento) => {
+  evento.preventDefault();
+  const botao = document.getElementById("botao-enviar");
+  botao.disabled = true;
+
+  try {
+    mostrarMensagem("Enviando fotos, aguarde…", "progresso");
+
+    const fotoFrontal = document.getElementById("foto_frontal").files[0];
+    const fotoLateral = document.getElementById("foto_lateral").files[0];
+    const fotoPosterior = document.getElementById("foto_posterior").files[0];
+    const arquivosExames = Array.from(document.getElementById("exames").files ?? []);
+
+    const [caminhoFrontal, caminhoLateral, caminhoPosterior] = await Promise.all([
+      subirArquivo(fotoFrontal, `${token}/frontal.${extensao(fotoFrontal)}`),
+      subirArquivo(fotoLateral, `${token}/lateral.${extensao(fotoLateral)}`),
+      subirArquivo(fotoPosterior, `${token}/posterior.${extensao(fotoPosterior)}`),
+    ]);
+
+    const caminhosExames = [];
+    for (let i = 0; i < arquivosExames.length; i++) {
+      caminhosExames.push(await subirArquivo(arquivosExames[i], `${token}/exame_${i + 1}.${extensao(arquivosExames[i])}`));
+    }
+
+    mostrarMensagem("Salvando suas respostas…", "progresso");
+
+    const { error: erroRpc } = await supabase.rpc("enviar_avaliacao", {
+      p_token: token,
+      p_respostas: coletarRespostas(),
+      p_foto_frontal: caminhoFrontal,
+      p_foto_lateral: caminhoLateral,
+      p_foto_posterior: caminhoPosterior,
+      p_exames: caminhosExames,
+    });
+    if (erroRpc) throw new Error(erroRpc.message);
+
+    mostrarMensagem("Analisando sua avaliação, isso pode levar até 1 minuto…", "progresso");
+
+    const { error: erroFuncao } = await supabase.functions.invoke("finalizar-avaliacao", {
+      body: { token },
+    });
+    if (erroFuncao) throw new Error(erroFuncao.message);
+
+    localStorage.removeItem(CHAVE_LOCAL);
+    document.getElementById("form-avaliacao").classList.add("escondido");
+    mensagemEl.className = "";
+    document.getElementById("tela-obrigado").style.display = "block";
+  } catch (erro) {
+    mostrarMensagem(`Não foi possível concluir: ${erro.message}. Seus dados de texto ficam salvos neste aparelho — tente reenviar.`, "erro");
+    botao.disabled = false;
+  }
+});
+</script>
+</body>
+</html>
