@@ -354,41 +354,53 @@ async function subirArquivo(arquivo, caminho) {
   return caminho;
 }
 
+// Depois que os dados/fotos ja foram salvos (RPC enviar_avaliacao com sucesso), o token
+// deixa de aceitar novo upload (por design, ver policy no banco). Se a etapa seguinte
+// (chamar finalizar-avaliacao) falhar por qualquer motivo, uma nova tentativa NAO pode
+// tentar subir arquivo de novo, senao quebra. Essa flag lembra que ja passou dessa etapa.
+const CHAVE_JA_ENVIADO = `avaliacao_ja_enviada_${token}`;
+
 document.getElementById("form-avaliacao").addEventListener("submit", async (evento) => {
   evento.preventDefault();
   const botao = document.getElementById("botao-enviar");
   botao.disabled = true;
 
   try {
-    mostrarMensagem("Enviando fotos, aguarde…", "progresso");
+    const jaEnviado = localStorage.getItem(CHAVE_JA_ENVIADO) === "1";
 
-    const fotoFrontal = document.getElementById("foto_frontal").files[0];
-    const fotoLateral = document.getElementById("foto_lateral").files[0];
-    const fotoPosterior = document.getElementById("foto_posterior").files[0];
-    const arquivosExames = Array.from(document.getElementById("exames").files ?? []);
+    if (!jaEnviado) {
+      mostrarMensagem("Enviando fotos, aguarde…", "progresso");
 
-    const [caminhoFrontal, caminhoLateral, caminhoPosterior] = await Promise.all([
-      subirArquivo(fotoFrontal, `${token}/frontal.${extensao(fotoFrontal)}`),
-      subirArquivo(fotoLateral, `${token}/lateral.${extensao(fotoLateral)}`),
-      subirArquivo(fotoPosterior, `${token}/posterior.${extensao(fotoPosterior)}`),
-    ]);
+      const fotoFrontal = document.getElementById("foto_frontal").files[0];
+      const fotoLateral = document.getElementById("foto_lateral").files[0];
+      const fotoPosterior = document.getElementById("foto_posterior").files[0];
+      const arquivosExames = Array.from(document.getElementById("exames").files ?? []);
 
-    const caminhosExames = [];
-    for (let i = 0; i < arquivosExames.length; i++) {
-      caminhosExames.push(await subirArquivo(arquivosExames[i], `${token}/exame_${i + 1}.${extensao(arquivosExames[i])}`));
+      const [caminhoFrontal, caminhoLateral, caminhoPosterior] = await Promise.all([
+        subirArquivo(fotoFrontal, `${token}/frontal.${extensao(fotoFrontal)}`),
+        subirArquivo(fotoLateral, `${token}/lateral.${extensao(fotoLateral)}`),
+        subirArquivo(fotoPosterior, `${token}/posterior.${extensao(fotoPosterior)}`),
+      ]);
+
+      const caminhosExames = [];
+      for (let i = 0; i < arquivosExames.length; i++) {
+        caminhosExames.push(await subirArquivo(arquivosExames[i], `${token}/exame_${i + 1}.${extensao(arquivosExames[i])}`));
+      }
+
+      mostrarMensagem("Salvando suas respostas…", "progresso");
+
+      const { error: erroRpc } = await supabase.rpc("enviar_avaliacao", {
+        p_token: token,
+        p_respostas: coletarRespostas(),
+        p_foto_frontal: caminhoFrontal,
+        p_foto_lateral: caminhoLateral,
+        p_foto_posterior: caminhoPosterior,
+        p_exames: caminhosExames,
+      });
+      if (erroRpc) throw new Error(erroRpc.message);
+
+      localStorage.setItem(CHAVE_JA_ENVIADO, "1");
     }
-
-    mostrarMensagem("Salvando suas respostas…", "progresso");
-
-    const { error: erroRpc } = await supabase.rpc("enviar_avaliacao", {
-      p_token: token,
-      p_respostas: coletarRespostas(),
-      p_foto_frontal: caminhoFrontal,
-      p_foto_lateral: caminhoLateral,
-      p_foto_posterior: caminhoPosterior,
-      p_exames: caminhosExames,
-    });
-    if (erroRpc) throw new Error(erroRpc.message);
 
     mostrarMensagem("Analisando sua avaliação, isso pode levar até 1 minuto…", "progresso");
 
@@ -398,6 +410,7 @@ document.getElementById("form-avaliacao").addEventListener("submit", async (even
     if (erroFuncao) throw new Error(erroFuncao.message);
 
     localStorage.removeItem(CHAVE_LOCAL);
+    localStorage.removeItem(CHAVE_JA_ENVIADO);
     document.getElementById("form-avaliacao").classList.add("escondido");
     mensagemEl.className = "";
     document.getElementById("tela-obrigado").style.display = "block";
