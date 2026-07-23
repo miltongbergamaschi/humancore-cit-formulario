@@ -195,7 +195,11 @@
     <section class="cartao escondido" id="bloco-exames">
       <h2>Exames</h2>
       <div class="campo">
-        <label for="exames">Envie o(s) laudo(s)/exame(s) (PDF ou foto)</label>
+        <label for="resultado_exame">Se souber, descreva o resultado/conclusão do exame (mesmo sem o arquivo em mãos)</label>
+        <textarea id="resultado_exame" placeholder="Ex.: hérnia de disco L4-L5, escoliose leve, etc."></textarea>
+      </div>
+      <div class="campo">
+        <label for="exames">Envie o(s) laudo(s)/exame(s), se tiver o arquivo (PDF ou foto)</label>
         <input type="file" id="exames" accept="image/*,application/pdf" multiple />
       </div>
     </section>
@@ -334,6 +338,7 @@ function coletarRespostas() {
     ["Você tem ou já teve alguma lesão, dor ou cirurgia relevante?", valorGrupo("lesao")],
     ["Detalhe da lesão", document.getElementById("detalhe_lesao").value],
     ["Você possui algum exame de imagem da coluna ou articulações?", valorGrupo("tem_exame")],
+    ["Resultado do exame relatado pelo aluno (sem arquivo)", document.getElementById("resultado_exame").value],
     ...PERGUNTAS_PARQ.map((pergunta, i) => [`PAR-Q ${i + 1}: ${pergunta}`, valorGrupo(`parq_${i + 1}`)]),
   ];
 }
