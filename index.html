@@ -111,6 +111,13 @@
         <label for="profissao">Profissão</label>
         <input type="text" id="profissao" />
       </div>
+      <div class="campo">
+        <label>Você tem filhos?</label>
+        <div class="opcoes" data-grupo="tem_filhos">
+          <label><input type="radio" name="tem_filhos" value="Sim" required /> Sim</label>
+          <label><input type="radio" name="tem_filhos" value="Não" /> Não</label>
+        </div>
+      </div>
     </section>
 
     <section class="cartao">
@@ -122,6 +129,17 @@
       <div class="campo">
         <label for="desafio">Qual sua maior dificuldade ou desafio hoje?</label>
         <textarea id="desafio"></textarea>
+      </div>
+      <div class="campo">
+        <label>Pratica atividade física atualmente?</label>
+        <div class="opcoes" data-grupo="pratica_atividade">
+          <label><input type="radio" name="pratica_atividade" value="Sim" required /> Sim</label>
+          <label><input type="radio" name="pratica_atividade" value="Não" /> Não</label>
+        </div>
+      </div>
+      <div class="campo escondido" id="bloco-tempo-atividade">
+        <label for="tempo_atividade">Há quanto tempo?</label>
+        <input type="text" id="tempo_atividade" />
       </div>
       <div class="campo">
         <label for="dias_treino">Quantos dias por semana você pode treinar?</label>
@@ -144,7 +162,13 @@
           <label><input type="radio" name="local_treino" value="Casa" required /> Casa</label>
           <label><input type="radio" name="local_treino" value="Academia" /> Academia</label>
           <label><input type="radio" name="local_treino" value="Ambos" /> Ambos</label>
+          <label><input type="radio" name="local_treino" value="Box de Crossfit" /> Box de Crossfit</label>
+          <label><input type="radio" name="local_treino" value="Outro" /> Outro</label>
         </div>
+      </div>
+      <div class="campo escondido" id="bloco-equipamentos-casa">
+        <label for="equipamentos_casa">Quais equipamentos/materiais você tem disponível para treinar em casa?</label>
+        <textarea id="equipamentos_casa" placeholder="Ex.: halteres, elástico, colchonete, ou nenhum equipamento"></textarea>
       </div>
     </section>
 
@@ -160,6 +184,24 @@
       <div class="campo escondido" id="bloco-detalhe-lesao">
         <label for="detalhe_lesao">Descreva (região, quando ocorreu, tratamento)</label>
         <textarea id="detalhe_lesao"></textarea>
+      </div>
+      <div class="campo">
+        <label>Tem algum problema de saúde ou faz uso de algum medicamento?</label>
+        <div class="opcoes" data-grupo="problema_saude">
+          <label><input type="radio" name="problema_saude" value="Sim" required /> Sim</label>
+          <label><input type="radio" name="problema_saude" value="Não" /> Não</label>
+        </div>
+      </div>
+      <div class="campo escondido" id="bloco-detalhe-saude">
+        <label for="detalhe_saude">Informe qual</label>
+        <textarea id="detalhe_saude"></textarea>
+      </div>
+      <div class="campo">
+        <label>Faz algum acompanhamento nutricional?</label>
+        <div class="opcoes" data-grupo="acompanhamento_nutricional">
+          <label><input type="radio" name="acompanhamento_nutricional" value="Sim" required /> Sim</label>
+          <label><input type="radio" name="acompanhamento_nutricional" value="Não" /> Não</label>
+        </div>
       </div>
       <div class="campo">
         <label>Você possui algum exame de imagem (RM, RX, ultrassom) da coluna ou articulações?</label>
@@ -201,6 +243,14 @@
       <div class="campo">
         <label for="exames">Envie o(s) laudo(s)/exame(s), se tiver o arquivo (PDF ou foto)</label>
         <input type="file" id="exames" accept="image/*,application/pdf" multiple />
+      </div>
+    </section>
+
+    <section class="cartao">
+      <h2>Algo mais?</h2>
+      <div class="campo">
+        <label for="relato_livre">Descreva livremente como tem sido sua dor/desconforto, ou qualquer outra informação relevante que não foi perguntada</label>
+        <textarea id="relato_livre"></textarea>
       </div>
     </section>
 
@@ -282,6 +332,22 @@ document.querySelectorAll('input[name="tem_exame"]').forEach((r) =>
     document.getElementById("bloco-exames").classList.toggle("escondido", e.target.value !== "Sim");
   }),
 );
+document.querySelectorAll('input[name="pratica_atividade"]').forEach((r) =>
+  r.addEventListener("change", (e) => {
+    document.getElementById("bloco-tempo-atividade").classList.toggle("escondido", e.target.value !== "Sim");
+  }),
+);
+document.querySelectorAll('input[name="problema_saude"]').forEach((r) =>
+  r.addEventListener("change", (e) => {
+    document.getElementById("bloco-detalhe-saude").classList.toggle("escondido", e.target.value !== "Sim");
+  }),
+);
+document.querySelectorAll('input[name="local_treino"]').forEach((r) =>
+  r.addEventListener("change", (e) => {
+    const mostrarEquipamentos = e.target.value === "Casa" || e.target.value === "Ambos";
+    document.getElementById("bloco-equipamentos-casa").classList.toggle("escondido", !mostrarEquipamentos);
+  }),
+);
 
 // Salvar/restaurar respostas de texto no localStorage (retomada no mesmo aparelho)
 const CHAVE_LOCAL = `avaliacao_rascunho_${token}`;
@@ -330,16 +396,24 @@ function coletarRespostas() {
     ["Altura (cm)", document.getElementById("altura").value],
     ["Peso (kg)", document.getElementById("peso").value],
     ["Profissão", document.getElementById("profissao").value],
+    ["Tem filhos?", valorGrupo("tem_filhos")],
     ["Qual seu principal objetivo com o treino?", document.getElementById("objetivo").value],
     ["Qual sua maior dificuldade ou desafio hoje?", document.getElementById("desafio").value],
+    ["Pratica atividade física atualmente?", valorGrupo("pratica_atividade")],
+    ["Há quanto tempo pratica atividade física", document.getElementById("tempo_atividade").value],
     ["Quantos dias por semana você pode treinar?", document.getElementById("dias_treino").value],
     ["Quantos minutos por sessão você tem disponível?", document.getElementById("min_treino").value],
     ["Onde você vai treinar?", valorGrupo("local_treino")],
+    ["Equipamentos disponíveis para treinar em casa", document.getElementById("equipamentos_casa").value],
     ["Você tem ou já teve alguma lesão, dor ou cirurgia relevante?", valorGrupo("lesao")],
     ["Detalhe da lesão", document.getElementById("detalhe_lesao").value],
+    ["Tem algum problema de saúde ou faz uso de algum medicamento?", valorGrupo("problema_saude")],
+    ["Detalhe do problema de saúde/medicamento", document.getElementById("detalhe_saude").value],
+    ["Faz algum acompanhamento nutricional?", valorGrupo("acompanhamento_nutricional")],
     ["Você possui algum exame de imagem da coluna ou articulações?", valorGrupo("tem_exame")],
     ["Resultado do exame relatado pelo aluno (sem arquivo)", document.getElementById("resultado_exame").value],
     ...PERGUNTAS_PARQ.map((pergunta, i) => [`PAR-Q ${i + 1}: ${pergunta}`, valorGrupo(`parq_${i + 1}`)]),
+    ["Relato livre / outras informações", document.getElementById("relato_livre").value],
   ];
 }
 
