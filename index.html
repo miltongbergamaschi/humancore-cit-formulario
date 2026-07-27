@@ -160,6 +160,18 @@
   #mensagem.erro { display: flex; background: var(--erro-bg); color: var(--erro); }
   #mensagem.progresso { display: flex; background: var(--aviso-bg); color: #7a4b00; }
 
+  #progresso-envio {
+    margin: 0 0 16px; padding: 16px 18px; border-radius: 12px; background: var(--card);
+    box-shadow: var(--sombra); border: 1px solid rgba(20, 40, 32, 0.04);
+  }
+  #progresso-envio .progresso-frase { margin: 0 0 10px; font-size: 14px; font-weight: 600; color: var(--texto); text-align: center; }
+  .progresso-trilha { height: 8px; background: var(--primaria-tint); border-radius: 999px; overflow: hidden; }
+  .progresso-preenchimento {
+    height: 100%; width: 4%; border-radius: 999px;
+    background: linear-gradient(90deg, var(--primaria), #35d38f);
+    transition: width 0.4s ease;
+  }
+
   #tela-obrigado { display: none; text-align: center; color: #fff; padding: 70px 24px; }
   #tela-obrigado .icone-check {
     width: 68px; height: 68px; border-radius: 50%; background: rgba(53, 211, 143, 0.15);
@@ -181,6 +193,10 @@
 
 <main>
   <div id="mensagem"></div>
+  <div id="progresso-envio" class="escondido">
+    <p class="progresso-frase">Aguarde enquanto todos os dados são carregados</p>
+    <div class="progresso-trilha"><div class="progresso-preenchimento" id="progresso-preenchimento"></div></div>
+  </div>
 
   <form id="form-avaliacao">
     <section class="cartao">
@@ -456,6 +472,35 @@ function mostrarMensagem(texto, tipo) {
   mensagemEl.className = tipo;
 }
 
+// Barra de progresso do envio - some das etapas rapidas (upload, salvar respostas)
+// junto com um avanco gradual "de mentirinha" durante a analise do Claude, que demora
+// um tempo variavel e nao tem como medir progresso real.
+const progressoEl = document.getElementById("progresso-envio");
+const progressoFill = document.getElementById("progresso-preenchimento");
+let progressoTimer = null;
+
+function definirProgresso(pct) {
+  progressoFill.style.width = `${Math.min(100, Math.max(0, pct))}%`;
+}
+function mostrarBarraProgresso() {
+  progressoEl.classList.remove("escondido");
+}
+function esconderBarraProgresso() {
+  progressoEl.classList.add("escondido");
+  clearInterval(progressoTimer);
+  progressoTimer = null;
+  definirProgresso(4);
+}
+function avancarProgressoGradualmente(de, para, duracaoMs) {
+  clearInterval(progressoTimer);
+  const inicio = Date.now();
+  progressoTimer = setInterval(() => {
+    const t = Math.min(1, (Date.now() - inicio) / duracaoMs);
+    definirProgresso(de + (para - de) * t);
+    if (t >= 1) clearInterval(progressoTimer);
+  }, 200);
+}
+
 if (!token) {
   mostrarMensagem("Link inválido ou incompleto. Peça um novo link para o seu professor.", "erro");
   document.getElementById("form-avaliacao").classList.add("escondido");
@@ -714,6 +759,8 @@ document.getElementById("form-avaliacao").addEventListener("submit", async (even
   evento.preventDefault();
   const botao = document.getElementById("botao-enviar");
   botao.disabled = true;
+  mostrarBarraProgresso();
+  definirProgresso(4);
 
   try {
     const jaEnviado = localStorage.getItem(CHAVE_JA_ENVIADO) === "1";
@@ -727,6 +774,7 @@ document.getElementById("form-avaliacao").addEventListener("submit", async (even
       }
 
       mostrarMensagem("Enviando fotos, aguarde…", "progresso");
+      avancarProgressoGradualmente(4, 40, 8000);
 
       const arquivosExames = Array.from(document.getElementById("exames").files ?? []);
 
@@ -741,6 +789,8 @@ document.getElementById("form-avaliacao").addEventListener("submit", async (even
         caminhosExames.push(await subirArquivo(arquivosExames[i], `${token}/exame_${i + 1}.${extensao(arquivosExames[i])}`));
       }
 
+      clearInterval(progressoTimer);
+      definirProgresso(45);
       mostrarMensagem("Salvando suas respostas…", "progresso");
 
       const { error: erroRpc } = await supabase.rpc("enviar_avaliacao", {
@@ -754,21 +804,32 @@ document.getElementById("form-avaliacao").addEventListener("submit", async (even
       if (erroRpc) throw new Error(erroRpc.message);
 
       localStorage.setItem(CHAVE_JA_ENVIADO, "1");
+      definirProgresso(60);
+    } else {
+      definirProgresso(60);
     }
 
     mostrarMensagem("Analisando sua avaliação, isso pode levar até 1 minuto…", "progresso");
+    // Duracao da analise varia (depende do Claude) - avanca devagar sem nunca "terminar"
+    // sozinho, so chega a 100% de verdade quando a resposta da funcao voltar.
+    avancarProgressoGradualmente(60, 96, 45000);
 
     const { error: erroFuncao } = await supabase.functions.invoke("finalizar-avaliacao", {
       body: { token },
     });
     if (erroFuncao) throw new Error(erroFuncao.message);
 
+    clearInterval(progressoTimer);
+    definirProgresso(100);
+
     localStorage.removeItem(CHAVE_LOCAL);
     localStorage.removeItem(CHAVE_JA_ENVIADO);
     document.getElementById("form-avaliacao").classList.add("escondido");
     mensagemEl.className = "";
+    esconderBarraProgresso();
     document.getElementById("tela-obrigado").style.display = "block";
   } catch (erro) {
+    esconderBarraProgresso();
     mostrarMensagem(`Não foi possível concluir: ${erro.message}. Seus dados de texto ficam salvos neste aparelho — tente reenviar.`, "erro");
     botao.disabled = false;
   }
