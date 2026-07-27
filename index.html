@@ -6,87 +6,179 @@
 <title>Avaliação Postural — HumanCore CIT</title>
 <style>
   :root {
-    --bg: #0f1115;
+    --bg: #0a0f0d;
+    --bg-2: #0f1613;
     --card: #ffffff;
-    --texto: #1a1a1a;
-    --texto-suave: #5b6270;
-    --primaria: #1f8a5c;
-    --primaria-escura: #166b46;
-    --borda: #d8dce2;
-    --erro: #b3261e;
-    --aviso-bg: #fff4e5;
+    --texto: #14181c;
+    --texto-suave: #667085;
+    --primaria: #17a06b;
+    --primaria-escura: #0d7a50;
+    --primaria-tint: #e6f6ee;
+    --borda: #e1e5e4;
+    --erro: #c0392b;
+    --erro-bg: #fdecea;
+    --sucesso-bg: #e9f7ef;
+    --aviso-bg: #fff6e0;
+    --sombra: 0 6px 24px rgba(15, 30, 25, 0.08);
+    --raio: 16px;
   }
   * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
   body {
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    background: var(--bg);
+    background: linear-gradient(165deg, var(--bg) 0%, var(--bg-2) 55%, var(--bg) 100%);
     color: var(--texto);
-    padding: 0 0 60px;
+    padding: 4px 0 70px;
+    -webkit-font-smoothing: antialiased;
   }
-  header {
-    padding: 28px 20px 16px;
-    text-align: center;
-    color: #fff;
+
+  #barra-progresso {
+    position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+    background: linear-gradient(90deg, var(--primaria), #35d38f);
+    z-index: 50; transition: width 0.15s ease-out;
   }
-  header h1 { font-size: 20px; margin: 0 0 4px; }
-  header p { margin: 0; color: #b7bdc7; font-size: 14px; }
+
+  header { padding: 40px 20px 22px; text-align: center; color: #fff; }
+  .selo {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.14);
+    border-radius: 999px; padding: 5px 14px; font-size: 12px; font-weight: 600;
+    letter-spacing: 0.06em; text-transform: uppercase; color: #9fe8c6; margin-bottom: 14px;
+  }
+  header h1 { font-size: 24px; margin: 0 0 6px; letter-spacing: -0.02em; }
+  header p { margin: 0; color: #a9b2ad; font-size: 14px; }
+  header .tempo-estimado { margin-top: 10px; font-size: 12px; color: #7c8983; }
+
   main { max-width: 640px; margin: 0 auto; padding: 0 16px; }
+
   .cartao {
     background: var(--card);
-    border-radius: 14px;
-    padding: 20px;
-    margin-bottom: 16px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+    border-radius: var(--raio);
+    padding: 24px 22px;
+    margin-bottom: 18px;
+    box-shadow: var(--sombra);
+    border: 1px solid rgba(20, 40, 32, 0.04);
   }
-  .cartao h2 { font-size: 16px; margin: 0 0 14px; }
-  .campo { margin-bottom: 16px; }
-  .campo label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 6px; }
-  .campo .dica { font-size: 12px; color: var(--texto-suave); margin-top: 4px; }
+  .cartao-cabecalho { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+  .numero-secao {
+    flex-shrink: 0; width: 30px; height: 30px; border-radius: 50%;
+    background: var(--primaria-tint); color: var(--primaria-escura);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 13px;
+  }
+  .cartao h2 { font-size: 17px; margin: 0; letter-spacing: -0.01em; }
+
+  .campo { margin-bottom: 18px; }
+  .campo:last-child { margin-bottom: 0; }
+  .campo label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 7px; }
+  .campo .dica { font-size: 12.5px; color: var(--texto-suave); margin: -3px 0 10px; line-height: 1.4; }
+
   input[type="text"], input[type="number"], input[type="tel"], textarea, select {
     width: 100%;
-    padding: 10px 12px;
+    padding: 11px 13px;
     border: 1px solid var(--borda);
-    border-radius: 8px;
+    border-radius: 10px;
     font-size: 15px;
     font-family: inherit;
+    background: #fff;
+    transition: border-color 0.15s, box-shadow 0.15s;
   }
-  textarea { resize: vertical; min-height: 70px; }
-  .opcoes { display: flex; gap: 10px; flex-wrap: wrap; }
+  input:focus, textarea:focus, select:focus {
+    outline: none; border-color: var(--primaria);
+    box-shadow: 0 0 0 3px var(--primaria-tint);
+  }
+  textarea { resize: vertical; min-height: 76px; line-height: 1.45; }
+
+  .opcoes { display: flex; gap: 8px; flex-wrap: wrap; }
   .opcoes label {
     display: flex; align-items: center; gap: 6px;
-    border: 1px solid var(--borda); border-radius: 8px;
-    padding: 8px 14px; font-size: 14px; font-weight: 400; cursor: pointer;
+    border: 1.5px solid var(--borda); border-radius: 999px;
+    padding: 9px 16px; font-size: 14px; font-weight: 500; cursor: pointer;
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
+    user-select: none;
   }
-  .opcoes input { margin: 0; }
-  input[type="file"] {
-    width: 100%; padding: 10px; border: 1px dashed var(--borda); border-radius: 8px; background: #fafbfc;
-  }
+  .opcoes label.selecionada { background: var(--primaria); border-color: var(--primaria); color: #fff; }
+  .opcoes label input { position: absolute; opacity: 0; width: 0; height: 0; }
+
   .escondido { display: none !important; }
+
+  /* Dropzones de arquivo */
+  .dropzone {
+    border: 1.5px dashed var(--borda); border-radius: 12px;
+    padding: 22px 16px; text-align: center; cursor: pointer;
+    background: #fafcfb; transition: border-color 0.15s, background 0.15s;
+  }
+  .dropzone:hover { border-color: #b7c4bf; }
+  .dropzone.dropzone-ativa { border-color: var(--primaria); background: var(--primaria-tint); }
+  .dropzone-icone { color: #9aa6a1; margin-bottom: 8px; }
+  .dropzone-conteudo p { margin: 0; font-size: 13.5px; color: var(--texto-suave); font-weight: 500; }
+  .dropzone-conteudo p.dropzone-sub { font-size: 12px; margin-top: 2px; color: #9aa6a1; font-weight: 400; }
+
+  .dropzone-preview {
+    display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap;
+  }
+  .dropzone-preview .dropzone-nome-arquivo {
+    font-size: 13.5px; font-weight: 600; color: var(--primaria-escura);
+    max-width: 220px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .dropzone-lista { display: flex; flex-direction: column; gap: 8px; text-align: left; }
+  .dropzone-lista .dropzone-item {
+    display: flex; align-items: center; justify-content: space-between; gap: 10px;
+    background: #fff; border: 1px solid var(--borda); border-radius: 8px; padding: 8px 12px;
+  }
+  .dropzone-lista .dropzone-item span {
+    font-size: 13px; font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .botao-remover {
+    flex-shrink: 0; border: none; background: var(--erro-bg); color: var(--erro);
+    font-size: 12px; font-weight: 700; border-radius: 999px; padding: 5px 11px; cursor: pointer;
+  }
+  .botao-secundario {
+    margin-top: 10px; background: none; border: 1.5px dashed var(--borda); border-radius: 10px;
+    padding: 10px 16px; font-size: 13.5px; color: var(--primaria-escura); font-weight: 600;
+    cursor: pointer; width: 100%;
+  }
+
   button[type="submit"] {
-    width: 100%; padding: 14px; border: none; border-radius: 10px;
-    background: var(--primaria); color: #fff; font-size: 16px; font-weight: 600;
-    cursor: pointer;
+    width: 100%; padding: 16px; border: none; border-radius: 12px;
+    background: linear-gradient(135deg, var(--primaria), var(--primaria-escura));
+    color: #fff; font-size: 16px; font-weight: 700; letter-spacing: 0.01em;
+    cursor: pointer; box-shadow: 0 10px 24px rgba(23, 160, 107, 0.3);
+    transition: transform 0.1s, box-shadow 0.1s;
   }
-  button[type="submit"]:active { background: var(--primaria-escura); }
-  button[type="submit"]:disabled { opacity: 0.6; cursor: default; }
-  .parq-item { border-top: 1px solid #eee; padding-top: 12px; margin-top: 12px; }
+  button[type="submit"]:active { transform: translateY(1px); box-shadow: 0 4px 12px rgba(23, 160, 107, 0.25); }
+  button[type="submit"]:disabled { opacity: 0.55; cursor: default; box-shadow: none; }
+
+  .parq-item { border-top: 1px solid #eef0ef; padding-top: 16px; margin-top: 16px; }
   .parq-item:first-child { border-top: none; padding-top: 0; margin-top: 0; }
+
   #mensagem {
-    display: none; margin: 20px 16px; padding: 14px 16px; border-radius: 10px; font-size: 14px;
+    display: none; margin: 0 0 16px; padding: 14px 16px; border-radius: 12px; font-size: 14px;
+    font-weight: 500; display: flex; align-items: center; gap: 10px;
   }
-  #mensagem.sucesso { display: block; background: #e6f4ea; color: #1e5b34; }
-  #mensagem.erro { display: block; background: #fdecea; color: var(--erro); }
-  #mensagem.progresso { display: block; background: var(--aviso-bg); color: #7a4b00; }
-  #tela-obrigado { display: none; text-align: center; color: #fff; padding: 60px 20px; }
-  #tela-obrigado h2 { font-size: 22px; }
+  #mensagem.sucesso { display: flex; background: var(--sucesso-bg); color: #1e5b34; }
+  #mensagem.erro { display: flex; background: var(--erro-bg); color: var(--erro); }
+  #mensagem.progresso { display: flex; background: var(--aviso-bg); color: #7a4b00; }
+
+  #tela-obrigado { display: none; text-align: center; color: #fff; padding: 70px 24px; }
+  #tela-obrigado .icone-check {
+    width: 68px; height: 68px; border-radius: 50%; background: rgba(53, 211, 143, 0.15);
+    display: flex; align-items: center; justify-content: center; margin: 0 auto 18px; color: #35d38f;
+  }
+  #tela-obrigado h2 { font-size: 22px; margin: 0 0 8px; }
+  #tela-obrigado p { color: #a9b2ad; font-size: 14.5px; line-height: 1.5; }
 </style>
 </head>
 <body>
 
+<div id="barra-progresso"></div>
+
 <header>
+  <span class="selo">HumanCore · Método CIT</span>
   <h1>Avaliação Postural</h1>
-  <p>HumanCore · Método CIT</p>
+  <p>Responda com atenção — isso vai direto pra análise do seu treino.</p>
+  <p class="tempo-estimado">⏱ Leva entre 5 e 8 minutos</p>
 </header>
 
 <main>
@@ -94,7 +186,7 @@
 
   <form id="form-avaliacao">
     <section class="cartao">
-      <h2>Dados Pessoais</h2>
+      <div class="cartao-cabecalho"><span class="numero-secao">1</span><h2>Dados Pessoais</h2></div>
       <div class="campo">
         <label for="nome_completo">Nome completo</label>
         <input type="text" id="nome_completo" required />
@@ -125,7 +217,7 @@
     </section>
 
     <section class="cartao">
-      <h2>Objetivos e Rotina</h2>
+      <div class="cartao-cabecalho"><span class="numero-secao">2</span><h2>Objetivos e Rotina</h2></div>
       <div class="campo">
         <label for="objetivo">Qual seu principal objetivo com o treino?</label>
         <textarea id="objetivo" required></textarea>
@@ -181,7 +273,7 @@
     </section>
 
     <section class="cartao">
-      <h2>Saúde e Histórico</h2>
+      <div class="cartao-cabecalho"><span class="numero-secao">3</span><h2>Saúde e Histórico</h2></div>
       <div class="campo">
         <label>Você tem ou já teve alguma lesão, dor ou cirurgia relevante?</label>
         <div class="opcoes" data-grupo="lesao">
@@ -212,47 +304,90 @@
         </div>
       </div>
       <div class="campo">
-        <label>Você possui algum exame de imagem (RM, RX, ultrassom) da coluna ou articulações?</label>
+        <label>Você possui algum exame de imagem (RM, RX, ultrassom, tomografia) da coluna ou outra articulação?</label>
         <div class="opcoes" data-grupo="tem_exame">
           <label><input type="radio" name="tem_exame" value="Sim" required /> Sim</label>
           <label><input type="radio" name="tem_exame" value="Não" /> Não</label>
         </div>
       </div>
-      <div class="campo escondido" id="bloco-exames">
-        <label for="resultado_exame">Se souber, descreva o resultado/conclusão do exame (mesmo sem o arquivo em mãos)</label>
+
+      <div class="campo escondido" id="bloco-exame-arquivo">
+        <label>Envie o(s) laudo(s)/exame(s) (PDF ou foto)</label>
+        <p class="dica">Pode arrastar vários arquivos de uma vez, ou clicar pra escolher. Selecionou o errado? Clique em "Remover" ao lado do arquivo antes de enviar a avaliação.</p>
+        <div class="dropzone dropzone-multipla" id="dropzone-exames">
+          <input type="file" id="exames" accept="image/*,application/pdf" multiple hidden class="dropzone-input" />
+          <div class="dropzone-conteudo">
+            <svg class="dropzone-icone" viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18a4 4 0 0 1-1-7.87A5 5 0 0 1 15.9 8H16a4 4 0 0 1 1 7.87"/><path d="M12 12v7"/><path d="M9.5 14.5 12 12l2.5 2.5"/></svg>
+            <p>Toque para escolher ou arraste os arquivos aqui</p>
+            <p class="dropzone-sub">PDF ou foto — pode selecionar vários</p>
+          </div>
+          <div class="dropzone-lista escondido"></div>
+        </div>
+      </div>
+
+      <div class="campo escondido" id="bloco-exame-texto">
+        <label for="resultado_exame">Descreva o resultado/conclusão do exame que você souber ou lembrar</label>
         <textarea id="resultado_exame" placeholder="Ex.: hérnia de disco L4-L5, escoliose leve, etc."></textarea>
-        <label for="exames" style="margin-top:12px;">Envie o(s) laudo(s)/exame(s), se tiver o(s) arquivo(s) (PDF ou foto)</label>
-        <p class="dica">Tem mais de um exame? Selecione todos de uma vez no seletor abaixo, ou clique em "Adicionar outro exame" para enviar um por vez.</p>
-        <input type="file" id="exames" accept="image/*,application/pdf" multiple />
-        <div id="exames-extras"></div>
-        <button type="button" id="botao-add-exame" style="margin-top:8px; background:none; border:1px dashed var(--borda); border-radius:8px; padding:8px 14px; font-size:13px; color: var(--primaria); font-weight:600; cursor:pointer;">+ Adicionar outro exame</button>
       </div>
     </section>
 
     <section class="cartao">
-      <h2>Questionário PAR-Q</h2>
+      <div class="cartao-cabecalho"><span class="numero-secao">4</span><h2>Questionário PAR-Q</h2></div>
       <div id="bloco-parq"></div>
     </section>
 
     <section class="cartao">
-      <h2>Fotos Posturais</h2>
-      <p class="dica">Use roupas justas ou de banho, fundo neutro, boa iluminação e fique descalço(a).</p>
+      <div class="cartao-cabecalho"><span class="numero-secao">5</span><h2>Fotos Posturais</h2></div>
+      <p class="dica" style="margin-top:-8px;">Use roupas justas ou de banho, fundo neutro, boa iluminação e fique descalço(a).</p>
+
       <div class="campo">
-        <label for="foto_frontal">Foto Frontal (de frente, braços relaxados)</label>
-        <input type="file" id="foto_frontal" accept="image/*" required />
+        <label>Foto Frontal (de frente, braços relaxados)</label>
+        <div class="dropzone" id="dropzone-foto_frontal">
+          <input type="file" id="foto_frontal" accept="image/*" hidden class="dropzone-input" />
+          <div class="dropzone-conteudo">
+            <svg class="dropzone-icone" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18a4 4 0 0 1-1-7.87A5 5 0 0 1 15.9 8H16a4 4 0 0 1 1 7.87"/><path d="M12 12v7"/><path d="M9.5 14.5 12 12l2.5 2.5"/></svg>
+            <p>Toque para escolher ou arraste a foto aqui</p>
+          </div>
+          <div class="dropzone-preview escondido">
+            <span class="dropzone-nome-arquivo"></span>
+            <button type="button" class="botao-remover">Remover</button>
+          </div>
+        </div>
       </div>
+
       <div class="campo">
-        <label for="foto_lateral">Foto Lateral (perfil)</label>
-        <input type="file" id="foto_lateral" accept="image/*" required />
+        <label>Foto Lateral (perfil)</label>
+        <div class="dropzone" id="dropzone-foto_lateral">
+          <input type="file" id="foto_lateral" accept="image/*" hidden class="dropzone-input" />
+          <div class="dropzone-conteudo">
+            <svg class="dropzone-icone" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18a4 4 0 0 1-1-7.87A5 5 0 0 1 15.9 8H16a4 4 0 0 1 1 7.87"/><path d="M12 12v7"/><path d="M9.5 14.5 12 12l2.5 2.5"/></svg>
+            <p>Toque para escolher ou arraste a foto aqui</p>
+          </div>
+          <div class="dropzone-preview escondido">
+            <span class="dropzone-nome-arquivo"></span>
+            <button type="button" class="botao-remover">Remover</button>
+          </div>
+        </div>
       </div>
+
       <div class="campo">
-        <label for="foto_posterior">Foto Posterior (de costas)</label>
-        <input type="file" id="foto_posterior" accept="image/*" required />
+        <label>Foto Posterior (de costas)</label>
+        <div class="dropzone" id="dropzone-foto_posterior">
+          <input type="file" id="foto_posterior" accept="image/*" hidden class="dropzone-input" />
+          <div class="dropzone-conteudo">
+            <svg class="dropzone-icone" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18a4 4 0 0 1-1-7.87A5 5 0 0 1 15.9 8H16a4 4 0 0 1 1 7.87"/><path d="M12 12v7"/><path d="M9.5 14.5 12 12l2.5 2.5"/></svg>
+            <p>Toque para escolher ou arraste a foto aqui</p>
+          </div>
+          <div class="dropzone-preview escondido">
+            <span class="dropzone-nome-arquivo"></span>
+            <button type="button" class="botao-remover">Remover</button>
+          </div>
+        </div>
       </div>
     </section>
 
     <section class="cartao">
-      <h2>Algo mais?</h2>
+      <div class="cartao-cabecalho"><span class="numero-secao">6</span><h2>Algo mais?</h2></div>
       <div class="campo">
         <label for="relato_livre">Descreva livremente como tem sido sua dor/desconforto, ou qualquer outra informação relevante que não foi perguntada</label>
         <textarea id="relato_livre"></textarea>
@@ -260,10 +395,10 @@
     </section>
 
     <section class="cartao">
-      <h2>Consentimento</h2>
+      <div class="cartao-cabecalho"><span class="numero-secao">7</span><h2>Consentimento</h2></div>
       <div class="campo">
         <label style="display:flex; align-items:flex-start; gap:8px; font-weight:400;">
-          <input type="checkbox" id="consentimento_lgpd" required style="margin-top:3px;" />
+          <input type="checkbox" id="consentimento_lgpd" required style="margin-top:3px; width:auto;" />
           <span>Autorizo o uso dos meus dados e imagens exclusivamente para a elaboração da minha avaliação postural e do meu treino, conforme a LGPD.</span>
         </label>
       </div>
@@ -273,7 +408,10 @@
   </form>
 
   <div id="tela-obrigado">
-    <h2>Recebemos sua avaliação! 🎉</h2>
+    <div class="icone-check">
+      <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m8 12.5 2.5 2.5L16 9.5"/></svg>
+    </div>
+    <h2>Recebemos sua avaliação!</h2>
     <p>Seu professor vai revisar e te enviar o resultado em breve.</p>
   </div>
 </main>
@@ -330,15 +468,30 @@ if (!token) {
 // e essa resposta digitada é o nome usado de fato no PDF e na pasta do Drive.
 if (nomeOculto) document.getElementById("nome_completo").value = nomeOculto;
 
+// Estilo visual do radio selecionado - delegado no document (funciona tambem pras
+// perguntas do PAR-Q, que sao criadas dinamicamente depois desse script rodar).
+document.addEventListener("change", (e) => {
+  if (e.target.matches('.opcoes input[type="radio"]')) {
+    e.target.closest(".opcoes").querySelectorAll("label").forEach((label) => {
+      label.classList.toggle("selecionada", label.querySelector("input").checked);
+    });
+  }
+});
+
 // Mostrar/escoder campos condicionais
 document.querySelectorAll('input[name="lesao"]').forEach((r) =>
   r.addEventListener("change", (e) => {
     document.getElementById("bloco-detalhe-lesao").classList.toggle("escondido", e.target.value !== "Sim");
   }),
 );
+// Exame: "Sim" (tem exame) -> mostra upload de arquivo, sem caixa de texto (o laudo
+// real vale mais que um resumo). "Nao" (nao tem arquivo em maos) -> abre a caixa de
+// texto pra descrever de memoria o que souber, sem pedir arquivo que nao existe.
 document.querySelectorAll('input[name="tem_exame"]').forEach((r) =>
   r.addEventListener("change", (e) => {
-    document.getElementById("bloco-exames").classList.toggle("escondido", e.target.value !== "Sim");
+    const tem = e.target.value === "Sim";
+    document.getElementById("bloco-exame-arquivo").classList.toggle("escondido", !tem);
+    document.getElementById("bloco-exame-texto").classList.toggle("escondido", tem);
   }),
 );
 document.querySelectorAll('input[name="pratica_atividade"]').forEach((r) =>
@@ -353,23 +506,121 @@ document.querySelectorAll('input[name="problema_saude"]').forEach((r) =>
     document.getElementById("bloco-detalhe-saude").classList.toggle("escondido", e.target.value !== "Sim");
   }),
 );
-// Cada clique adiciona mais um seletor de arquivo avulso - cobre o caso de o
-// aparelho do aluno nao suportar bem selecionar varios arquivos de exame de uma vez
-// so no input com "multiple" (comum em navegador embutido de app tipo WhatsApp).
-document.getElementById("botao-add-exame").addEventListener("click", () => {
-  const div = document.createElement("div");
-  div.className = "campo";
-  div.style.marginTop = "8px";
-  div.innerHTML = '<input type="file" class="exame-extra-input" accept="image/*,application/pdf" />';
-  document.getElementById("exames-extras").appendChild(div);
-});
-
 document.querySelectorAll('input[name="local_treino"]').forEach((r) =>
   r.addEventListener("change", (e) => {
     const mostrarEquipamentos = e.target.value === "Em casa (tenho material: elásticos, halteres, barras, etc)";
     document.getElementById("bloco-equipamentos-casa").classList.toggle("escondido", !mostrarEquipamentos);
   }),
 );
+
+// --- Dropzones de arquivo (clique OU arrastar, com opcao de remover antes de enviar) ---
+// Usar .click() explicito no input real (em vez de confiar so no comportamento nativo
+// do <label for>) e cobrir "drop" como caminho alternativo corrige o caso de aparelhos/
+// navegadores onde tocar no seletor de arquivo nao abre a janela nativa.
+function configurarDropzoneUnica(dropzoneEl) {
+  const input = dropzoneEl.querySelector(".dropzone-input");
+  const conteudo = dropzoneEl.querySelector(".dropzone-conteudo");
+  const preview = dropzoneEl.querySelector(".dropzone-preview");
+  const nomeEl = dropzoneEl.querySelector(".dropzone-nome-arquivo");
+  const removerBtn = dropzoneEl.querySelector(".botao-remover");
+
+  function atualizar() {
+    const arquivo = input.files?.[0];
+    if (arquivo) {
+      nomeEl.textContent = arquivo.name;
+      conteudo.classList.add("escondido");
+      preview.classList.remove("escondido");
+    } else {
+      conteudo.classList.remove("escondido");
+      preview.classList.add("escondido");
+    }
+  }
+
+  dropzoneEl.addEventListener("click", (e) => {
+    if (e.target.closest(".botao-remover")) return;
+    input.click();
+  });
+  input.addEventListener("change", atualizar);
+  removerBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    input.value = "";
+    atualizar();
+  });
+  dropzoneEl.addEventListener("dragover", (e) => { e.preventDefault(); dropzoneEl.classList.add("dropzone-ativa"); });
+  dropzoneEl.addEventListener("dragleave", () => dropzoneEl.classList.remove("dropzone-ativa"));
+  dropzoneEl.addEventListener("drop", (e) => {
+    e.preventDefault();
+    dropzoneEl.classList.remove("dropzone-ativa");
+    if (e.dataTransfer.files.length) {
+      input.files = e.dataTransfer.files;
+      atualizar();
+    }
+  });
+}
+
+function configurarDropzoneMultipla(dropzoneEl) {
+  const input = dropzoneEl.querySelector(".dropzone-input");
+  const conteudo = dropzoneEl.querySelector(".dropzone-conteudo");
+  const lista = dropzoneEl.querySelector(".dropzone-lista");
+
+  function renderizar() {
+    const arquivos = Array.from(input.files ?? []);
+    lista.innerHTML = "";
+    arquivos.forEach((arquivo, i) => {
+      const item = document.createElement("div");
+      item.className = "dropzone-item";
+      item.innerHTML = `<span>${arquivo.name}</span><button type="button" class="botao-remover" data-i="${i}">Remover</button>`;
+      lista.appendChild(item);
+    });
+    conteudo.classList.toggle("escondido", arquivos.length > 0);
+    lista.classList.toggle("escondido", arquivos.length === 0);
+  }
+
+  function removerIndice(indice) {
+    const dt = new DataTransfer();
+    Array.from(input.files).forEach((arquivo, i) => { if (i !== indice) dt.items.add(arquivo); });
+    input.files = dt.files;
+    renderizar();
+  }
+
+  dropzoneEl.addEventListener("click", (e) => {
+    const botao = e.target.closest(".botao-remover");
+    if (botao) {
+      e.stopPropagation();
+      removerIndice(Number(botao.dataset.i));
+      return;
+    }
+    input.click();
+  });
+  input.addEventListener("change", renderizar);
+  dropzoneEl.addEventListener("dragover", (e) => { e.preventDefault(); dropzoneEl.classList.add("dropzone-ativa"); });
+  dropzoneEl.addEventListener("dragleave", () => dropzoneEl.classList.remove("dropzone-ativa"));
+  dropzoneEl.addEventListener("drop", (e) => {
+    e.preventDefault();
+    dropzoneEl.classList.remove("dropzone-ativa");
+    if (!e.dataTransfer.files.length) return;
+    const dt = new DataTransfer();
+    Array.from(input.files ?? []).forEach((f) => dt.items.add(f));
+    Array.from(e.dataTransfer.files).forEach((f) => dt.items.add(f));
+    input.files = dt.files;
+    renderizar();
+  });
+}
+
+document.querySelectorAll(".dropzone:not(.dropzone-multipla)").forEach(configurarDropzoneUnica);
+document.querySelectorAll(".dropzone-multipla").forEach(configurarDropzoneMultipla);
+
+// Barra de progresso no topo, baseada no quanto do formulario ja foi rolado.
+const barraProgresso = document.getElementById("barra-progresso");
+function atualizarBarraProgresso() {
+  const form = document.getElementById("form-avaliacao");
+  const alturaTotal = form.offsetHeight - window.innerHeight;
+  const rolado = Math.min(1, Math.max(0, (window.scrollY) / Math.max(1, alturaTotal)));
+  barraProgresso.style.width = `${rolado * 100}%`;
+}
+window.addEventListener("scroll", atualizarBarraProgresso, { passive: true });
+window.addEventListener("resize", atualizarBarraProgresso);
+atualizarBarraProgresso();
 
 // Salvar/restaurar respostas de texto no localStorage (retomada no mesmo aparelho)
 const CHAVE_LOCAL = `avaliacao_rascunho_${token}`;
@@ -433,7 +684,7 @@ function coletarRespostas() {
     ["Tem algum problema de saúde ou faz uso de algum medicamento?", valorGrupo("problema_saude")],
     ["Detalhe do problema de saúde/medicamento", document.getElementById("detalhe_saude").value],
     ["Faz algum acompanhamento nutricional?", valorGrupo("acompanhamento_nutricional")],
-    ["Você possui algum exame de imagem da coluna ou articulações?", valorGrupo("tem_exame")],
+    ["Você possui algum exame de imagem da coluna ou outra articulação?", valorGrupo("tem_exame")],
     ["Resultado do exame relatado pelo aluno (sem arquivo)", document.getElementById("resultado_exame").value],
     ...PERGUNTAS_PARQ.map((pergunta, i) => [`PAR-Q ${i + 1}: ${pergunta}`, valorGrupo(`parq_${i + 1}`)]),
     ["Relato livre / outras informações", document.getElementById("relato_livre").value],
@@ -471,15 +722,16 @@ document.getElementById("form-avaliacao").addEventListener("submit", async (even
     const jaEnviado = localStorage.getItem(CHAVE_JA_ENVIADO) === "1";
 
     if (!jaEnviado) {
-      mostrarMensagem("Enviando fotos, aguarde…", "progresso");
-
       const fotoFrontal = document.getElementById("foto_frontal").files[0];
       const fotoLateral = document.getElementById("foto_lateral").files[0];
       const fotoPosterior = document.getElementById("foto_posterior").files[0];
-      const arquivosExamesExtras = Array.from(document.querySelectorAll(".exame-extra-input"))
-        .map((input) => input.files[0])
-        .filter(Boolean);
-      const arquivosExames = [...Array.from(document.getElementById("exames").files ?? []), ...arquivosExamesExtras];
+      if (!fotoFrontal || !fotoLateral || !fotoPosterior) {
+        throw new Error("Envie as 3 fotos posturais (frontal, lateral e posterior) antes de continuar.");
+      }
+
+      mostrarMensagem("Enviando fotos, aguarde…", "progresso");
+
+      const arquivosExames = Array.from(document.getElementById("exames").files ?? []);
 
       const [caminhoFrontal, caminhoLateral, caminhoPosterior] = await Promise.all([
         subirArquivo(fotoFrontal, `${token}/frontal.${extensao(fotoFrontal)}`),
