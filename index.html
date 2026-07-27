@@ -193,10 +193,6 @@
 
 <main>
   <div id="mensagem"></div>
-  <div id="progresso-envio" class="escondido">
-    <p class="progresso-frase">Aguarde enquanto todos os dados são carregados</p>
-    <div class="progresso-trilha"><div class="progresso-preenchimento" id="progresso-preenchimento"></div></div>
-  </div>
 
   <form id="form-avaliacao">
     <section class="cartao">
@@ -417,6 +413,11 @@
         </label>
       </div>
     </section>
+
+    <div id="progresso-envio" class="escondido">
+      <p class="progresso-frase">Analisando seus dados</p>
+      <div class="progresso-trilha"><div class="progresso-preenchimento" id="progresso-preenchimento"></div></div>
+    </div>
 
     <button type="submit" id="botao-enviar">Enviar avaliação</button>
   </form>
