@@ -96,6 +96,10 @@
     <section class="cartao">
       <h2>Dados Pessoais</h2>
       <div class="campo">
+        <label for="nome_completo">Nome completo</label>
+        <input type="text" id="nome_completo" required />
+      </div>
+      <div class="campo">
         <label for="idade">Idade</label>
         <input type="number" id="idade" required />
       </div>
@@ -321,6 +325,10 @@ if (!token) {
   document.getElementById("form-avaliacao").classList.add("escondido");
 }
 
+// Pre-preenche com o nome que veio no link (se houver), mas o aluno pode corrigir -
+// e essa resposta digitada é o nome usado de fato no PDF e na pasta do Drive.
+if (nomeOculto) document.getElementById("nome_completo").value = nomeOculto;
+
 // Mostrar/escoder campos condicionais
 document.querySelectorAll('input[name="lesao"]').forEach((r) =>
   r.addEventListener("change", (e) => {
@@ -391,7 +399,7 @@ function valorGrupo(nome) {
 
 function coletarRespostas() {
   return [
-    ["Qual seu nome completo?", nomeOculto],
+    ["Qual seu nome completo?", document.getElementById("nome_completo").value],
     ["Idade", document.getElementById("idade").value],
     ["Altura (cm)", document.getElementById("altura").value],
     ["Peso (kg)", document.getElementById("peso").value],
