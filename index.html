@@ -221,8 +221,11 @@
       <div class="campo escondido" id="bloco-exames">
         <label for="resultado_exame">Se souber, descreva o resultado/conclusão do exame (mesmo sem o arquivo em mãos)</label>
         <textarea id="resultado_exame" placeholder="Ex.: hérnia de disco L4-L5, escoliose leve, etc."></textarea>
-        <label for="exames" style="margin-top:12px;">Envie o(s) laudo(s)/exame(s), se tiver o arquivo (PDF ou foto)</label>
+        <label for="exames" style="margin-top:12px;">Envie o(s) laudo(s)/exame(s), se tiver o(s) arquivo(s) (PDF ou foto)</label>
+        <p class="dica">Tem mais de um exame? Selecione todos de uma vez no seletor abaixo, ou clique em "Adicionar outro exame" para enviar um por vez.</p>
         <input type="file" id="exames" accept="image/*,application/pdf" multiple />
+        <div id="exames-extras"></div>
+        <button type="button" id="botao-add-exame" style="margin-top:8px; background:none; border:1px dashed var(--borda); border-radius:8px; padding:8px 14px; font-size:13px; color: var(--primaria); font-weight:600; cursor:pointer;">+ Adicionar outro exame</button>
       </div>
     </section>
 
@@ -350,6 +353,17 @@ document.querySelectorAll('input[name="problema_saude"]').forEach((r) =>
     document.getElementById("bloco-detalhe-saude").classList.toggle("escondido", e.target.value !== "Sim");
   }),
 );
+// Cada clique adiciona mais um seletor de arquivo avulso - cobre o caso de o
+// aparelho do aluno nao suportar bem selecionar varios arquivos de exame de uma vez
+// so no input com "multiple" (comum em navegador embutido de app tipo WhatsApp).
+document.getElementById("botao-add-exame").addEventListener("click", () => {
+  const div = document.createElement("div");
+  div.className = "campo";
+  div.style.marginTop = "8px";
+  div.innerHTML = '<input type="file" class="exame-extra-input" accept="image/*,application/pdf" />';
+  document.getElementById("exames-extras").appendChild(div);
+});
+
 document.querySelectorAll('input[name="local_treino"]').forEach((r) =>
   r.addEventListener("change", (e) => {
     const mostrarEquipamentos = e.target.value === "Em casa (tenho material: elásticos, halteres, barras, etc)";
@@ -462,7 +476,10 @@ document.getElementById("form-avaliacao").addEventListener("submit", async (even
       const fotoFrontal = document.getElementById("foto_frontal").files[0];
       const fotoLateral = document.getElementById("foto_lateral").files[0];
       const fotoPosterior = document.getElementById("foto_posterior").files[0];
-      const arquivosExames = Array.from(document.getElementById("exames").files ?? []);
+      const arquivosExamesExtras = Array.from(document.querySelectorAll(".exame-extra-input"))
+        .map((input) => input.files[0])
+        .filter(Boolean);
+      const arquivosExames = [...Array.from(document.getElementById("exames").files ?? []), ...arquivosExamesExtras];
 
       const [caminhoFrontal, caminhoLateral, caminhoPosterior] = await Promise.all([
         subirArquivo(fotoFrontal, `${token}/frontal.${extensao(fotoFrontal)}`),
