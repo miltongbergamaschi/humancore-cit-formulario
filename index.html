@@ -141,6 +141,10 @@
           <label><input type="radio" name="pratica_atividade" value="Não" /> Não</label>
         </div>
       </div>
+      <div class="campo escondido" id="bloco-qual-atividade">
+        <label for="qual_atividade">Qual atividade você pratica?</label>
+        <input type="text" id="qual_atividade" />
+      </div>
       <div class="campo escondido" id="bloco-tempo-atividade">
         <label for="tempo_atividade">Há quanto tempo?</label>
         <input type="text" id="tempo_atividade" />
@@ -163,11 +167,11 @@
       <div class="campo">
         <label>Onde você vai treinar?</label>
         <div class="opcoes" data-grupo="local_treino">
-          <label><input type="radio" name="local_treino" value="Casa" required /> Casa</label>
+          <label><input type="radio" name="local_treino" value="Em casa (não tenho material)" required /> Em casa (não tenho material)</label>
+          <label><input type="radio" name="local_treino" value="Em casa (tenho material: elásticos, halteres, barras, etc)" /> Em casa (tenho material: elásticos, halteres, barras, etc)</label>
           <label><input type="radio" name="local_treino" value="Academia" /> Academia</label>
-          <label><input type="radio" name="local_treino" value="Ambos" /> Ambos</label>
-          <label><input type="radio" name="local_treino" value="Box de Crossfit" /> Box de Crossfit</label>
-          <label><input type="radio" name="local_treino" value="Outro" /> Outro</label>
+          <label><input type="radio" name="local_treino" value="Box de CrossFit ou Treinamento funcional" /> Box de CrossFit ou Treinamento funcional</label>
+          <label><input type="radio" name="local_treino" value="Academia do condomínio ou do prédio que moro" /> Academia do condomínio ou do prédio que moro</label>
         </div>
       </div>
       <div class="campo escondido" id="bloco-equipamentos-casa">
@@ -214,6 +218,12 @@
           <label><input type="radio" name="tem_exame" value="Não" /> Não</label>
         </div>
       </div>
+      <div class="campo escondido" id="bloco-exames">
+        <label for="resultado_exame">Se souber, descreva o resultado/conclusão do exame (mesmo sem o arquivo em mãos)</label>
+        <textarea id="resultado_exame" placeholder="Ex.: hérnia de disco L4-L5, escoliose leve, etc."></textarea>
+        <label for="exames" style="margin-top:12px;">Envie o(s) laudo(s)/exame(s), se tiver o arquivo (PDF ou foto)</label>
+        <input type="file" id="exames" accept="image/*,application/pdf" multiple />
+      </div>
     </section>
 
     <section class="cartao">
@@ -235,18 +245,6 @@
       <div class="campo">
         <label for="foto_posterior">Foto Posterior (de costas)</label>
         <input type="file" id="foto_posterior" accept="image/*" required />
-      </div>
-    </section>
-
-    <section class="cartao escondido" id="bloco-exames">
-      <h2>Exames</h2>
-      <div class="campo">
-        <label for="resultado_exame">Se souber, descreva o resultado/conclusão do exame (mesmo sem o arquivo em mãos)</label>
-        <textarea id="resultado_exame" placeholder="Ex.: hérnia de disco L4-L5, escoliose leve, etc."></textarea>
-      </div>
-      <div class="campo">
-        <label for="exames">Envie o(s) laudo(s)/exame(s), se tiver o arquivo (PDF ou foto)</label>
-        <input type="file" id="exames" accept="image/*,application/pdf" multiple />
       </div>
     </section>
 
@@ -342,7 +340,9 @@ document.querySelectorAll('input[name="tem_exame"]').forEach((r) =>
 );
 document.querySelectorAll('input[name="pratica_atividade"]').forEach((r) =>
   r.addEventListener("change", (e) => {
-    document.getElementById("bloco-tempo-atividade").classList.toggle("escondido", e.target.value !== "Sim");
+    const mostrar = e.target.value === "Sim";
+    document.getElementById("bloco-qual-atividade").classList.toggle("escondido", !mostrar);
+    document.getElementById("bloco-tempo-atividade").classList.toggle("escondido", !mostrar);
   }),
 );
 document.querySelectorAll('input[name="problema_saude"]').forEach((r) =>
@@ -352,7 +352,7 @@ document.querySelectorAll('input[name="problema_saude"]').forEach((r) =>
 );
 document.querySelectorAll('input[name="local_treino"]').forEach((r) =>
   r.addEventListener("change", (e) => {
-    const mostrarEquipamentos = e.target.value === "Casa" || e.target.value === "Ambos";
+    const mostrarEquipamentos = e.target.value === "Em casa (tenho material: elásticos, halteres, barras, etc)";
     document.getElementById("bloco-equipamentos-casa").classList.toggle("escondido", !mostrarEquipamentos);
   }),
 );
@@ -408,6 +408,7 @@ function coletarRespostas() {
     ["Qual seu principal objetivo com o treino?", document.getElementById("objetivo").value],
     ["Qual sua maior dificuldade ou desafio hoje?", document.getElementById("desafio").value],
     ["Pratica atividade física atualmente?", valorGrupo("pratica_atividade")],
+    ["Qual atividade você pratica?", document.getElementById("qual_atividade").value],
     ["Há quanto tempo pratica atividade física", document.getElementById("tempo_atividade").value],
     ["Quantos dias por semana você pode treinar?", document.getElementById("dias_treino").value],
     ["Quantos minutos por sessão você tem disponível?", document.getElementById("min_treino").value],
