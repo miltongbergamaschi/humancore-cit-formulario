@@ -560,6 +560,25 @@ document.querySelectorAll('input[name="local_treino"]').forEach((r) =>
 // Usar .click() explicito no input real (em vez de confiar so no comportamento nativo
 // do <label for>) e cobrir "drop" como caminho alternativo corrige o caso de aparelhos/
 // navegadores onde tocar no seletor de arquivo nao abre a janela nativa.
+// HEIC/HEIF (formato padrao de foto no iPhone) nao e aceito pela IA que analisa as
+// fotos - sem esse bloqueio, o aluno so descobre depois de responder tudo, quando a
+// avaliacao inteira falha (caso real: aluno enviou 3 fotos em HEIC e a avaliacao
+// travou com erro da API, sem nenhum aviso antes). Bloqueando aqui, na hora da
+// selecao do arquivo, o aluno corrige antes de perder tempo preenchendo o resto.
+function ehHeic(arquivo) {
+  const nome = (arquivo.name || "").toLowerCase();
+  const tipo = (arquivo.type || "").toLowerCase();
+  return nome.endsWith(".heic") || nome.endsWith(".heif") || tipo.includes("heic") || tipo.includes("heif");
+}
+
+function avisarHeic() {
+  alert(
+    'Esse arquivo está no formato HEIC (padrão de foto do iPhone) e não pode ser usado aqui.\n\n' +
+    'No iPhone: Ajustes > Câmera > Formatos > escolha "Mais Compatível", tire a foto de novo e envie.\n' +
+    'Ou: abra a foto no aplicativo Fotos, toque em Compartilhar e escolha "Copiar foto" / salve como JPEG antes de enviar.'
+  );
+}
+
 function configurarDropzoneUnica(dropzoneEl) {
   const input = dropzoneEl.querySelector(".dropzone-input");
   const conteudo = dropzoneEl.querySelector(".dropzone-conteudo");
@@ -569,6 +588,13 @@ function configurarDropzoneUnica(dropzoneEl) {
 
   function atualizar() {
     const arquivo = input.files?.[0];
+    if (arquivo && ehHeic(arquivo)) {
+      avisarHeic();
+      input.value = "";
+      conteudo.classList.remove("escondido");
+      preview.classList.add("escondido");
+      return;
+    }
     if (arquivo) {
       nomeEl.textContent = arquivo.name;
       conteudo.classList.add("escondido");
@@ -606,6 +632,18 @@ function configurarDropzoneMultipla(dropzoneEl) {
   const conteudo = dropzoneEl.querySelector(".dropzone-conteudo");
   const lista = dropzoneEl.querySelector(".dropzone-lista");
 
+  // Remove qualquer arquivo HEIC/HEIF da selecao (ver ehHeic/avisarHeic acima) antes
+  // de renderizar a lista - permite os demais arquivos normalmente, so avisa uma vez.
+  function removerHeicDaSelecao() {
+    const arquivos = Array.from(input.files ?? []);
+    const teveHeic = arquivos.some(ehHeic);
+    if (!teveHeic) return;
+    const dt = new DataTransfer();
+    arquivos.filter((a) => !ehHeic(a)).forEach((a) => dt.items.add(a));
+    input.files = dt.files;
+    avisarHeic();
+  }
+
   function renderizar() {
     const arquivos = Array.from(input.files ?? []);
     lista.innerHTML = "";
@@ -635,7 +673,10 @@ function configurarDropzoneMultipla(dropzoneEl) {
     }
     input.click();
   });
-  input.addEventListener("change", renderizar);
+  input.addEventListener("change", () => {
+    removerHeicDaSelecao();
+    renderizar();
+  });
   dropzoneEl.addEventListener("dragover", (e) => { e.preventDefault(); dropzoneEl.classList.add("dropzone-ativa"); });
   dropzoneEl.addEventListener("dragleave", () => dropzoneEl.classList.remove("dropzone-ativa"));
   dropzoneEl.addEventListener("drop", (e) => {
@@ -646,6 +687,7 @@ function configurarDropzoneMultipla(dropzoneEl) {
     Array.from(input.files ?? []).forEach((f) => dt.items.add(f));
     Array.from(e.dataTransfer.files).forEach((f) => dt.items.add(f));
     input.files = dt.files;
+    removerHeicDaSelecao();
     renderizar();
   });
 }
