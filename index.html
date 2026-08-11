@@ -268,12 +268,13 @@
       </div>
       <div class="campo">
         <label>Onde você vai treinar?</label>
+        <p class="dica" style="margin-top:-4px;">Pode marcar mais de uma opção.</p>
         <div class="opcoes" data-grupo="local_treino">
-          <label><input type="radio" name="local_treino" value="Em casa (não tenho material)" required /> Em casa (não tenho material)</label>
-          <label><input type="radio" name="local_treino" value="Em casa (tenho material: elásticos, halteres, barras, etc)" /> Em casa (tenho material: elásticos, halteres, barras, etc)</label>
-          <label><input type="radio" name="local_treino" value="Academia" /> Academia</label>
-          <label><input type="radio" name="local_treino" value="Box de CrossFit ou Treinamento funcional" /> Box de CrossFit ou Treinamento funcional</label>
-          <label><input type="radio" name="local_treino" value="Academia do condomínio ou do prédio que moro" /> Academia do condomínio ou do prédio que moro</label>
+          <label><input type="checkbox" name="local_treino" value="Em casa (não tenho material)" /> Em casa (não tenho material)</label>
+          <label><input type="checkbox" name="local_treino" value="Em casa (tenho material: elásticos, halteres, barras, etc)" /> Em casa (tenho material: elásticos, halteres, barras, etc)</label>
+          <label><input type="checkbox" name="local_treino" value="Academia" /> Academia</label>
+          <label><input type="checkbox" name="local_treino" value="Box de CrossFit ou Treinamento funcional" /> Box de CrossFit ou Treinamento funcional</label>
+          <label><input type="checkbox" name="local_treino" value="Academia do condomínio ou do prédio que moro" /> Academia do condomínio ou do prédio que moro</label>
         </div>
       </div>
       <div class="campo escondido" id="bloco-equipamentos-casa">
@@ -534,10 +535,11 @@ if (!token) {
 // e essa resposta digitada é o nome usado de fato no PDF e na pasta do Drive.
 if (nomeOculto) document.getElementById("nome_completo").value = nomeOculto;
 
-// Estilo visual do radio selecionado - delegado no document (funciona tambem pras
-// perguntas do PAR-Q, que sao criadas dinamicamente depois desse script rodar).
+// Estilo visual do radio/checkbox selecionado - delegado no document (funciona
+// tambem pras perguntas do PAR-Q, que sao criadas dinamicamente depois desse script
+// rodar).
 document.addEventListener("change", (e) => {
-  if (e.target.matches('.opcoes input[type="radio"]')) {
+  if (e.target.matches('.opcoes input[type="radio"], .opcoes input[type="checkbox"]')) {
     e.target.closest(".opcoes").querySelectorAll("label").forEach((label) => {
       label.classList.toggle("selecionada", label.querySelector("input").checked);
     });
@@ -577,9 +579,13 @@ document.querySelectorAll('input[name="parq_6"]').forEach((r) =>
     document.getElementById("bloco-detalhe-medicacao-parq").classList.toggle("escondido", e.target.value !== "Sim");
   }),
 );
+// Agora e checkbox (pode marcar mais de um local) - o campo de equipamentos aparece
+// se "Em casa (tenho material...)" estiver entre os marcados, independente do resto.
 document.querySelectorAll('input[name="local_treino"]').forEach((r) =>
-  r.addEventListener("change", (e) => {
-    const mostrarEquipamentos = e.target.value === "Em casa (tenho material: elásticos, halteres, barras, etc)";
+  r.addEventListener("change", () => {
+    const mostrarEquipamentos = document.querySelector(
+      'input[name="local_treino"][value="Em casa (tenho material: elásticos, halteres, barras, etc)"]',
+    ).checked;
     document.getElementById("bloco-equipamentos-casa").classList.toggle("escondido", !mostrarEquipamentos);
   }),
 );
@@ -775,6 +781,11 @@ function valorGrupo(nome) {
   return marcado ? marcado.value : "";
 }
 
+// Pra grupos de checkbox (selecao multipla) - devolve todos os valores marcados.
+function valoresGrupo(nome) {
+  return Array.from(document.querySelectorAll(`input[name="${nome}"]:checked`)).map((i) => i.value);
+}
+
 function coletarRespostas() {
   return [
     ["Qual seu nome completo?", document.getElementById("nome_completo").value],
@@ -790,7 +801,7 @@ function coletarRespostas() {
     ["Há quanto tempo pratica atividade física", document.getElementById("tempo_atividade").value],
     ["Quantos dias por semana você pode treinar?", document.getElementById("dias_treino").value],
     ["Quantos minutos por sessão você tem disponível?", document.getElementById("min_treino").value],
-    ["Onde você vai treinar?", valorGrupo("local_treino")],
+    ["Onde você vai treinar?", valoresGrupo("local_treino").join(", ")],
     ["Equipamentos disponíveis para treinar em casa", document.getElementById("equipamentos_casa").value],
     ["Você tem ou já teve alguma lesão, dor ou cirurgia relevante?", valorGrupo("lesao")],
     ["Detalhe da lesão", document.getElementById("detalhe_lesao").value],
@@ -844,6 +855,12 @@ document.getElementById("form-avaliacao").addEventListener("submit", async (even
       const fotoPosterior = document.getElementById("foto_posterior").files[0];
       if (!fotoFrontal || !fotoLateral || !fotoPosterior) {
         throw new Error("Envie as 3 fotos posturais (frontal, lateral e posterior) antes de continuar.");
+      }
+
+      // "local_treino" agora e checkbox (selecao multipla) - sem "required" nativo do
+      // navegador, precisa validar manualmente que pelo menos 1 opcao foi marcada.
+      if (valoresGrupo("local_treino").length === 0) {
+        throw new Error("Selecione pelo menos um local onde você vai treinar.");
       }
 
       mostrarMensagem("Enviando fotos, aguarde…", "progresso");
