@@ -824,12 +824,47 @@ function extensao(arquivo) {
 
 const TAMANHO_MAX = 15 * 1024 * 1024; // 15MB
 
-async function subirArquivo(arquivo, caminho) {
-  if (arquivo.size > TAMANHO_MAX) {
-    throw new Error(`Arquivo "${arquivo.name}" é maior que 15MB. Envie um arquivo menor.`);
+// Celular moderno tira foto de 4-8MB facilmente - sem compressao, uma avaliacao com
+// varias fotos/exames grandes (caso real: aluna com ~40MB em 7 arquivos, 12/08/2026)
+// estourava o limite de memoria da Edge Function e travava pra sempre, sem erro
+// nenhum. Comprimindo aqui, ANTES do upload, isso nunca mais acontece, independente
+// do tamanho da foto original - o aluno nao precisa fazer nada diferente.
+// { imageOrientation: "from-image" } garante que a orientacao EXIF (foto de lado por
+// engano) seja aplicada nos pixels do canvas - sem isso, o canvas perde o EXIF e a
+// foto sairia sempre "deitada" quando o celular salva em orientacao rotacionada.
+async function comprimirSeImagem(arquivo, larguraMax = 1600, qualidade = 0.82) {
+  if (!arquivo.type.startsWith("image/") || arquivo.size <= 500 * 1024) return arquivo;
+  try {
+    const bitmap = await createImageBitmap(arquivo, { imageOrientation: "from-image" });
+    let largura = bitmap.width;
+    let altura = bitmap.height;
+    if (Math.max(largura, altura) > larguraMax) {
+      const escala = larguraMax / Math.max(largura, altura);
+      largura = Math.round(largura * escala);
+      altura = Math.round(altura * escala);
+    }
+    const canvas = document.createElement("canvas");
+    canvas.width = largura;
+    canvas.height = altura;
+    canvas.getContext("2d").drawImage(bitmap, 0, 0, largura, altura);
+    const blob = await new Promise((resolve) => canvas.toBlob(resolve, "image/jpeg", qualidade));
+    if (!blob || blob.size >= arquivo.size) return arquivo; // compressao nao ajudou - mantem original
+    const nomeBase = arquivo.name.replace(/\.[^.]+$/, "");
+    return new File([blob], `${nomeBase}.jpg`, { type: "image/jpeg" });
+  } catch (erro) {
+    console.error("Falha ao comprimir imagem, enviando arquivo original:", erro);
+    return arquivo;
   }
-  const { error } = await supabase.storage.from("uploads").upload(caminho, arquivo, { upsert: true });
-  if (error) throw new Error(`Falha ao enviar "${arquivo.name}": ${error.message}`);
+}
+
+async function subirArquivo(arquivoOriginal, caminhoBase) {
+  if (arquivoOriginal.size > TAMANHO_MAX) {
+    throw new Error(`Arquivo "${arquivoOriginal.name}" é maior que 15MB. Envie um arquivo menor.`);
+  }
+  const arquivo = await comprimirSeImagem(arquivoOriginal);
+  const caminho = `${caminhoBase}.${extensao(arquivo)}`;
+  const { error } = await supabase.storage.from("uploads").upload(caminho, arquivo, { upsert: true, contentType: arquivo.type || undefined });
+  if (error) throw new Error(`Falha ao enviar "${arquivoOriginal.name}": ${error.message}`);
   return caminho;
 }
 
@@ -869,14 +904,14 @@ document.getElementById("form-avaliacao").addEventListener("submit", async (even
       const arquivosExames = Array.from(document.getElementById("exames").files ?? []);
 
       const [caminhoFrontal, caminhoLateral, caminhoPosterior] = await Promise.all([
-        subirArquivo(fotoFrontal, `${token}/frontal.${extensao(fotoFrontal)}`),
-        subirArquivo(fotoLateral, `${token}/lateral.${extensao(fotoLateral)}`),
-        subirArquivo(fotoPosterior, `${token}/posterior.${extensao(fotoPosterior)}`),
+        subirArquivo(fotoFrontal, `${token}/frontal`),
+        subirArquivo(fotoLateral, `${token}/lateral`),
+        subirArquivo(fotoPosterior, `${token}/posterior`),
       ]);
 
       const caminhosExames = [];
       for (let i = 0; i < arquivosExames.length; i++) {
-        caminhosExames.push(await subirArquivo(arquivosExames[i], `${token}/exame_${i + 1}.${extensao(arquivosExames[i])}`));
+        caminhosExames.push(await subirArquivo(arquivosExames[i], `${token}/exame_${i + 1}`));
       }
 
       clearInterval(progressoTimer);
