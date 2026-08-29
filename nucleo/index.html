@@ -426,17 +426,39 @@ footer{
   letter-spacing:.04em;
 }
 footer b{color:#9fe8c6;font-weight:500}
+
+/* estudo de ingles */
+.linha-en{margin-bottom:12px;font-size:13.5px;line-height:1.55}
+.linha-en .en{color:var(--ink);display:block}
+.linha-en .pt{color:var(--ink-3);font-size:12.5px;display:block;font-style:italic;margin-top:1px}
+.nova{border-bottom:2px solid var(--ambar);padding-bottom:1px}
+.voc{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px dashed var(--line)}
+.voc:last-child{border-bottom:0}
+.voc .som{flex:0 0 22px;height:22px;border-radius:6px;background:var(--verde-tint);color:var(--verde-esc);display:grid;place-items:center;font-size:10px;margin-top:2px}
+.voc b{font-family:"Familjen Grotesk",sans-serif;font-size:13.5px;display:block}
+.voc small{font-size:11.5px;color:var(--ink-3);line-height:1.4;display:block;font-style:italic}
+.voc .nivel{font-family:"IBM Plex Mono",monospace;font-size:9.5px;color:var(--ambar);letter-spacing:.08em;margin-left:auto;flex:0 0 auto}
+.estat{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-bottom:14px}
+.estat > div{border:1px solid var(--line);border-radius:10px;padding:9px 11px;background:var(--surface)}
+.estat b{font-family:"Familjen Grotesk",sans-serif;font-size:20px;display:block;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.estat span{font-family:"IBM Plex Mono",monospace;font-size:9.5px;color:var(--ink-3);letter-spacing:.07em;text-transform:uppercase}
+.barra{height:5px;border-radius:3px;background:var(--surface-2);overflow:hidden;margin-top:7px}
+.barra i{display:block;height:100%;background:var(--verde);border-radius:3px}
+.dif{font-family:"IBM Plex Mono",monospace;font-size:12px;line-height:1.9}
+.dif .certo{color:var(--verde-esc)}
+.dif .falhou{color:var(--alerta);text-decoration:underline wavy var(--alerta);text-underline-offset:3px}
 </style>
 
 <header class="capa">
   <div class="wrap">
-    <span class="selo">HumanCore · proposta de produto</span>
+    <span class="selo">HumanCore · sistema pessoal de estudo</span>
     <h1>Núcleo:<br>captura, entende<br>e <em>faz virar ação</em>.</h1>
-    <p class="linha-fina">Um sistema que grava reuniões, aulas e leituras, transcreve, estrutura o conteúdo e devolve checklist com prazo — em vez de mais um arquivo que ninguém reabre.</p>
+    <p class="linha-fina">Grava as aulas e reuniões que você assiste, transcreve, estrutura o conteúdo, transforma livros em protocolo e ainda usa o material em inglês para você aprender o idioma. Uso pessoal, nada publicado.</p>
     <div class="capa-meta">
-      <span>Escopo · <b>Plano + protótipo</b></span>
-      <span>Base · <b>Repositório HumanCore CIT</b></span>
-      <span>Estimativa · <b>10 a 12 semanas</b></span>
+      <span>Uso · <b>só você</b></span>
+      <span>Escopo · <b>plano + protótipo</b></span>
+      <span>Estimativa · <b>9 a 11 semanas</b></span>
+      <span>Usável a partir da · <b>semana 4</b></span>
     </div>
   </div>
 </header>
@@ -445,29 +467,34 @@ footer b{color:#9fe8c6;font-weight:500}
 
 <section>
   <div class="wrap">
-    <p class="eyebrow">01 · O pedido, destrinchado</p>
-    <h2>São quatro produtos, não um</h2>
-    <p class="lede prosa">O “Plaud” que você descreveu junta quatro coisas que normalmente vivem separadas. Vale enxergar assim porque cada uma tem custo, risco e prazo diferentes — e três delas já geram valor sozinhas.</p>
+    <p class="eyebrow">01 · O que o sistema faz</p>
+    <h2>Cinco funções, um caminho só</h2>
+    <p class="lede prosa">Como é para você estudar e aplicar — não para vender e não para os alunos — o sistema fica bem menor: sem contas, sem times, sem loja de aplicativo. Sobra o que interessa.</p>
     <div class="grade g4" style="margin-top:24px">
       <div class="cartao">
         <div class="icone">01</div>
         <h4>Captura</h4>
-        <p>Microfone do celular, bot em reuniões, live do YouTube, arquivo enviado. O objetivo é sempre o mesmo: virar áudio íntegro com carimbo de tempo.</p>
+        <p>Microfone do celular na aula presencial, áudio do computador na aula online, link do YouTube, arquivo que você já tem. Tudo vira áudio com marcação de tempo.</p>
       </div>
       <div class="cartao">
         <div class="icone">02</div>
         <h4>Compreensão</h4>
-        <p>Transcrição com separação de quem falou, resumo em camadas, decisões, dúvidas em aberto e os trechos que sustentam cada afirmação.</p>
+        <p>Transcrição, resumo em camadas, o que ficou decidido e o que ficou em aberto — cada afirmação apontando o minuto que a originou.</p>
       </div>
       <div class="cartao ambar">
         <div class="icone">03</div>
         <h4>Execução</h4>
-        <p>A parte que quase todo app pula: transformar conteúdo em tarefas com responsável, prazo e revisão. É aqui que o sistema se paga.</p>
+        <p>A parte que faz o sistema valer: o conteúdo vira tarefa com prazo e critério de feito, mais revisão espaçada para não esquecer em duas semanas.</p>
       </div>
       <div class="cartao">
         <div class="icone">04</div>
         <h4>Acervo</h4>
-        <p>Livros, artigos científicos, PDFs e temas a estudar num só lugar, com busca por significado e conexão entre fontes.</p>
+        <p>Livros, artigos científicos, PDFs e temas a estudar num lugar só, com busca por significado e cruzamento entre as fontes.</p>
+      </div>
+      <div class="cartao">
+        <div class="icone">05</div>
+        <h4>Inglês</h4>
+        <p>Todo material em inglês que você já estuda vira aula de idioma: vocabulário da sua área, com a voz original, revisão e treino de fala.</p>
       </div>
     </div>
   </div>
@@ -475,70 +502,43 @@ footer b{color:#9fe8c6;font-weight:500}
 
 <section>
   <div class="wrap">
-    <p class="eyebrow">02 · Resposta direta</p>
-    <h2>Dá para fazer — com três ressalvas honestas</h2>
+    <p class="eyebrow">02 · O que mudou com suas respostas</p>
+    <h2>Três decisões que encolheram o projeto</h2>
     <div class="prosa">
-      <p>Tecnicamente, tudo que você listou é construível hoje com serviços prontos. O que muda de item para item é <b>como</b> a captura acontece e <b>o que o contrato da plataforma permite</b>. Prefiro deixar isso claro agora do que descobrir na semana 8.</p>
+      <p>Tirar o bot de reunião e o uso por terceiros cortou justamente as partes mais caras, mais frágeis e mais burocráticas do plano anterior. O que sobrou é mais rápido de construir e mais barato de manter.</p>
     </div>
-    <div class="tabela-wrap" style="margin:22px 0 18px">
+    <div class="grade g2" style="margin:22px 0 20px">
+      <div class="cartao">
+        <h4>Sem bot na reunião</h4>
+        <p>Some a integração mais cara e a que mais quebra. No lugar: você grava o áudio do próprio computador, ou usa a gravação local que o Zoom e o Meet já fazem, e joga o arquivo no sistema. Menos automático, muito mais simples — e sem custo por hora de reunião.</p>
+      </div>
+      <div class="cartao">
+        <h4>Uso pessoal, nada publicado</h4>
+        <p>Sem contas, sem permissões, sem termos de uso, sem tratar dado de aluno. O material fica no seu acervo privado e é usado por você para estudar — que é o cenário mais tranquilo tanto do lado legal quanto do lado técnico.</p>
+      </div>
+      <div class="cartao">
+        <h4>Inglês entra no escopo</h4>
+        <p>E entra quase de graça: metade do que o módulo precisa já é subproduto da transcrição. A parte específica de idioma é a segunda camada, que a gente constrói no fim.</p>
+      </div>
+      <div class="cartao ambar">
+        <h4>O que continua valendo</h4>
+        <p>Não quebrar proteção de vídeo de plataforma paga, e avisar quando houver outras pessoas na gravação. Fora isso, o terreno está limpo.</p>
+      </div>
+    </div>
+
+    <h3>De onde vem cada conteúdo</h3>
+    <div class="tabela-wrap">
       <table>
-        <thead>
-          <tr><th>Fonte</th><th>Como capturar</th><th>Viabilidade</th><th>O que observar</th></tr>
-        </thead>
+        <thead><tr><th>Fonte</th><th>Como entra</th><th>Viabilidade</th><th>Observação</th></tr></thead>
         <tbody>
-          <tr>
-            <td><b>Zoom</b></td>
-            <td>Bot que entra na sala identificado, ou gravação em nuvem + webhook oficial</td>
-            <td><span class="pill ok">Alta</span></td>
-            <td>Avisar os participantes; consentimento registrado</td>
-          </tr>
-          <tr>
-            <td><b>Google Meet</b></td>
-            <td>Mesmo bot. A API oficial de transcrição existe, mas só em planos Workspace mais altos</td>
-            <td><span class="pill ok">Alta</span></td>
-            <td>Sem Workspace pago, o bot é o único caminho estável</td>
-          </tr>
-          <tr>
-            <td><b>Teams e outras</b></td>
-            <td>Um único provedor de bot cobre as três principais com a mesma integração</td>
-            <td><span class="pill ok">Alta</span></td>
-            <td>Custo por hora de reunião</td>
-          </tr>
-          <tr>
-            <td><b>YouTube ao vivo</b></td>
-            <td>Captura do stream público ou legendas do próprio vídeo</td>
-            <td><span class="pill ok">Alta</span></td>
-            <td>Uso pessoal de estudo; nunca redistribuir o conteúdo</td>
-          </tr>
-          <tr>
-            <td><b>Aula presencial</b></td>
-            <td>App no celular gravando em segundo plano, com envio em pedaços</td>
-            <td><span class="pill ok">Alta</span></td>
-            <td>No iPhone, site salvo na tela inicial não grava com a tela apagada — precisa de app nativo</td>
-          </tr>
-          <tr>
-            <td><b>Plataformas de curso</b><br><span class="sub">Hotmart, Kiwify, Udemy…</span></td>
-            <td>Não há API. O caminho legítimo é capturar o áudio do seu próprio aparelho enquanto você assiste, ou enviar o material que você tem direito de baixar</td>
-            <td><span class="pill med">Parcial</span></td>
-            <td>Nada de quebrar proteção de vídeo. Guardar só transcrição e notas, nunca o vídeo</td>
-          </tr>
-          <tr>
-            <td><b>Baixar o vídeo do curso</b></td>
-            <td>—</td>
-            <td><span class="pill nao">Fora</span></td>
-            <td>Viola o contrato da plataforma e a lei de direitos autorais. Não vou construir isso</td>
-          </tr>
-          <tr>
-            <td><b>Arquivos, PDF, EPUB, artigo</b></td>
-            <td>Envio direto pela biblioteca</td>
-            <td><span class="pill ok">Alta</span></td>
-            <td>Nenhuma</td>
-          </tr>
+          <tr><td><b>Aula presencial</b></td><td>App no celular gravando em segundo plano</td><td><span class="pill ok">Alta</span></td><td>No iPhone precisa de app instalado, não serve site salvo na tela</td></tr>
+          <tr><td><b>Aula online e reunião</b><br><span class="sub">Zoom, Meet, Teams</span></td><td>Gravação do áudio do computador, ou a gravação local que a própria plataforma faz</td><td><span class="pill ok">Alta</span></td><td>Havendo outras pessoas, avise que está gravando</td></tr>
+          <tr><td><b>YouTube, ao vivo ou gravado</b></td><td>Colar o link; usa as legendas quando existem</td><td><span class="pill ok">Alta</span></td><td>Estudo pessoal, sem redistribuir</td></tr>
+          <tr><td><b>Plataformas de curso</b><br><span class="sub">Hotmart, Kiwify, Udemy…</span></td><td>Captura do áudio do seu aparelho enquanto você assiste ao curso que comprou</td><td><span class="pill ok">Alta</span></td><td>Guardar transcrição e notas, nunca o vídeo</td></tr>
+          <tr><td><b>Baixar o vídeo do curso</b></td><td>—</td><td><span class="pill nao">Fora</span></td><td>Quebrar a proteção do vídeo continua fora, mesmo em uso pessoal</td></tr>
+          <tr><td><b>Livros, artigos, PDFs</b></td><td>Envio direto na biblioteca</td><td><span class="pill ok">Alta</span></td><td>Vira framework executável pelo modelo de livros</td></tr>
         </tbody>
       </table>
-    </div>
-    <div class="nota prosa">
-      <strong>As três ressalvas:</strong> (1) conteúdo de plataforma paga entra por captura do seu próprio áudio, não por download; (2) gravar reunião com outras pessoas exige aviso e consentimento — a LGPD trata voz como dado pessoal, e se você cruzar isso com dados de saúde de aluno, vira dado sensível; (3) gravação em segundo plano no iPhone só funciona bem em app nativo, o que muda o prazo da fase de captura ao vivo.
     </div>
   </div>
 </section>
@@ -546,32 +546,32 @@ footer b{color:#9fe8c6;font-weight:500}
 <section>
   <div class="wrap">
     <p class="eyebrow">03 · Como funciona por dentro</p>
-    <h2>Um caminho só, várias entradas</h2>
-    <p class="lede prosa">Toda fonte — microfone, bot, link ou arquivo — desemboca no mesmo trilho. Isso mantém o sistema pequeno: adicionar uma plataforma nova é escrever só o primeiro passo.</p>
+    <h2>Um trilho, várias entradas</h2>
+    <p class="lede prosa">Toda fonte cai no mesmo caminho. Adicionar uma origem nova é escrever só o primeiro passo — o resto já está pronto.</p>
     <div class="fluxo" style="margin-top:24px" role="list">
-      <div class="fluxo-no" role="listitem"><span class="n">Entrada</span><strong>Captura</strong><span class="det">Mic, bot de reunião, link, upload</span></div>
+      <div class="fluxo-no" role="listitem"><span class="n">Entrada</span><strong>Captura</strong><span class="det">Celular, áudio do computador, link, arquivo</span></div>
       <div class="fluxo-seta" aria-hidden="true">→</div>
-      <div class="fluxo-no" role="listitem"><span class="n">Fila</span><strong>Processamento</strong><span class="det">Corte por partes, retomada de falha</span></div>
+      <div class="fluxo-no" role="listitem"><span class="n">Fila</span><strong>Processamento</strong><span class="det">Corte em partes, retomada de falha</span></div>
       <div class="fluxo-seta" aria-hidden="true">→</div>
-      <div class="fluxo-no" role="listitem"><span class="n">Áudio</span><strong>Transcrição</strong><span class="det">Português, quem falou, tempo</span></div>
+      <div class="fluxo-no" role="listitem"><span class="n">Áudio</span><strong>Transcrição</strong><span class="det">Português ou inglês, com tempo</span></div>
       <div class="fluxo-seta" aria-hidden="true">→</div>
-      <div class="fluxo-no" role="listitem"><span class="n">Sentido</span><strong>Estruturação</strong><span class="det">Resumo, decisões, ações, citação da fonte</span></div>
+      <div class="fluxo-no" role="listitem"><span class="n">Sentido</span><strong>Estruturação</strong><span class="det">Resumo, ações, origem de cada item</span></div>
       <div class="fluxo-seta" aria-hidden="true">→</div>
-      <div class="fluxo-no" role="listitem"><span class="n">Saída</span><strong>Ação e acervo</strong><span class="det">Tarefas, revisão, busca por significado</span></div>
+      <div class="fluxo-no" role="listitem"><span class="n">Saída</span><strong>Ação, acervo e idioma</strong><span class="det">Tarefas, revisão, vocabulário</span></div>
     </div>
 
-    <h3>Escolhas de tecnologia que eu recomendo</h3>
+    <h3>Escolhas de tecnologia</h3>
     <div class="tabela-wrap">
       <table>
         <thead><tr><th>Camada</th><th>Escolha</th><th>Por quê</th></tr></thead>
         <tbody>
-          <tr><td>Web</td><td>Next.js hospedado na Vercel</td><td>Mesmo time de front do formulário atual; publica em minutos</td></tr>
-          <tr><td>Banco e arquivos</td><td>Postgres gerenciado com busca vetorial embutida</td><td>Um serviço só resolve login, dados, arquivos e busca por significado</td></tr>
-          <tr><td>Fila</td><td>Serviço de tarefas em segundo plano com retomada</td><td>Transcrever 2h de aula não cabe numa requisição web</td></tr>
-          <tr><td>Transcrição</td><td>API especializada, com opção de rodar modelo próprio depois</td><td>Português nativo e separação de falantes sem treinar nada</td></tr>
-          <tr><td>Estruturação</td><td>Modelo de linguagem com saída em formato fixo</td><td>Saída validada por schema evita “resumo bonito e inútil”</td></tr>
-          <tr><td>Celular</td><td>App em React Native (Expo)</td><td>Única forma de gravar aula presencial com a tela apagada</td></tr>
-          <tr><td>Reuniões</td><td>Provedor único de bot para Zoom, Meet e Teams</td><td>Uma integração cobre as três; evita manutenção infinita</td></tr>
+          <tr><td>Web</td><td>Next.js em hospedagem gratuita</td><td>Mesmo tipo de front do formulário atual; no plano pessoal, custo zero</td></tr>
+          <tr><td>Banco e arquivos</td><td>Postgres gerenciado com busca vetorial</td><td>Um serviço só resolve dados, arquivos e busca por significado</td></tr>
+          <tr><td>Fila</td><td>Tarefas em segundo plano com retomada</td><td>Transcrever 2h de aula não cabe numa requisição web</td></tr>
+          <tr><td>Transcrição</td><td>API na nuvem, com opção de rodar no seu computador depois</td><td>Começa simples; se o volume crescer, o modelo local zera o custo por hora</td></tr>
+          <tr><td>Estruturação</td><td>Modelo de linguagem com saída em formato fixo</td><td>Schema validado evita resumo bonito e inútil</td></tr>
+          <tr><td>Celular</td><td>App em React Native, instalado direto no seu aparelho</td><td>Sem publicar em loja: é só para você, então é build pessoal</td></tr>
+          <tr><td>Acesso</td><td>Uma senha só, sem sistema de contas</td><td>Um usuário. Cada camada a menos é uma semana a menos</td></tr>
         </tbody>
       </table>
     </div>
@@ -582,20 +582,21 @@ footer b{color:#9fe8c6;font-weight:500}
   <div class="wrap">
     <p class="eyebrow">04 · Layout</p>
     <h2>Como ficaria na tela</h2>
-    <p class="lede prosa">Cinco telas, na ordem em que você usaria num dia normal. Clique nas abas — é a interface real proposta, com conteúdo de exemplo do seu contexto.</p>
+    <p class="lede prosa">Seis telas, na ordem de um dia normal de estudo. Clique nas abas — é a interface proposta, com conteúdo de exemplo do seu contexto.</p>
 
     <div class="palco" style="margin-top:26px">
       <div class="abas" role="tablist" aria-label="Telas do protótipo">
         <button class="aba" role="tab" id="t-captura" aria-controls="s-captura" aria-selected="true">Gravar</button>
-        <button class="aba" role="tab" id="t-reuniao" aria-controls="s-reuniao" aria-selected="false">Reunião processada</button>
+        <button class="aba" role="tab" id="t-reuniao" aria-controls="s-reuniao" aria-selected="false">Aula processada</button>
         <button class="aba" role="tab" id="t-livro" aria-controls="s-livro" aria-selected="false">Livro → framework</button>
+        <button class="aba" role="tab" id="t-ingles" aria-controls="s-ingles" aria-selected="false">Inglês</button>
         <button class="aba" role="tab" id="t-acervo" aria-controls="s-acervo" aria-selected="false">Biblioteca</button>
         <button class="aba" role="tab" id="t-acao" aria-controls="s-acao" aria-selected="false">Painel de ação</button>
       </div>
 
       <!-- TELA 1 -->
       <div class="tela" id="s-captura" role="tabpanel" aria-labelledby="t-captura">
-        <p class="legenda-tela">No celular, uma tela só: apertar e gravar. As outras fontes ficam a um toque, e o envio continua mesmo com o app fechado.</p>
+        <p class="legenda-tela">No celular, uma tela só: apertar e gravar. O envio continua mesmo com o app fechado, e as outras origens ficam a um toque.</p>
         <div class="telefone">
           <div class="tel-topo"><span>9:41</span><span>Núcleo</span><span>100%</span></div>
           <div class="tel-corpo">
@@ -614,10 +615,10 @@ footer b{color:#9fe8c6;font-weight:500}
               <button class="botao" style="flex:1">Marcar momento</button>
               <button class="botao fantasma" style="flex:1">Encerrar</button>
             </div>
-            <p class="sub" style="margin:20px 0 8px">Outras fontes</p>
+            <p class="sub" style="margin:20px 0 8px">Outras origens</p>
             <div class="fontes">
               <div class="fonte on"><small>Ao vivo</small><b>Microfone</b></div>
-              <div class="fonte"><small>Bot na sala</small><b>Zoom / Meet</b></div>
+              <div class="fonte"><small>Aula online</small><b>Áudio do PC</b></div>
               <div class="fonte"><small>Colar link</small><b>YouTube</b></div>
               <div class="fonte"><small>Enviar</small><b>Áudio, PDF</b></div>
             </div>
@@ -628,15 +629,16 @@ footer b{color:#9fe8c6;font-weight:500}
 
       <!-- TELA 2 -->
       <div class="tela" id="s-reuniao" role="tabpanel" aria-labelledby="t-reuniao" hidden>
-        <p class="legenda-tela">Transcrição à esquerda, entendimento à direita. Cada ação criada aponta para o minuto exato que a originou — você confere a fonte em um clique, sem precisar confiar cegamente no resumo.</p>
+        <p class="legenda-tela">Transcrição à esquerda, entendimento à direita. Cada ação aponta o minuto que a originou — você confere a fonte em um clique, sem precisar confiar no resumo.</p>
         <div class="janela">
-          <div class="janela-barra"><i></i><i></i><i></i><span class="janela-url">nucleo.humancore.app/sessao/mentoria-14</span></div>
+          <div class="janela-barra"><i></i><i></i><i></i><span class="janela-url">nucleo.local/sessao/mentoria-14</span></div>
           <div class="app">
             <aside class="lateral">
               <div class="marca"><span class="ponto"></span> Núcleo</div>
               <div class="nav-item ativo">Sessões <span class="tag">12</span></div>
               <div class="nav-item">Biblioteca <span class="tag">86</span></div>
               <div class="nav-item">Frameworks <span class="tag">7</span></div>
+              <div class="nav-item">Inglês <span class="tag">14</span></div>
               <div class="nav-item">Ações <span class="tag">23</span></div>
               <div class="nav-item">Revisar hoje <span class="tag">5</span></div>
             </aside>
@@ -644,7 +646,7 @@ footer b{color:#9fe8c6;font-weight:500}
               <div class="conteudo-topo">
                 <div>
                   <h5>Mentoria — periodização para hipertrofia</h5>
-                  <span class="sub">Zoom · 62 min · 3 participantes · processada em 4 min</span>
+                  <span class="sub">gravação local · 62 min · processada em 4 min</span>
                 </div>
                 <div style="display:flex;gap:6px"><button class="botao fantasma">Exportar</button><button class="botao">Criar ações</button></div>
               </div>
@@ -659,18 +661,18 @@ footer b{color:#9fe8c6;font-weight:500}
                 <div style="display:flex;flex-direction:column;gap:12px;min-width:0">
                   <div class="bloco">
                     <p class="bloco-titulo">Em uma frase</p>
-                    <p style="margin:0;font-size:13.5px;line-height:1.5;color:var(--ink-2)">Aumentar a frequência semanal por grupo muscular e ajustar o volume conforme os dias disponíveis do aluno, reavaliando a cada quatro semanas.</p>
+                    <p style="margin:0;font-size:13.5px;line-height:1.5;color:var(--ink-2)">Aumentar a frequência semanal por grupo muscular e ajustar o volume conforme os dias disponíveis, reavaliando a cada quatro semanas.</p>
                   </div>
                   <div class="bloco">
-                    <p class="bloco-titulo">Decisões</p>
-                    <div class="item"><span class="caixa feito">✓</span><span class="txt">Migrar alunos de 3 dias para full body<span class="meta">09:20 · confirmado</span></span></div>
-                    <div class="item"><span class="caixa feito">✓</span><span class="txt">Adotar reavaliação de carga a cada 4 semanas<span class="meta">21:47 · confirmado</span></span></div>
+                    <p class="bloco-titulo">O que ficou decidido</p>
+                    <div class="item"><span class="caixa feito">✓</span><span class="txt">Migrar quem treina 3 dias para full body<span class="meta">09:20 · confirmado</span></span></div>
+                    <div class="item"><span class="caixa feito">✓</span><span class="txt">Reavaliar carga a cada 4 semanas<span class="meta">21:47 · confirmado</span></span></div>
                   </div>
                   <div class="bloco">
                     <p class="bloco-titulo">Ações geradas <span>3</span></p>
-                    <div class="item"><span class="caixa"></span><span class="txt">Refazer as fichas dos 6 alunos de 3 dias<span class="meta">até 05/09 · você</span></span></div>
-                    <div class="item"><span class="caixa"></span><span class="txt">Criar planilha de repetições em reserva<span class="meta">até 02/09 · você</span></span></div>
-                    <div class="item"><span class="caixa"></span><span class="txt">Perguntar sobre volume para iniciantes na próxima<span class="meta">em aberto</span></span></div>
+                    <div class="item"><span class="caixa"></span><span class="txt">Refazer as fichas de quem treina 3 dias<span class="meta">até 05/09</span></span></div>
+                    <div class="item"><span class="caixa"></span><span class="txt">Montar planilha de repetições em reserva<span class="meta">até 02/09</span></span></div>
+                    <div class="item"><span class="caixa"></span><span class="txt">Estudar volume para iniciantes<span class="meta">em aberto</span></span></div>
                   </div>
                 </div>
               </div>
@@ -681,15 +683,16 @@ footer b{color:#9fe8c6;font-weight:500}
 
       <!-- TELA 3 -->
       <div class="tela" id="s-livro" role="tabpanel" aria-labelledby="t-livro" hidden>
-        <p class="legenda-tela">O livro entra em PDF ou EPUB e sai como protocolo: princípios, passo a passo, erros comuns, métricas e um plano de 30 dias que já nasce como tarefa no seu painel.</p>
+        <p class="legenda-tela">O livro entra em PDF ou EPUB e sai como protocolo: princípios, passo a passo, erros comuns, métricas e um plano de 30 dias que já nasce como tarefa no painel.</p>
         <div class="janela">
-          <div class="janela-barra"><i></i><i></i><i></i><span class="janela-url">nucleo.humancore.app/framework/supertreinamento</span></div>
+          <div class="janela-barra"><i></i><i></i><i></i><span class="janela-url">nucleo.local/framework/supertreinamento</span></div>
           <div class="app">
             <aside class="lateral">
               <div class="marca"><span class="ponto"></span> Núcleo</div>
               <div class="nav-item">Sessões <span class="tag">12</span></div>
               <div class="nav-item">Biblioteca <span class="tag">86</span></div>
               <div class="nav-item ativo">Frameworks <span class="tag">7</span></div>
+              <div class="nav-item">Inglês <span class="tag">14</span></div>
               <div class="nav-item">Ações <span class="tag">23</span></div>
               <div class="nav-item">Revisar hoje <span class="tag">5</span></div>
             </aside>
@@ -730,7 +733,7 @@ footer b{color:#9fe8c6;font-weight:500}
                     <p class="bloco-titulo">Plano de 30 dias</p>
                     <div class="trilha">
                       <div class="marca-t"><span></span></div>
-                      <div class="passo"><h6>Semana 1 · Diagnóstico</h6><p>Testar padrões principais e registrar linha de base dos 6 alunos piloto.</p></div>
+                      <div class="passo"><h6>Semana 1 · Diagnóstico</h6><p>Testar padrões principais e registrar linha de base.</p></div>
                       <div class="marca-t"><span></span></div>
                       <div class="passo"><h6>Semana 2 · Acúmulo</h6><p>Subir volume mantendo intensidade; anotar repetições em reserva.</p></div>
                       <div class="marca-t"><span></span></div>
@@ -742,7 +745,7 @@ footer b{color:#9fe8c6;font-weight:500}
                   <div class="bloco">
                     <p class="bloco-titulo">Como saber se funcionou</p>
                     <div class="item"><span class="caixa"></span><span class="txt">Carga do agachamento subiu ≥ 5%<span class="meta">métrica principal</span></span></div>
-                    <div class="item"><span class="caixa"></span><span class="txt">Nenhum aluno com dor persistente &gt; 72h<span class="meta">segurança</span></span></div>
+                    <div class="item"><span class="caixa"></span><span class="txt">Nenhuma dor persistente acima de 72h<span class="meta">segurança</span></span></div>
                     <div class="item"><span class="caixa"></span><span class="txt">Adesão ≥ 85% das sessões<span class="meta">processo</span></span></div>
                   </div>
                 </div>
@@ -752,17 +755,78 @@ footer b{color:#9fe8c6;font-weight:500}
         </div>
       </div>
 
-      <!-- TELA 4 -->
-      <div class="tela" id="s-acervo" role="tabpanel" aria-labelledby="t-acervo" hidden>
-        <p class="legenda-tela">Tudo que entra no sistema mora aqui: aula, livro, artigo científico, PDF solto, tema a estudar. A busca entende o sentido da pergunta e responde citando as fontes.</p>
+      <!-- TELA 4 · INGLÊS -->
+      <div class="tela" id="s-ingles" role="tabpanel" aria-labelledby="t-ingles" hidden>
+        <p class="legenda-tela">A ideia central do módulo: você não estuda inglês à parte. Estuda o inglês do material que já precisa consumir — com a voz do professor original no cartão de revisão.</p>
         <div class="janela">
-          <div class="janela-barra"><i></i><i></i><i></i><span class="janela-url">nucleo.humancore.app/biblioteca</span></div>
+          <div class="janela-barra"><i></i><i></i><i></i><span class="janela-url">nucleo.local/ingles/hypertrophy-lecture</span></div>
+          <div class="app">
+            <aside class="lateral">
+              <div class="marca"><span class="ponto"></span> Núcleo</div>
+              <div class="nav-item">Sessões <span class="tag">12</span></div>
+              <div class="nav-item">Biblioteca <span class="tag">86</span></div>
+              <div class="nav-item">Frameworks <span class="tag">7</span></div>
+              <div class="nav-item ativo">Inglês <span class="tag">14</span></div>
+              <div class="nav-item">Ações <span class="tag">23</span></div>
+              <div class="nav-item">Revisar hoje <span class="tag">5</span></div>
+            </aside>
+            <div class="conteudo">
+              <div class="conteudo-topo">
+                <div><h5>Training Volume and Hypertrophy</h5><span class="sub">aula em inglês · 38 min · 21 itens novos</span></div>
+                <button class="botao">Treinar agora</button>
+              </div>
+              <div class="estat">
+                <div><b>1.840</b><span>palavras que você já reconhece</span></div>
+                <div><b>74%</b><span>desta aula sem legenda<div class="barra"><i style="width:74%"></i></div></span></div>
+                <div><b>12</b><span>dias seguidos</span></div>
+              </div>
+              <div class="duas">
+                <div class="bloco">
+                  <p class="bloco-titulo">Transcrição <span>tradução ao clicar</span></p>
+                  <div class="linha-en"><span class="en">The key variable here is <span class="nova">time under tension</span>, not the absolute load.</span><span class="pt">A variável principal aqui é o tempo sob tensão, não a carga absoluta.</span></div>
+                  <div class="linha-en"><span class="en">Most lifters <span class="nova">plateau</span> because they never adjust weekly volume.</span><span class="pt">A maioria estaciona porque nunca ajusta o volume semanal.</span></div>
+                  <div class="linha-en"><span class="en">You want to <span class="nova">taper off</span> in the final week before testing.</span><span class="pt">Você quer reduzir gradualmente na última semana antes do teste.</span></div>
+                  <div class="linha-en"><span class="en">Keep two reps <span class="nova">in reserve</span> on the main lift.</span><span class="pt">Mantenha duas repetições em reserva no exercício principal.</span></div>
+                  <p style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--ink-3);margin:12px 0 0">sublinhado em âmbar = acima do seu nível atual</p>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:12px;min-width:0">
+                  <div class="bloco">
+                    <p class="bloco-titulo">Vocabulário desta aula <span>da sua área</span></p>
+                    <div class="voc"><span class="som">▶</span><div><b>time under tension</b><small>“the key variable here is time under tension”</small></div><span class="nivel">B2</span></div>
+                    <div class="voc"><span class="som">▶</span><div><b>to plateau</b><small>“most lifters plateau because…”</small></div><span class="nivel">B2</span></div>
+                    <div class="voc"><span class="som">▶</span><div><b>to taper off</b><small>“you want to taper off in the final week”</small></div><span class="nivel">C1</span></div>
+                    <p style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--ink-3);margin:9px 0 0">o botão toca o trecho original, na voz do professor</p>
+                  </div>
+                  <div class="bloco">
+                    <p class="bloco-titulo">Treino de fala <span>shadowing</span></p>
+                    <p style="margin:0 0 8px;font-size:12.5px;color:var(--ink-2);font-family:'Familjen Grotesk',sans-serif">Você repetiu o trecho de 09:12. O sistema transcreveu sua fala e comparou palavra a palavra:</p>
+                    <p class="dif" style="margin:0"><span class="certo">The key variable here is</span> <span class="falhou">time under tension</span><span class="certo">, not the</span> <span class="falhou">absolute</span> <span class="certo">load.</span></p>
+                    <p style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--ink-3);margin:9px 0 0">2 de 11 palavras não saíram · repetir amanhã</p>
+                  </div>
+                  <div class="bloco">
+                    <p class="bloco-titulo">Caderno de erros <span>recorrentes</span></p>
+                    <div class="item"><span class="caixa"></span><span class="txt">Esquecer o “to” antes do verbo no infinitivo<span class="meta">7 ocorrências este mês</span></span></div>
+                    <div class="item"><span class="caixa"></span><span class="txt">Confundir <i>raise</i> com <i>rise</i><span class="meta">4 ocorrências</span></span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TELA 5 -->
+      <div class="tela" id="s-acervo" role="tabpanel" aria-labelledby="t-acervo" hidden>
+        <p class="legenda-tela">Tudo que entra mora aqui: aula, livro, artigo científico, PDF solto, tema a estudar. A busca entende o sentido da pergunta e responde citando as fontes.</p>
+        <div class="janela">
+          <div class="janela-barra"><i></i><i></i><i></i><span class="janela-url">nucleo.local/biblioteca</span></div>
           <div class="app">
             <aside class="lateral">
               <div class="marca"><span class="ponto"></span> Núcleo</div>
               <div class="nav-item">Sessões <span class="tag">12</span></div>
               <div class="nav-item ativo">Biblioteca <span class="tag">86</span></div>
               <div class="nav-item">Frameworks <span class="tag">7</span></div>
+              <div class="nav-item">Inglês <span class="tag">14</span></div>
               <div class="nav-item">Ações <span class="tag">23</span></div>
               <div class="nav-item">Revisar hoje <span class="tag">5</span></div>
             </aside>
@@ -773,14 +837,14 @@ footer b{color:#9fe8c6;font-weight:500}
               </div>
               <div class="busca">“o que a literatura diz sobre frequência semanal para hipertrofia?” <span style="color:var(--verde-esc)">— 7 fontes encontradas</span></div>
               <div class="chips" style="margin-bottom:14px">
-                <span class="chip on">Tudo</span><span class="chip">Aulas</span><span class="chip">Livros</span><span class="chip">Artigos</span><span class="chip">Reuniões</span><span class="chip">A estudar</span>
+                <span class="chip on">Tudo</span><span class="chip">Aulas</span><span class="chip">Livros</span><span class="chip">Artigos</span><span class="chip">Em inglês</span><span class="chip">A estudar</span>
               </div>
               <div class="acervo">
-                <div class="ficha"><span class="tipo art">Artigo · PubMed</span><h6>Resistance training frequency and hypertrophy</h6><p>Meta-análise · 2019 · resumo em PICO pronto</p></div>
+                <div class="ficha"><span class="tipo art">Artigo · PubMed</span><h6>Resistance training frequency and hypertrophy</h6><p>Meta-análise · 2019 · resumo estruturado pronto</p></div>
                 <div class="ficha"><span class="tipo">Livro</span><h6>Supertreinamento</h6><p>Framework gerado · plano de 30 dias ativo</p></div>
                 <div class="ficha"><span class="tipo">Aula</span><h6>Cinesiologia — Módulo 4</h6><p>47 min · presencial · 9 ações geradas</p></div>
                 <div class="ficha"><span class="tipo art">Artigo · DOI</span><h6>Autorregulação por RIR na prescrição</h6><p>Marcado para leitura crítica</p></div>
-                <div class="ficha"><span class="tipo">Reunião</span><h6>Mentoria — periodização</h6><p>Zoom · 62 min · 2 decisões</p></div>
+                <div class="ficha"><span class="tipo">Em inglês</span><h6>Training Volume and Hypertrophy</h6><p>38 min · 21 itens de vocabulário</p></div>
                 <div class="ficha"><span class="tipo">A estudar</span><h6>Avaliação postural quantitativa</h6><p>Tema aberto · 3 fontes reunidas</p></div>
                 <div class="ficha"><span class="tipo">Aula ao vivo</span><h6>Live: dor lombar e treino</h6><p>YouTube · transcrita · 21 destaques</p></div>
                 <div class="ficha"><span class="tipo">PDF</span><h6>Protocolo interno HumanCore</h6><p>Enviado por você · indexado</p></div>
@@ -790,17 +854,18 @@ footer b{color:#9fe8c6;font-weight:500}
         </div>
       </div>
 
-      <!-- TELA 5 -->
+      <!-- TELA 6 -->
       <div class="tela" id="s-acao" role="tabpanel" aria-labelledby="t-acao" hidden>
-        <p class="legenda-tela">O painel que fecha o ciclo. Toda tarefa carrega a origem — qual aula, qual minuto, qual página — e o que não avança em duas semanas aparece marcado, para você decidir se corta ou reprograma.</p>
+        <p class="legenda-tela">O painel que fecha o ciclo. Toda tarefa carrega a origem — qual aula, qual minuto, qual página — e o que não avança em duas semanas aparece marcado, para você cortar ou reprogramar.</p>
         <div class="janela">
-          <div class="janela-barra"><i></i><i></i><i></i><span class="janela-url">nucleo.humancore.app/acoes</span></div>
+          <div class="janela-barra"><i></i><i></i><i></i><span class="janela-url">nucleo.local/acoes</span></div>
           <div class="app">
             <aside class="lateral">
               <div class="marca"><span class="ponto"></span> Núcleo</div>
               <div class="nav-item">Sessões <span class="tag">12</span></div>
               <div class="nav-item">Biblioteca <span class="tag">86</span></div>
               <div class="nav-item">Frameworks <span class="tag">7</span></div>
+              <div class="nav-item">Inglês <span class="tag">14</span></div>
               <div class="nav-item ativo">Ações <span class="tag">23</span></div>
               <div class="nav-item">Revisar hoje <span class="tag">5</span></div>
             </aside>
@@ -812,25 +877,25 @@ footer b{color:#9fe8c6;font-weight:500}
               <div class="colunas">
                 <div class="coluna">
                   <p class="bloco-titulo">A fazer <span>9</span></p>
-                  <div class="tarefa"><p>Refazer fichas dos 6 alunos de 3 dias</p><div class="rodape"><span class="origem">Mentoria · 09:20</span><span>05/09</span></div></div>
+                  <div class="tarefa"><p>Refazer fichas de quem treina 3 dias</p><div class="rodape"><span class="origem">Mentoria · 09:20</span><span>05/09</span></div></div>
                   <div class="tarefa"><p>Montar planilha de repetições em reserva</p><div class="rodape"><span class="origem">Mentoria · 21:47</span><span>02/09</span></div></div>
                   <div class="tarefa"><p>Ler meta-análise de frequência semanal</p><div class="rodape"><span class="origem">Biblioteca</span><span>03/09</span></div></div>
                 </div>
                 <div class="coluna">
                   <p class="bloco-titulo">Em andamento <span>4</span></p>
-                  <div class="tarefa"><p>Semana 1 do bloco de força — coletar linha de base</p><div class="rodape"><span class="origem">Supertreinamento · p. 214</span><span>hoje</span></div></div>
-                  <div class="tarefa" style="border-color:var(--ambar)"><p>Aplicar teste postural novo nos alunos</p><div class="rodape"><span class="origem" style="color:var(--ambar)">parada há 16 dias</span><span>atrasada</span></div></div>
+                  <div class="tarefa"><p>Semana 1 do bloco de força — linha de base</p><div class="rodape"><span class="origem">Supertreinamento · p. 214</span><span>hoje</span></div></div>
+                  <div class="tarefa" style="border-color:var(--ambar)"><p>Assistir aula em inglês sem legenda</p><div class="rodape"><span class="origem" style="color:var(--ambar)">parada há 16 dias</span><span>atrasada</span></div></div>
                 </div>
                 <div class="coluna">
                   <p class="bloco-titulo">Feito <span>10</span></p>
                   <div class="tarefa" style="opacity:.62"><p>Definir intensidade do bloco em 85–92%</p><div class="rodape"><span class="origem">Supertreinamento</span><span>27/08</span></div></div>
-                  <div class="tarefa" style="opacity:.62"><p>Migrar alunos de 3 dias para full body</p><div class="rodape"><span class="origem">Mentoria</span><span>26/08</span></div></div>
+                  <div class="tarefa" style="opacity:.62"><p>Migrar quem treina 3 dias para full body</p><div class="rodape"><span class="origem">Mentoria</span><span>26/08</span></div></div>
                 </div>
               </div>
               <div class="bloco" style="margin-top:14px">
                 <p class="bloco-titulo">Revisar hoje <span>memória espaçada</span></p>
                 <div class="item"><span class="caixa"></span><span class="txt">Qual o volume semanal recomendado por grupo muscular em intermediários?<span class="meta">Mentoria · revisão 2 de 5</span></span></div>
-                <div class="item"><span class="caixa"></span><span class="txt">Quando reduzir a carga dentro de um bloco de força?<span class="meta">Supertreinamento · revisão 1 de 5</span></span></div>
+                <div class="item"><span class="caixa"></span><span class="txt">O que significa “to taper off”?<span class="meta">Inglês · revisão 1 de 5</span></span></div>
               </div>
             </div>
           </div>
@@ -842,81 +907,88 @@ footer b{color:#9fe8c6;font-weight:500}
 
 <section>
   <div class="wrap">
-    <p class="eyebrow">05 · Livro → framework</p>
-    <h2>O que garante que a saída seja útil</h2>
+    <p class="eyebrow">05 · Inglês</p>
+    <h2>Estudar o idioma do material que você já precisa ler</h2>
     <div class="prosa">
-      <p>Um livro de 600 páginas não cabe de uma vez no modelo, e pedir “resuma” devolve texto genérico. O caminho é outro: quebrar o livro em partes, extrair de cada uma só o que é <b>acionável</b>, juntar tudo e obrigar a saída a preencher um formato fixo. Se um campo não puder ser preenchido com base no texto, ele fica vazio — em vez de inventado.</p>
-      <p>Como não consegui ver as imagens dos prompts que você mencionou, este é o formato que eu proponho. Me mande as imagens e eu ajusto para o seu padrão.</p>
-      <p><a href="https://claude.ai/code/artifact/749f3124-4303-4517-b280-616f9559fc75"><b>O modelo completo está detalhado à parte</b></a> — os seis passos, o schema inteiro, as sete regras e os prompts prontos para copiar e testar hoje, sem esperar o sistema.</p>
+      <p>A maior parte do conteúdo bom da sua área está em inglês. Isso normalmente vira dois estudos separados — o da área e o do idioma — e o segundo quase sempre é abandonado, porque parece tempo tirado do primeiro.</p>
+      <p>O módulo resolve isso invertendo: <b>o material de estudo de inglês é o próprio conteúdo técnico que você já ia consumir</b>. Você assiste à aula de fisiologia em inglês uma vez e ela rende as duas coisas.</p>
     </div>
-    <pre style="margin-top:20px"><b>{</b>
-  <i>"tese"</i>: <i>"a ideia central em uma frase"</i>,
-  <i>"principios"</i>: [{ <i>"nome"</i>, <i>"explicacao"</i>, <i>"pagina"</i> }],
-  <i>"protocolos"</i>: [{
-      <i>"nome"</i>, <i>"quando_usar"</i>, <i>"passos"</i>: [], <i>"erros_comuns"</i>: [], <i>"fonte"</i>
-  }],
-  <i>"checklists"</i>: [{ <i>"contexto"</i>, <i>"itens"</i>: [] }],
-  <i>"metricas"</i>: [{ <i>"indicador"</i>, <i>"como_medir"</i>, <i>"meta"</i> }],
-  <i>"plano_30_dias"</i>: [{ <i>"semana"</i>, <i>"foco"</i>, <i>"tarefas"</i>: [] }],
-  <i>"perguntas_de_revisao"</i>: [],
-  <i>"o_que_o_livro_nao_responde"</i>: []
-<b>}</b></pre>
-    <p class="prosa" style="margin-top:18px">Dois detalhes fazem toda a diferença na qualidade: <b>toda afirmação carrega página ou minuto de origem</b> — é o que te deixa conferir em vez de confiar — e existe um campo para o que o material <b>não</b> cobre, que é o começo natural da sua próxima busca.</p>
+    <div class="grade g2" style="margin-top:22px">
+      <div class="cartao"><h4>Vocabulário da sua área, não genérico</h4><p>O sistema separa o que está acima do seu nível atual e ignora o que você já sabe. Sai “time under tension” e “to taper off”, não “the book is on the table”.</p></div>
+      <div class="cartao"><h4>Com a voz original</h4><p>Cada item guarda o recorte de áudio da frase onde apareceu. Você revisa ouvindo o professor dizendo aquilo, no ritmo real — não uma leitura sintética isolada.</p></div>
+      <div class="cartao"><h4>Seu nível, medido sozinho</h4><p>Nada de teste de nivelamento. O sistema estima o que você já reconhece pelo que você marca como conhecido e vai ajustando o corte sozinho.</p></div>
+      <div class="cartao"><h4>Treino de fala com correção objetiva</h4><p>Você repete um trecho, o sistema transcreve sua fala e compara palavra a palavra com o original. O que não saiu fica sublinhado e volta amanhã.</p></div>
+      <div class="cartao"><h4>Caderno de erros</h4><p>Você escreve o resumo da aula em inglês, o sistema corrige e guarda o padrão do erro. Erro que se repete vira item de revisão, em vez de correção esquecida.</p></div>
+      <div class="cartao"><h4>Mesma revisão espaçada</h4><p>Vocabulário de inglês e conteúdo técnico dividem o mesmo motor de revisão. Uma fila só por dia, não dois aplicativos competindo pelo seu tempo.</p></div>
+    </div>
+    <div class="nota prosa" style="margin-top:20px"><strong>Metade disso é subproduto:</strong> a transcrição em inglês, a tradução por frase e a extração de vocabulário saem quase de graça do que já vai existir na fase 1. O que exige trabalho próprio é o treino de fala, a correção de escrita e o corte por nível — por isso o módulo fica no fim do plano, mas você já colhe a primeira parte bem antes.</div>
   </div>
 </section>
 
 <section>
   <div class="wrap">
-    <p class="eyebrow">06 · Execução</p>
-    <h2>Cinco fases, valor em cada uma</h2>
-    <p class="lede prosa">A ordem não é técnica, é de risco: primeiro validamos que o <em>formato da saída</em> serve para você, com zero linha de código. Só depois automatizamos.</p>
+    <p class="eyebrow">06 · Livro → framework</p>
+    <h2>O modelo dos livros já está montado</h2>
+    <div class="prosa">
+      <p>Um livro de 600 páginas não cabe de uma vez no modelo, e pedir “resuma” devolve texto genérico. O caminho é outro: quebrar em partes, extrair de cada uma só o que é <b>acionável</b>, consolidar e obrigar a saída a preencher um formato fixo — com página e citação em cada item, e um campo para o que o livro <b>não</b> responde.</p>
+      <p><a href="https://claude.ai/code/artifact/749f3124-4303-4517-b280-616f9559fc75"><b>O modelo completo está detalhado à parte</b></a>: os seis passos, o schema inteiro, as sete regras e os prompts prontos para copiar. Dá para testar hoje, na mão, sem esperar o sistema.</p>
+      <p>Quando você me mandar as imagens dos prompts que já usa, comparo campo a campo e junto o que for melhor dos dois.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">07 · Execução</p>
+    <h2>Cinco fases, usável a partir da quarta semana</h2>
+    <p class="lede prosa">A ordem é de risco, não de dificuldade: primeiro validamos que o formato da saída serve para você, sem escrever código. Depois automatizamos o que você mais usa.</p>
     <div style="margin-top:26px">
       <div class="fase">
         <div class="fase-n">FASE 0<b>1 semana</b></div>
         <div>
           <h4>Piloto manual, sem código</h4>
-          <p>Você grava uma aula e uma reunião e me manda um livro. Eu rodo o processo à mão e te entrego as saídas. O objetivo é achar o formato certo antes de construir qualquer coisa em cima do errado.</p>
-          <p class="entrega">Entrega: 3 saídas reais (aula, reunião, livro) + formato aprovado por você</p>
+          <p>Você grava uma aula, me manda um livro e uma aula em inglês. Eu rodo o processo à mão e devolvo as saídas. Serve para achar o formato certo antes de construir em cima do errado.</p>
+          <p class="entrega">Entrega: 3 saídas reais + formato aprovado por você</p>
         </div>
       </div>
       <div class="fase">
-        <div class="fase-n">FASE 1<b>3 a 4 semanas</b></div>
+        <div class="fase-n">FASE 1<b>2 a 3 semanas</b></div>
         <div>
-          <h4>O produto base na web</h4>
-          <p>Login, envio de áudio, vídeo e PDF, transcrição automática, estruturação, biblioteca com busca e exportação. Já resolve tudo que está gravado ou baixado — a maior parte do seu volume.</p>
-          <p class="entrega">Entrega: app publicado, funcionando com conteúdo seu de verdade</p>
+          <h4>A base na web</h4>
+          <p>Envio de áudio, vídeo e PDF, transcrição automática, estruturação, biblioteca com busca por significado e exportação em Markdown. Já resolve tudo que estiver gravado — e já produz o glossário de inglês das aulas nesse idioma.</p>
+          <p class="entrega">Entrega: sistema no ar, funcionando com conteúdo seu de verdade</p>
         </div>
       </div>
       <div class="fase">
-        <div class="fase-n">FASE 2<b>3 semanas</b></div>
+        <div class="fase-n">FASE 2<b>2 semanas</b></div>
         <div>
           <h4>Captura ao vivo</h4>
-          <p>App de celular com gravação em segundo plano para aula presencial, bot de reunião para Zoom, Meet e Teams com aviso de gravação, e captura de live do YouTube por link.</p>
-          <p class="entrega">Entrega: app nas lojas em teste + bot entrando nas suas reuniões</p>
+          <p>App instalado no seu celular gravando em segundo plano na aula presencial, captura do áudio do computador para aula online e reunião, e transcrição por link do YouTube. Sem loja de aplicativo, sem bot.</p>
+          <p class="entrega">Entrega: gravar de qualquer origem em dois toques</p>
         </div>
       </div>
       <div class="fase">
         <div class="fase-n">FASE 3<b>2 semanas</b></div>
         <div>
-          <h4>Livro vira framework</h4>
-          <p>Leitura de PDF e EPUB, extração em partes, montagem do framework no formato acima, com página de origem em cada item e exportação para Notion ou Markdown.</p>
-          <p class="entrega">Entrega: seus livros de referência convertidos em protocolos</p>
+          <h4>Livros viram framework</h4>
+          <p>Leitura de PDF e EPUB, os seis passos do modelo já definido, página de origem em cada item e exportação. É a fase mais previsível, porque o modelo já está pronto.</p>
+          <p class="entrega">Entrega: seus livros de referência convertidos em protocolo</p>
         </div>
       </div>
       <div class="fase">
-        <div class="fase-n">FASE 4<b>2 semanas</b></div>
+        <div class="fase-n">FASE 4<b>1 a 2 semanas</b></div>
         <div>
-          <h4>Camada de execução</h4>
-          <p>Checklists viram tarefas com prazo, sincronizam com a agenda, cobram no WhatsApp o que está parado e trazem de volta as perguntas de revisão em intervalos crescentes.</p>
-          <p class="entrega">Entrega: painel de ação + lembretes + revisão espaçada</p>
+          <h4>Execução e memória</h4>
+          <p>Checklists viram tarefas com prazo, sincronizam com sua agenda e voltam em revisão espaçada. É a fase que impede o sistema de virar um depósito de transcrições.</p>
+          <p class="entrega">Entrega: painel de ação + fila diária de revisão</p>
         </div>
       </div>
       <div class="fase">
-        <div class="fase-n">EXTRA<b>a decidir</b></div>
+        <div class="fase-n">FASE 5<b>2 semanas</b></div>
         <div>
-          <h4>Reaproveitamento do conteúdo</h4>
-          <p>A partir do mesmo acervo: roteiro de vídeo, post e material de apoio para aluno. Você já produz conteúdo — cada aula assistida vira insumo em vez de arquivo morto.</p>
-          <p class="entrega">Entrega: gerador de roteiro e de material didático a partir de qualquer item</p>
+          <h4>Estúdio de inglês</h4>
+          <p>Sobre o glossário da fase 1: corte por nível, cartões com o áudio original, treino de fala com comparação palavra a palavra, correção de escrita e caderno de erros.</p>
+          <p class="entrega">Entrega: aula em inglês rendendo conteúdo e idioma na mesma sessão</p>
         </div>
       </div>
     </div>
@@ -925,65 +997,65 @@ footer b{color:#9fe8c6;font-weight:500}
 
 <section>
   <div class="wrap">
-    <p class="eyebrow">07 · Custo</p>
-    <h2>Quanto custa rodar isso por mês</h2>
-    <p class="lede prosa">Mexa nos controles com o seu volume real. São valores de ordem de grandeza para dimensionar a decisão — os preços exatos precisam ser confirmados nas tabelas oficiais no momento da contratação.</p>
+    <p class="eyebrow">08 · Custo</p>
+    <h2>Quanto custa manter isso rodando</h2>
+    <p class="lede prosa">Sem bot e sem usuários, o custo despenca. Mexa nos controles com seu volume real — são valores de ordem de grandeza, a confirmar nas tabelas vigentes na hora de contratar.</p>
     <div class="calc" style="margin-top:24px">
       <div>
         <div class="campo-calc">
-          <label for="horas">Horas de conteúdo por mês <b><span id="v-horas">40</span> h</b></label>
-          <input type="range" id="horas" min="5" max="160" step="5" value="40">
+          <label for="horas">Horas de aula e reunião por mês <b><span id="v-horas">30</span> h</b></label>
+          <input type="range" id="horas" min="5" max="120" step="5" value="30">
         </div>
         <div class="campo-calc">
-          <label for="pct">Quanto disso é reunião com bot <b><span id="v-pct">30</span>%</b></label>
-          <input type="range" id="pct" min="0" max="100" step="5" value="30">
+          <label for="livros">Livros processados por mês <b><span id="v-livros">2</span></b></label>
+          <input type="range" id="livros" min="0" max="10" step="1" value="2">
         </div>
         <div class="campo-calc">
-          <label>Motor de transcrição</label>
+          <label>Onde a transcrição roda</label>
           <div class="opcoes-calc" id="motor">
-            <button type="button" data-v="0.26" aria-pressed="true">API premium</button>
-            <button type="button" data-v="0.15" aria-pressed="false">API econômica</button>
-            <button type="button" data-v="0.05" aria-pressed="false">Modelo próprio</button>
+            <button type="button" data-v="0.26" aria-pressed="true">Nuvem, melhor qualidade</button>
+            <button type="button" data-v="0.15" aria-pressed="false">Nuvem, econômica</button>
+            <button type="button" data-v="0.02" aria-pressed="false">Seu computador</button>
           </div>
         </div>
-        <p style="font-size:13.5px;color:var(--ink-3);margin:14px 0 0;max-width:52ch">A infraestrutura base — hospedagem, banco, fila e armazenamento — entra fixa em torno de US$ 30/mês e só cresce depois de centenas de horas acumuladas.</p>
+        <p style="font-size:13.5px;color:var(--ink-3);margin:14px 0 0;max-width:52ch">A infraestrutura de uso pessoal cabe nos planos gratuitos ou mais baratos de hospedagem e banco: cerca de US$ 5 por mês, subindo só depois de centenas de horas guardadas. Rodando a transcrição no seu computador, o custo por hora quase some — em troca de deixar a máquina trabalhando.</p>
       </div>
       <div class="resultado">
         <span class="rot">Custo mensal estimado</span>
-        <span class="valor" id="v-total">US$ 66</span>
-        <span class="brl" id="v-brl">≈ R$ 363 · câmbio ilustrativo 5,50</span>
+        <span class="valor" id="v-total">US$ 20</span>
+        <span class="brl" id="v-brl">≈ R$ 110 · câmbio ilustrativo 5,50</span>
         <div class="quebra">
-          <div><span>Transcrição</span><span id="q-stt">US$ 10</span></div>
-          <div><span>Estruturação</span><span id="q-llm">US$ 6</span></div>
-          <div><span>Bot de reunião</span><span id="q-bot">US$ 20</span></div>
-          <div><span>Infra base</span><span id="q-infra">US$ 30</span></div>
+          <div><span>Transcrição</span><span id="q-stt">US$ 8</span></div>
+          <div><span>Estruturação</span><span id="q-llm">US$ 5</span></div>
+          <div><span>Livros</span><span id="q-livro">US$ 2</span></div>
+          <div><span>Infra base</span><span id="q-infra">US$ 5</span></div>
         </div>
       </div>
     </div>
-    <p class="prosa" style="margin-top:18px;font-size:15px;color:var(--ink-2)">Para efeito de comparação: o gravador físico que inspirou o pedido custa algumas centenas de dólares no aparelho, mais assinatura anual com limite de horas — e não faz nada dos frameworks, da biblioteca nem da camada de ação.</p>
+    <p class="prosa" style="margin-top:18px;font-size:15px;color:var(--ink-2)">Para comparar: o gravador físico que inspirou o pedido custa algumas centenas de dólares no aparelho, mais assinatura anual com teto de horas — e não faz framework de livro, nem biblioteca, nem painel de ação, nem inglês.</p>
   </div>
 </section>
 
 <section>
   <div class="wrap">
-    <p class="eyebrow">08 · Recomendações</p>
-    <h2>O que eu faria diferente do pedido original</h2>
+    <p class="eyebrow">09 · Recomendações</p>
+    <h2>O que eu faria no seu lugar</h2>
     <ul class="lista prosa" style="margin-top:20px">
-      <li><b>Começar pelo formato, não pela captura.</b> A captura é o problema mais chato e menos incerto. O que decide se você vai usar o sistema é a qualidade da saída — e isso dá para testar na primeira semana sem escrever código.</li>
-      <li><b>Cortar as plataformas de curso do escopo inicial.</b> É a fonte de maior atrito jurídico e menor retorno. Enquanto isso, capturar o áudio do seu próprio aparelho já resolve na prática, e sem construir nada frágil.</li>
-      <li><b>Toda afirmação com origem rastreável.</b> Resumo sem link para o minuto ou a página vira mais uma coisa em que você não confia inteiramente. Com a origem, o sistema pode até errar de vez em quando — você confere em cinco segundos.</li>
-      <li><b>Não recriar um gerenciador de tarefas.</b> Se você já vive no Google Agenda ou no Notion, as ações devem nascer lá. O Núcleo é a fonte, não o destino.</li>
-      <li><b>Aproveitar o que já existe aqui.</b> O formulário de avaliação da CIT já tem envio de arquivos, validação e identidade visual. A biblioteca reaproveita esse código quase inteiro — e o mesmo login serve para os dois.</li>
-      <li><b>Fechar o ciclo com o aluno.</b> O maior diferencial não é você anotar melhor: é a aula que você assistiu virar protocolo aplicado no treino de alguém, com métrica de acompanhamento. Isso nenhum app genérico faz, porque nenhum sabe que você é da área.</li>
-      <li><b>Um único acervo, várias saídas.</b> Mesmo conteúdo indexado, saídas diferentes: framework para você aplicar, roteiro para o seu canal, material de apoio para o aluno. Custo marginal quase zero depois da fase 1.</li>
+      <li><b>Começar pelo formato, não pela captura.</b> A captura é chata mas previsível. O que decide se você vai usar o sistema é a qualidade da saída — e isso dá para testar na primeira semana, sem código.</li>
+      <li><b>Guardar transcrição, descartar áudio.</b> Depois de processado, o áudio bruto só ocupa espaço — exceto os recortes curtos que o módulo de inglês usa. Apagar o resto em 30 dias mantém o custo baixo e a casa arrumada.</li>
+      <li><b>Uma tarefa por sessão, não dez.</b> A tentação é gerar 15 ações por aula. Duas semanas depois, são 90 ações abandonadas. Prefiro o sistema devolver no máximo três, e cobrar as três.</li>
+      <li><b>Assistir em inglês sem legenda primeiro, conferir depois.</b> Como a transcrição fica guardada, você pode tentar entender direto e usar o texto só para conferir. É o melhor uso do módulo — e é grátis, já existe na fase 1.</li>
+      <li><b>Não recriar gerenciador de tarefas.</b> Se você já vive no Google Agenda, as ações devem nascer lá. O Núcleo é a fonte, não o destino.</li>
+      <li><b>Exportar sempre em Markdown.</b> Uso pessoal e sistema feito sob medida combinam com um risco: ficar preso. Exportação simples resolve, e custa pouco de fazer desde o começo.</li>
+      <li><b>Aproveitar o que já existe aqui.</b> O formulário da CIT já tem envio de arquivo, validação e a identidade visual. A biblioteca reaproveita quase tudo isso.</li>
     </ul>
 
-    <h3>O que eu preciso decidir com você antes da fase 1</h3>
+    <h3>O que ainda preciso saber</h3>
     <div class="grade g2" style="margin-top:14px">
-      <div class="cartao"><h4>Só você ou uma equipe?</h4><p>Muda o modelo de contas, permissões e o custo. Uso individual simplifica bastante a fase 1.</p></div>
-      <div class="cartao"><h4>iPhone ou Android?</h4><p>Se for iPhone e gravação de aula presencial for prioridade, o app nativo precisa entrar antes — o prazo da fase 2 depende disso.</p></div>
-      <div class="cartao"><h4>Onde as tarefas devem viver?</h4><p>Dentro do Núcleo, no Google Agenda, no Notion ou no seu app de tarefas atual. Prefiro integrar ao que você já usa.</p></div>
-      <div class="cartao ambar"><h4>As imagens dos prompts</h4><p>Não chegaram na conversa. Com elas, o formato do framework de livros sai igual ao que você já validou.</p></div>
+      <div class="cartao"><h4>iPhone ou Android?</h4><p>Muda como o app da fase 2 é instalado no seu aparelho. No iPhone é um pouco mais burocrático — nada impeditivo, mas o prazo muda.</p></div>
+      <div class="cartao"><h4>Onde as tarefas devem viver?</h4><p>Dentro do Núcleo, no Google Agenda ou no Notion. Prefiro integrar ao que você já usa a inventar mais um lugar para você esquecer.</p></div>
+      <div class="cartao"><h4>Quanto tempo por dia para o inglês?</h4><p>15 minutos e 40 minutos geram módulos diferentes. O tamanho da fila diária sai daí.</p></div>
+      <div class="cartao ambar"><h4>As imagens dos prompts</h4><p>Continuam não tendo chegado na conversa. Com elas, o modelo de livros sai igual ao formato que você já validou.</p></div>
     </div>
   </div>
 </section>
@@ -992,8 +1064,8 @@ footer b{color:#9fe8c6;font-weight:500}
 
 <footer>
   <div class="wrap">
-    <b>Núcleo</b> · proposta para HumanCore CIT · plano, protótipo e estimativas<br>
-    Próximo passo sugerido: fase 0 — você me manda uma gravação e um livro, eu devolvo as três saídas reais em uma semana.
+    <b>Núcleo</b> · sistema pessoal de estudo · plano, protótipo e estimativas<br>
+    Próximo passo: fase 0 — você me manda uma gravação, um livro e uma aula em inglês, e eu devolvo as três saídas reais em uma semana.
   </div>
 </footer>
 
@@ -1021,27 +1093,27 @@ footer b{color:#9fe8c6;font-weight:500}
   });
 
   var horas = document.getElementById('horas');
-  var pct = document.getElementById('pct');
+  var livros = document.getElementById('livros');
   var motorBtns = Array.prototype.slice.call(document.querySelectorAll('#motor button'));
   var taxaSTT = 0.26;
-  var CAMBIO = 5.5, LLM_HORA = 0.15, BOT_HORA = 0.70, INFRA = 30;
+  var CAMBIO = 5.5, LLM_HORA = 0.15, POR_LIVRO = 1.2, INFRA = 5;
 
-  function usd(v){ return 'US$ ' + (v < 10 ? v.toFixed(1) : Math.round(v)); }
+  function usd(v){ return 'US$ ' + (v > 0 && v < 10 ? v.toFixed(1) : Math.round(v)); }
   function calcular(){
-    var h = Number(horas.value), p = Number(pct.value) / 100;
-    var stt = h * taxaSTT, llm = h * LLM_HORA, bot = h * p * BOT_HORA;
-    var total = stt + llm + bot + INFRA;
+    var h = Number(horas.value), l = Number(livros.value);
+    var stt = h * taxaSTT, llm = h * LLM_HORA, liv = l * POR_LIVRO;
+    var total = stt + llm + liv + INFRA;
     document.getElementById('v-horas').textContent = h;
-    document.getElementById('v-pct').textContent = Number(pct.value);
+    document.getElementById('v-livros').textContent = l;
     document.getElementById('q-stt').textContent = usd(stt);
     document.getElementById('q-llm').textContent = usd(llm);
-    document.getElementById('q-bot').textContent = usd(bot);
+    document.getElementById('q-livro').textContent = usd(liv);
     document.getElementById('q-infra').textContent = usd(INFRA);
     document.getElementById('v-total').textContent = 'US$ ' + Math.round(total);
     document.getElementById('v-brl').textContent = '≈ R$ ' + Math.round(total * CAMBIO).toLocaleString('pt-BR') + ' · câmbio ilustrativo 5,50';
   }
   horas.addEventListener('input', calcular);
-  pct.addEventListener('input', calcular);
+  livros.addEventListener('input', calcular);
   motorBtns.forEach(function(b){
     b.addEventListener('click', function(){
       motorBtns.forEach(function(o){ o.setAttribute('aria-pressed','false'); });
