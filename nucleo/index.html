@@ -1,0 +1,1062 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>HumanCore Núcleo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Literata:opsz,wght@7..72,400;7..72,500;7..72,600&display=swap">
+<style>
+:root{
+  --ground:#f3f7f4;
+  --surface:#ffffff;
+  --surface-2:#e9f0ec;
+  --ink:#101714;
+  --ink-2:#4c5b55;
+  --ink-3:#7c8b84;
+  --line:#dbe4df;
+  --line-forte:#c3d1ca;
+  --verde:#17a06b;
+  --verde-esc:#0d7a50;
+  --verde-tint:#e2f4eb;
+  --ambar:#a86c12;
+  --ambar-tint:#f9efdb;
+  --alerta:#b23a2b;
+  --alerta-tint:#fbe8e5;
+  --codigo-bg:#0f1613;
+  --codigo-ink:#d8e6df;
+  --sombra:0 1px 2px rgba(16,40,30,.05), 0 8px 28px rgba(16,40,30,.06);
+  --raio:14px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#080d0b;
+    --surface:#101815;
+    --surface-2:#17221d;
+    --ink:#e9f2ed;
+    --ink-2:#a2b2ab;
+    --ink-3:#7a8a83;
+    --line:#22302a;
+    --line-forte:#31423b;
+    --verde:#35d38f;
+    --verde-esc:#9fe8c6;
+    --verde-tint:#0f2b20;
+    --ambar:#e0a344;
+    --ambar-tint:#2b2113;
+    --alerta:#f08b7c;
+    --alerta-tint:#2e1714;
+    --codigo-bg:#0a100d;
+    --codigo-ink:#cfe2d9;
+    --sombra:0 1px 2px rgba(0,0,0,.4), 0 10px 30px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#080d0b;
+  --surface:#101815;
+  --surface-2:#17221d;
+  --ink:#e9f2ed;
+  --ink-2:#a2b2ab;
+  --ink-3:#7a8a83;
+  --line:#22302a;
+  --line-forte:#31423b;
+  --verde:#35d38f;
+  --verde-esc:#9fe8c6;
+  --verde-tint:#0f2b20;
+  --ambar:#e0a344;
+  --ambar-tint:#2b2113;
+  --alerta:#f08b7c;
+  --alerta-tint:#2e1714;
+  --codigo-bg:#0a100d;
+  --codigo-ink:#cfe2d9;
+  --sombra:0 1px 2px rgba(0,0,0,.4), 0 10px 30px rgba(0,0,0,.35);
+}
+
+*{box-sizing:border-box}
+body{
+  background:var(--ground);
+  color:var(--ink);
+  font-family:"Literata",Georgia,serif;
+  font-size:16.5px;
+  line-height:1.62;
+  margin:0;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4,.grotesk{font-family:"Familjen Grotesk","Segoe UI",system-ui,sans-serif;text-wrap:balance}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace}
+
+.wrap{max-width:1080px;margin:0 auto;padding:0 22px}
+.prosa{max-width:68ch}
+p{margin:0 0 1em}
+a{color:var(--verde-esc);text-decoration-thickness:1px;text-underline-offset:2px}
+:focus-visible{outline:2px solid var(--verde);outline-offset:2px;border-radius:4px}
+
+/* ---------- topo ---------- */
+.capa{
+  background:linear-gradient(168deg,#0a0f0d 0%,#0f1a15 58%,#0a0f0d 100%);
+  color:#eaf3ee;
+  padding:56px 0 46px;
+  border-bottom:1px solid #1c2b24;
+}
+.selo{
+  display:inline-flex;align-items:center;gap:8px;
+  border:1px solid rgba(159,232,198,.28);background:rgba(53,211,143,.08);
+  color:#9fe8c6;border-radius:999px;padding:5px 13px;
+  font-family:"IBM Plex Mono",monospace;font-size:11.5px;font-weight:500;
+  letter-spacing:.1em;text-transform:uppercase;
+}
+.capa h1{
+  font-size:clamp(38px,6.4vw,64px);line-height:1.02;letter-spacing:-.03em;
+  margin:20px 0 0;font-weight:700;color:#fff;
+}
+.capa h1 em{font-style:normal;color:#35d38f}
+.capa .linha-fina{
+  font-size:clamp(17px,2.2vw,20px);color:#a9bab2;max-width:56ch;margin:16px 0 0;
+}
+.capa-meta{
+  display:flex;flex-wrap:wrap;gap:8px 26px;margin-top:30px;
+  font-family:"IBM Plex Mono",monospace;font-size:12px;color:#7f9289;
+  letter-spacing:.04em;text-transform:uppercase;
+}
+.capa-meta b{color:#c6d6ce;font-weight:500}
+
+/* ---------- seções ---------- */
+section{padding:56px 0}
+section + section{border-top:1px solid var(--line)}
+.eyebrow{
+  font-family:"IBM Plex Mono",monospace;font-size:11.5px;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--verde-esc);
+  margin:0 0 10px;
+}
+h2{font-size:clamp(26px,3.6vw,34px);letter-spacing:-.02em;margin:0 0 14px;line-height:1.14}
+h3{font-size:20px;letter-spacing:-.01em;margin:34px 0 10px}
+h4{font-size:15px;letter-spacing:-.005em;margin:0 0 6px}
+.lede{font-size:18px;color:var(--ink-2)}
+
+/* ---------- cartões ---------- */
+.grade{display:grid;gap:14px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(216px,1fr))}
+.cartao{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--raio);
+  padding:20px;box-shadow:var(--sombra);
+}
+.cartao p{margin:0;font-size:15px;color:var(--ink-2);line-height:1.55}
+.cartao .icone{
+  width:32px;height:32px;border-radius:9px;background:var(--verde-tint);color:var(--verde-esc);
+  display:grid;place-items:center;margin-bottom:12px;
+  font-family:"IBM Plex Mono",monospace;font-size:13px;font-weight:600;
+}
+.cartao.ambar .icone{background:var(--ambar-tint);color:var(--ambar)}
+
+/* ---------- pipeline ---------- */
+.fluxo{
+  display:flex;gap:0;align-items:stretch;overflow-x:auto;padding:4px 2px 14px;
+  scrollbar-width:thin;
+}
+.fluxo-no{
+  flex:1 0 165px;background:var(--surface);border:1px solid var(--line);
+  border-radius:12px;padding:14px 14px 15px;box-shadow:var(--sombra);
+}
+.fluxo-seta{flex:0 0 26px;display:grid;place-items:center;color:var(--line-forte)}
+.fluxo-no .n{
+  font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--verde-esc);display:block;margin-bottom:6px;
+}
+.fluxo-no strong{font-family:"Familjen Grotesk",sans-serif;font-size:15px;display:block;margin-bottom:4px}
+.fluxo-no span.det{font-size:13px;color:var(--ink-3);line-height:1.45;display:block}
+
+/* ---------- tabela ---------- */
+.tabela-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--raio);background:var(--surface);box-shadow:var(--sombra)}
+table{border-collapse:collapse;width:100%;min-width:620px;font-family:"Familjen Grotesk",sans-serif;font-size:14.5px}
+th,td{text-align:left;padding:12px 15px;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.45}
+th{
+  font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink-3);font-weight:600;background:var(--surface-2);white-space:nowrap;
+}
+tr:last-child td{border-bottom:0}
+td.num{font-variant-numeric:tabular-nums;text-align:right;font-family:"IBM Plex Mono",monospace}
+
+.pill{
+  display:inline-block;padding:2px 9px;border-radius:999px;
+  font-family:"IBM Plex Mono",monospace;font-size:10.5px;font-weight:600;
+  letter-spacing:.07em;text-transform:uppercase;white-space:nowrap;
+}
+.pill.ok{background:var(--verde-tint);color:var(--verde-esc)}
+.pill.med{background:var(--ambar-tint);color:var(--ambar)}
+.pill.nao{background:var(--alerta-tint);color:var(--alerta)}
+
+/* ---------- protótipo ---------- */
+.palco{
+  background:var(--surface-2);border:1px solid var(--line);border-radius:20px;
+  padding:22px;
+}
+.abas{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px}
+.aba{
+  font-family:"Familjen Grotesk",sans-serif;font-size:13.5px;font-weight:500;
+  padding:8px 14px;border-radius:999px;border:1px solid var(--line-forte);
+  background:transparent;color:var(--ink-2);cursor:pointer;transition:.16s;
+}
+.aba:hover{border-color:var(--verde);color:var(--ink)}
+.aba[aria-selected="true"]{background:var(--verde);border-color:var(--verde);color:#04170f;font-weight:600}
+
+.tela{animation:sobe .28s ease-out}
+@keyframes sobe{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion: reduce){
+  .tela{animation:none}
+  .onda i{animation:none !important}
+}
+.legenda-tela{font-size:14.5px;color:var(--ink-2);margin:0 0 16px;max-width:62ch}
+
+/* moldura navegador */
+.janela{
+  background:var(--surface);border:1px solid var(--line-forte);border-radius:12px;
+  overflow:hidden;box-shadow:0 18px 44px rgba(10,25,20,.14);
+}
+.janela-barra{
+  display:flex;align-items:center;gap:8px;padding:9px 12px;
+  background:var(--surface-2);border-bottom:1px solid var(--line);
+}
+.janela-barra i{width:9px;height:9px;border-radius:50%;background:var(--line-forte);display:block}
+.janela-url{
+  margin-left:8px;font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--ink-3);
+  background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:3px 10px;
+}
+.app{display:grid;grid-template-columns:186px 1fr;min-height:430px}
+@media (max-width:760px){.app{grid-template-columns:1fr}.app .lateral{display:none}}
+.lateral{border-right:1px solid var(--line);padding:14px 10px;background:var(--surface-2)}
+.marca{
+  display:flex;align-items:center;gap:8px;padding:4px 8px 14px;
+  font-family:"Familjen Grotesk",sans-serif;font-weight:700;font-size:15px;letter-spacing:-.01em;
+}
+.marca span.ponto{width:9px;height:9px;border-radius:3px;background:var(--verde);display:block}
+.nav-item{
+  display:flex;align-items:center;justify-content:space-between;gap:8px;
+  font-family:"Familjen Grotesk",sans-serif;font-size:13.5px;color:var(--ink-2);
+  padding:7px 9px;border-radius:8px;margin-bottom:2px;
+}
+.nav-item.ativo{background:var(--verde-tint);color:var(--verde-esc);font-weight:600}
+.nav-item .tag{
+  font-family:"IBM Plex Mono",monospace;font-size:10px;color:var(--ink-3);
+  background:var(--surface);border:1px solid var(--line);border-radius:5px;padding:0 5px;
+}
+.conteudo{padding:18px 20px;font-family:"Familjen Grotesk",sans-serif;min-width:0}
+.conteudo-topo{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:16px}
+.conteudo h5{font-size:18px;margin:0 0 4px;letter-spacing:-.015em}
+.sub{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--ink-3);letter-spacing:.05em;text-transform:uppercase}
+.botao{
+  font-family:"Familjen Grotesk",sans-serif;font-size:12.5px;font-weight:600;
+  background:var(--verde);color:#04170f;border:0;border-radius:8px;padding:7px 13px;cursor:default;
+}
+.botao.fantasma{background:transparent;border:1px solid var(--line-forte);color:var(--ink-2)}
+
+.duas{display:grid;grid-template-columns:1.05fr .95fr;gap:16px}
+@media (max-width:860px){.duas{grid-template-columns:1fr}}
+
+.bloco{border:1px solid var(--line);border-radius:11px;padding:13px 14px;background:var(--surface)}
+.bloco-titulo{
+  font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--ink-3);margin:0 0 9px;display:flex;justify-content:space-between;align-items:center;
+}
+.fala{display:flex;gap:10px;margin-bottom:11px;font-size:13.5px;line-height:1.5}
+.fala .t{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--ink-3);flex:0 0 42px;padding-top:2px}
+.fala b{display:block;font-size:12.5px;color:var(--verde-esc);font-weight:600;margin-bottom:1px}
+.fala p{margin:0;color:var(--ink-2)}
+mark{background:var(--verde-tint);color:var(--ink);padding:0 2px;border-radius:3px}
+
+.item{display:flex;gap:9px;align-items:flex-start;font-size:13.5px;padding:7px 0;border-bottom:1px dashed var(--line)}
+.item:last-child{border-bottom:0}
+.caixa{
+  flex:0 0 15px;height:15px;border:1.5px solid var(--line-forte);border-radius:4px;margin-top:3px;
+  display:grid;place-items:center;font-size:10px;color:transparent;
+}
+.caixa.feito{background:var(--verde);border-color:var(--verde);color:#04170f}
+.item .meta{font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:var(--ink-3);margin-top:2px;display:block}
+.item .txt{color:var(--ink);line-height:1.4}
+
+/* telefone */
+.telefone{
+  width:290px;border:9px solid #10201a;border-radius:36px;background:var(--surface);
+  overflow:hidden;box-shadow:0 22px 50px rgba(10,25,20,.28);margin:0 auto;
+}
+.tel-topo{
+  background:#10201a;color:#9fe8c6;font-family:"IBM Plex Mono",monospace;font-size:10px;
+  padding:5px 16px 7px;display:flex;justify-content:space-between;letter-spacing:.05em;
+}
+.tel-corpo{padding:16px 15px 18px;font-family:"Familjen Grotesk",sans-serif}
+.onda{display:flex;align-items:center;justify-content:center;gap:3px;height:66px;margin:14px 0}
+.onda i{display:block;width:4px;border-radius:2px;background:var(--verde);opacity:.85;animation:pulsa 1.1s ease-in-out infinite}
+@keyframes pulsa{0%,100%{height:10px}50%{height:44px}}
+.rec{
+  display:flex;align-items:center;gap:7px;justify-content:center;
+  font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--alerta);letter-spacing:.08em;
+}
+.rec .bola{width:7px;height:7px;border-radius:50%;background:var(--alerta);animation:pisca 1.4s infinite}
+@keyframes pisca{50%{opacity:.25}}
+.crono{font-family:"IBM Plex Mono",monospace;font-size:30px;text-align:center;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.fontes{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:16px}
+.fonte{
+  border:1px solid var(--line);border-radius:10px;padding:9px 10px;background:var(--surface-2);
+  font-size:12.5px;line-height:1.25;
+}
+.fonte b{display:block;font-size:12.5px}
+.fonte small{font-family:"IBM Plex Mono",monospace;font-size:9.5px;color:var(--ink-3);letter-spacing:.06em;text-transform:uppercase}
+.fonte.on{border-color:var(--verde);background:var(--verde-tint)}
+
+/* framework do livro */
+.livro-capa{
+  border-radius:8px;background:linear-gradient(150deg,#0d7a50,#17a06b 60%,#35d38f);
+  color:#fff;padding:14px 12px;font-family:"Familjen Grotesk",sans-serif;
+  display:flex;flex-direction:column;justify-content:space-between;min-height:150px;
+}
+.livro-capa small{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;opacity:.8}
+.livro-capa strong{font-size:17px;line-height:1.15;letter-spacing:-.01em}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{
+  font-family:"IBM Plex Mono",monospace;font-size:10.5px;padding:3px 9px;border-radius:999px;
+  border:1px solid var(--line-forte);color:var(--ink-2);
+}
+.chip.on{background:var(--verde-tint);border-color:var(--verde);color:var(--verde-esc)}
+
+.trilha{display:grid;grid-template-columns:22px 1fr;gap:0 12px}
+.trilha .marca-t{
+  grid-column:1;width:22px;display:grid;place-items:center;position:relative;
+}
+.trilha .marca-t::before{content:"";position:absolute;top:0;bottom:0;width:1px;background:var(--line)}
+.trilha .marca-t span{
+  position:relative;width:9px;height:9px;border-radius:50%;background:var(--verde);
+  outline:3px solid var(--surface);
+}
+.trilha .passo{padding:0 0 16px}
+.trilha .passo h6{font-family:"Familjen Grotesk",sans-serif;font-size:13.5px;margin:0 0 2px}
+.trilha .passo p{margin:0;font-size:12.5px;color:var(--ink-3);line-height:1.45}
+
+/* biblioteca */
+.acervo{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.ficha{border:1px solid var(--line);border-radius:11px;padding:11px 12px;background:var(--surface)}
+.ficha .tipo{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--verde-esc)}
+.ficha .tipo.art{color:var(--ambar)}
+.ficha h6{font-family:"Familjen Grotesk",sans-serif;font-size:13.5px;margin:5px 0 5px;line-height:1.25}
+.ficha p{margin:0;font-size:11.5px;color:var(--ink-3);line-height:1.4}
+.busca{
+  border:1px solid var(--line-forte);border-radius:9px;padding:8px 12px;background:var(--surface);
+  font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--ink-3);margin-bottom:14px;
+}
+
+/* execução */
+.colunas{display:grid;grid-template-columns:repeat(3,1fr);gap:11px}
+@media (max-width:760px){.colunas{grid-template-columns:1fr}}
+.coluna{background:var(--surface-2);border:1px solid var(--line);border-radius:11px;padding:10px}
+.coluna > .bloco-titulo{margin-bottom:8px}
+.tarefa{background:var(--surface);border:1px solid var(--line);border-radius:9px;padding:9px 10px;margin-bottom:7px}
+.tarefa p{margin:0 0 6px;font-size:12.5px;line-height:1.35;font-family:"Familjen Grotesk",sans-serif}
+.tarefa .rodape{display:flex;justify-content:space-between;align-items:center;font-family:"IBM Plex Mono",monospace;font-size:9.5px;color:var(--ink-3);letter-spacing:.05em}
+.origem{color:var(--verde-esc)}
+
+/* ---------- fases ---------- */
+.fase{
+  display:grid;grid-template-columns:76px 1fr;gap:18px;padding:18px 0;border-top:1px solid var(--line);
+}
+.fase:first-of-type{border-top:0}
+.fase-n{
+  font-family:"IBM Plex Mono",monospace;font-size:12px;font-weight:600;color:var(--verde-esc);
+  letter-spacing:.08em;padding-top:3px;
+}
+.fase-n b{display:block;font-size:11px;color:var(--ink-3);font-weight:400;margin-top:3px;letter-spacing:.04em}
+.fase h4{font-size:17px;font-family:"Familjen Grotesk",sans-serif;margin:0 0 4px}
+.fase p{margin:0 0 8px;font-size:15px;color:var(--ink-2)}
+.entrega{
+  font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--ink-3);
+  border-left:2px solid var(--verde);padding-left:10px;line-height:1.5;
+}
+
+/* ---------- calculadora ---------- */
+.calc{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--raio);
+  padding:20px;box-shadow:var(--sombra);display:grid;grid-template-columns:1fr 250px;gap:24px;
+}
+@media (max-width:760px){.calc{grid-template-columns:1fr}}
+.campo-calc{margin-bottom:16px}
+.campo-calc label{
+  display:flex;justify-content:space-between;align-items:baseline;
+  font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--ink-3);margin-bottom:7px;
+}
+.campo-calc label b{font-size:14px;color:var(--ink);letter-spacing:0;text-transform:none;font-variant-numeric:tabular-nums}
+input[type=range]{width:100%;accent-color:var(--verde);height:22px}
+.opcoes-calc{display:flex;gap:6px;flex-wrap:wrap}
+.opcoes-calc button{
+  font-family:"Familjen Grotesk",sans-serif;font-size:12.5px;padding:6px 12px;border-radius:8px;
+  border:1px solid var(--line-forte);background:transparent;color:var(--ink-2);cursor:pointer;transition:.15s;
+}
+.opcoes-calc button[aria-pressed="true"]{background:var(--verde-tint);border-color:var(--verde);color:var(--verde-esc);font-weight:600}
+.resultado{
+  background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:16px;
+  display:flex;flex-direction:column;justify-content:center;
+}
+.resultado .rot{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+.resultado .valor{font-family:"Familjen Grotesk",sans-serif;font-size:34px;font-weight:700;letter-spacing:-.03em;font-variant-numeric:tabular-nums;line-height:1.1;margin:4px 0 2px}
+.resultado .brl{font-family:"IBM Plex Mono",monospace;font-size:12.5px;color:var(--ink-2)}
+.quebra{margin-top:14px;padding-top:12px;border-top:1px dashed var(--line-forte);font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--ink-2)}
+.quebra div{display:flex;justify-content:space-between;padding:2px 0}
+.quebra span{font-variant-numeric:tabular-nums}
+
+/* ---------- código ---------- */
+pre{
+  background:var(--codigo-bg);color:var(--codigo-ink);border-radius:12px;padding:16px 18px;
+  overflow-x:auto;font-family:"IBM Plex Mono",monospace;font-size:12.5px;line-height:1.6;
+  border:1px solid var(--line);margin:0;
+}
+pre b{color:#35d38f;font-weight:500}
+pre i{color:#8fa79c;font-style:normal}
+
+/* ---------- avisos ---------- */
+.nota{
+  border-left:3px solid var(--ambar);background:var(--ambar-tint);color:var(--ink);
+  padding:14px 16px;border-radius:0 10px 10px 0;font-size:15px;
+}
+.nota strong{font-family:"Familjen Grotesk",sans-serif}
+.lista{padding-left:0;list-style:none;margin:0}
+.lista li{
+  position:relative;padding-left:22px;margin-bottom:9px;font-size:15.5px;color:var(--ink-2);line-height:1.55;
+}
+.lista li::before{
+  content:"";position:absolute;left:4px;top:.62em;width:6px;height:6px;border-radius:2px;background:var(--verde);
+}
+.lista li b{color:var(--ink);font-family:"Familjen Grotesk",sans-serif;font-weight:600}
+
+footer{
+  background:#0a0f0d;color:#8ba398;padding:34px 0;font-family:"IBM Plex Mono",monospace;font-size:12px;
+  letter-spacing:.04em;
+}
+footer b{color:#9fe8c6;font-weight:500}
+</style>
+<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<header class="capa">
+  <div class="wrap">
+    <span class="selo">HumanCore · proposta de produto</span>
+    <h1>Núcleo:<br>captura, entende<br>e <em>faz virar ação</em>.</h1>
+    <p class="linha-fina">Um sistema que grava reuniões, aulas e leituras, transcreve, estrutura o conteúdo e devolve checklist com prazo — em vez de mais um arquivo que ninguém reabre.</p>
+    <div class="capa-meta">
+      <span>Escopo · <b>Plano + protótipo</b></span>
+      <span>Base · <b>Repositório HumanCore CIT</b></span>
+      <span>Estimativa · <b>10 a 12 semanas</b></span>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">01 · O pedido, destrinchado</p>
+    <h2>São quatro produtos, não um</h2>
+    <p class="lede prosa">O “Plaud” que você descreveu junta quatro coisas que normalmente vivem separadas. Vale enxergar assim porque cada uma tem custo, risco e prazo diferentes — e três delas já geram valor sozinhas.</p>
+    <div class="grade g4" style="margin-top:24px">
+      <div class="cartao">
+        <div class="icone">01</div>
+        <h4>Captura</h4>
+        <p>Microfone do celular, bot em reuniões, live do YouTube, arquivo enviado. O objetivo é sempre o mesmo: virar áudio íntegro com carimbo de tempo.</p>
+      </div>
+      <div class="cartao">
+        <div class="icone">02</div>
+        <h4>Compreensão</h4>
+        <p>Transcrição com separação de quem falou, resumo em camadas, decisões, dúvidas em aberto e os trechos que sustentam cada afirmação.</p>
+      </div>
+      <div class="cartao ambar">
+        <div class="icone">03</div>
+        <h4>Execução</h4>
+        <p>A parte que quase todo app pula: transformar conteúdo em tarefas com responsável, prazo e revisão. É aqui que o sistema se paga.</p>
+      </div>
+      <div class="cartao">
+        <div class="icone">04</div>
+        <h4>Acervo</h4>
+        <p>Livros, artigos científicos, PDFs e temas a estudar num só lugar, com busca por significado e conexão entre fontes.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">02 · Resposta direta</p>
+    <h2>Dá para fazer — com três ressalvas honestas</h2>
+    <div class="prosa">
+      <p>Tecnicamente, tudo que você listou é construível hoje com serviços prontos. O que muda de item para item é <b>como</b> a captura acontece e <b>o que o contrato da plataforma permite</b>. Prefiro deixar isso claro agora do que descobrir na semana 8.</p>
+    </div>
+    <div class="tabela-wrap" style="margin:22px 0 18px">
+      <table>
+        <thead>
+          <tr><th>Fonte</th><th>Como capturar</th><th>Viabilidade</th><th>O que observar</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>Zoom</b></td>
+            <td>Bot que entra na sala identificado, ou gravação em nuvem + webhook oficial</td>
+            <td><span class="pill ok">Alta</span></td>
+            <td>Avisar os participantes; consentimento registrado</td>
+          </tr>
+          <tr>
+            <td><b>Google Meet</b></td>
+            <td>Mesmo bot. A API oficial de transcrição existe, mas só em planos Workspace mais altos</td>
+            <td><span class="pill ok">Alta</span></td>
+            <td>Sem Workspace pago, o bot é o único caminho estável</td>
+          </tr>
+          <tr>
+            <td><b>Teams e outras</b></td>
+            <td>Um único provedor de bot cobre as três principais com a mesma integração</td>
+            <td><span class="pill ok">Alta</span></td>
+            <td>Custo por hora de reunião</td>
+          </tr>
+          <tr>
+            <td><b>YouTube ao vivo</b></td>
+            <td>Captura do stream público ou legendas do próprio vídeo</td>
+            <td><span class="pill ok">Alta</span></td>
+            <td>Uso pessoal de estudo; nunca redistribuir o conteúdo</td>
+          </tr>
+          <tr>
+            <td><b>Aula presencial</b></td>
+            <td>App no celular gravando em segundo plano, com envio em pedaços</td>
+            <td><span class="pill ok">Alta</span></td>
+            <td>No iPhone, site salvo na tela inicial não grava com a tela apagada — precisa de app nativo</td>
+          </tr>
+          <tr>
+            <td><b>Plataformas de curso</b><br><span class="sub">Hotmart, Kiwify, Udemy…</span></td>
+            <td>Não há API. O caminho legítimo é capturar o áudio do seu próprio aparelho enquanto você assiste, ou enviar o material que você tem direito de baixar</td>
+            <td><span class="pill med">Parcial</span></td>
+            <td>Nada de quebrar proteção de vídeo. Guardar só transcrição e notas, nunca o vídeo</td>
+          </tr>
+          <tr>
+            <td><b>Baixar o vídeo do curso</b></td>
+            <td>—</td>
+            <td><span class="pill nao">Fora</span></td>
+            <td>Viola o contrato da plataforma e a lei de direitos autorais. Não vou construir isso</td>
+          </tr>
+          <tr>
+            <td><b>Arquivos, PDF, EPUB, artigo</b></td>
+            <td>Envio direto pela biblioteca</td>
+            <td><span class="pill ok">Alta</span></td>
+            <td>Nenhuma</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="nota prosa">
+      <strong>As três ressalvas:</strong> (1) conteúdo de plataforma paga entra por captura do seu próprio áudio, não por download; (2) gravar reunião com outras pessoas exige aviso e consentimento — a LGPD trata voz como dado pessoal, e se você cruzar isso com dados de saúde de aluno, vira dado sensível; (3) gravação em segundo plano no iPhone só funciona bem em app nativo, o que muda o prazo da fase de captura ao vivo.
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">03 · Como funciona por dentro</p>
+    <h2>Um caminho só, várias entradas</h2>
+    <p class="lede prosa">Toda fonte — microfone, bot, link ou arquivo — desemboca no mesmo trilho. Isso mantém o sistema pequeno: adicionar uma plataforma nova é escrever só o primeiro passo.</p>
+    <div class="fluxo" style="margin-top:24px" role="list">
+      <div class="fluxo-no" role="listitem"><span class="n">Entrada</span><strong>Captura</strong><span class="det">Mic, bot de reunião, link, upload</span></div>
+      <div class="fluxo-seta" aria-hidden="true">→</div>
+      <div class="fluxo-no" role="listitem"><span class="n">Fila</span><strong>Processamento</strong><span class="det">Corte por partes, retomada de falha</span></div>
+      <div class="fluxo-seta" aria-hidden="true">→</div>
+      <div class="fluxo-no" role="listitem"><span class="n">Áudio</span><strong>Transcrição</strong><span class="det">Português, quem falou, tempo</span></div>
+      <div class="fluxo-seta" aria-hidden="true">→</div>
+      <div class="fluxo-no" role="listitem"><span class="n">Sentido</span><strong>Estruturação</strong><span class="det">Resumo, decisões, ações, citação da fonte</span></div>
+      <div class="fluxo-seta" aria-hidden="true">→</div>
+      <div class="fluxo-no" role="listitem"><span class="n">Saída</span><strong>Ação e acervo</strong><span class="det">Tarefas, revisão, busca por significado</span></div>
+    </div>
+
+    <h3>Escolhas de tecnologia que eu recomendo</h3>
+    <div class="tabela-wrap">
+      <table>
+        <thead><tr><th>Camada</th><th>Escolha</th><th>Por quê</th></tr></thead>
+        <tbody>
+          <tr><td>Web</td><td>Next.js hospedado na Vercel</td><td>Mesmo time de front do formulário atual; publica em minutos</td></tr>
+          <tr><td>Banco e arquivos</td><td>Postgres gerenciado com busca vetorial embutida</td><td>Um serviço só resolve login, dados, arquivos e busca por significado</td></tr>
+          <tr><td>Fila</td><td>Serviço de tarefas em segundo plano com retomada</td><td>Transcrever 2h de aula não cabe numa requisição web</td></tr>
+          <tr><td>Transcrição</td><td>API especializada, com opção de rodar modelo próprio depois</td><td>Português nativo e separação de falantes sem treinar nada</td></tr>
+          <tr><td>Estruturação</td><td>Modelo de linguagem com saída em formato fixo</td><td>Saída validada por schema evita “resumo bonito e inútil”</td></tr>
+          <tr><td>Celular</td><td>App em React Native (Expo)</td><td>Única forma de gravar aula presencial com a tela apagada</td></tr>
+          <tr><td>Reuniões</td><td>Provedor único de bot para Zoom, Meet e Teams</td><td>Uma integração cobre as três; evita manutenção infinita</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">04 · Layout</p>
+    <h2>Como ficaria na tela</h2>
+    <p class="lede prosa">Cinco telas, na ordem em que você usaria num dia normal. Clique nas abas — é a interface real proposta, com conteúdo de exemplo do seu contexto.</p>
+
+    <div class="palco" style="margin-top:26px">
+      <div class="abas" role="tablist" aria-label="Telas do protótipo">
+        <button class="aba" role="tab" id="t-captura" aria-controls="s-captura" aria-selected="true">Gravar</button>
+        <button class="aba" role="tab" id="t-reuniao" aria-controls="s-reuniao" aria-selected="false">Reunião processada</button>
+        <button class="aba" role="tab" id="t-livro" aria-controls="s-livro" aria-selected="false">Livro → framework</button>
+        <button class="aba" role="tab" id="t-acervo" aria-controls="s-acervo" aria-selected="false">Biblioteca</button>
+        <button class="aba" role="tab" id="t-acao" aria-controls="s-acao" aria-selected="false">Painel de ação</button>
+      </div>
+
+      <!-- TELA 1 -->
+      <div class="tela" id="s-captura" role="tabpanel" aria-labelledby="t-captura">
+        <p class="legenda-tela">No celular, uma tela só: apertar e gravar. As outras fontes ficam a um toque, e o envio continua mesmo com o app fechado.</p>
+        <div class="telefone">
+          <div class="tel-topo"><span>9:41</span><span>Núcleo</span><span>100%</span></div>
+          <div class="tel-corpo">
+            <div class="rec"><span class="bola"></span> GRAVANDO · AULA PRESENCIAL</div>
+            <div class="onda" aria-hidden="true">
+              <i style="animation-delay:0s"></i><i style="animation-delay:.09s"></i><i style="animation-delay:.18s"></i>
+              <i style="animation-delay:.27s"></i><i style="animation-delay:.36s"></i><i style="animation-delay:.45s"></i>
+              <i style="animation-delay:.54s"></i><i style="animation-delay:.63s"></i><i style="animation-delay:.72s"></i>
+              <i style="animation-delay:.81s"></i><i style="animation-delay:.9s"></i><i style="animation-delay:.99s"></i>
+              <i style="animation-delay:1.08s"></i><i style="animation-delay:1.17s"></i><i style="animation-delay:1.26s"></i>
+              <i style="animation-delay:1.35s"></i><i style="animation-delay:1.44s"></i><i style="animation-delay:1.53s"></i>
+            </div>
+            <div class="crono">00:47:12</div>
+            <p style="text-align:center;font-size:12px;color:var(--ink-3);margin:6px 0 0;font-family:'IBM Plex Mono',monospace">Curso de Cinesiologia · Módulo 4</p>
+            <div style="display:flex;gap:8px;margin-top:16px">
+              <button class="botao" style="flex:1">Marcar momento</button>
+              <button class="botao fantasma" style="flex:1">Encerrar</button>
+            </div>
+            <p class="sub" style="margin:20px 0 8px">Outras fontes</p>
+            <div class="fontes">
+              <div class="fonte on"><small>Ao vivo</small><b>Microfone</b></div>
+              <div class="fonte"><small>Bot na sala</small><b>Zoom / Meet</b></div>
+              <div class="fonte"><small>Colar link</small><b>YouTube</b></div>
+              <div class="fonte"><small>Enviar</small><b>Áudio, PDF</b></div>
+            </div>
+            <p style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--ink-3);margin:14px 0 0;text-align:center">Envio automático a cada 2 min · funciona offline</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- TELA 2 -->
+      <div class="tela" id="s-reuniao" role="tabpanel" aria-labelledby="t-reuniao" hidden>
+        <p class="legenda-tela">Transcrição à esquerda, entendimento à direita. Cada ação criada aponta para o minuto exato que a originou — você confere a fonte em um clique, sem precisar confiar cegamente no resumo.</p>
+        <div class="janela">
+          <div class="janela-barra"><i></i><i></i><i></i><span class="janela-url">nucleo.humancore.app/sessao/mentoria-14</span></div>
+          <div class="app">
+            <aside class="lateral">
+              <div class="marca"><span class="ponto"></span> Núcleo</div>
+              <div class="nav-item ativo">Sessões <span class="tag">12</span></div>
+              <div class="nav-item">Biblioteca <span class="tag">86</span></div>
+              <div class="nav-item">Frameworks <span class="tag">7</span></div>
+              <div class="nav-item">Ações <span class="tag">23</span></div>
+              <div class="nav-item">Revisar hoje <span class="tag">5</span></div>
+            </aside>
+            <div class="conteudo">
+              <div class="conteudo-topo">
+                <div>
+                  <h5>Mentoria — periodização para hipertrofia</h5>
+                  <span class="sub">Zoom · 62 min · 3 participantes · processada em 4 min</span>
+                </div>
+                <div style="display:flex;gap:6px"><button class="botao fantasma">Exportar</button><button class="botao">Criar ações</button></div>
+              </div>
+              <div class="duas">
+                <div class="bloco">
+                  <p class="bloco-titulo">Transcrição <span>buscar</span></p>
+                  <div class="fala"><span class="t">08:14</span><div><b>Mentor</b><p>Para aluno intermediário, a <mark>frequência de 2x por grupo muscular</mark> costuma render mais que o clássico ABC de uma vez só.</p></div></div>
+                  <div class="fala"><span class="t">09:02</span><div><b>Milton</b><p>E quando o cara treina só 3 dias na semana, como fica a divisão?</p></div></div>
+                  <div class="fala"><span class="t">09:20</span><div><b>Mentor</b><p>Aí você vai de <mark>full body nos três dias</mark>, variando ênfase. Volume semanal por grupo entre 10 e 16 séries.</p></div></div>
+                  <div class="fala"><span class="t">21:47</span><div><b>Mentor</b><p>Reavalia a carga a cada quatro semanas com um teste simples de repetições em reserva.</p></div></div>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:12px;min-width:0">
+                  <div class="bloco">
+                    <p class="bloco-titulo">Em uma frase</p>
+                    <p style="margin:0;font-size:13.5px;line-height:1.5;color:var(--ink-2)">Aumentar a frequência semanal por grupo muscular e ajustar o volume conforme os dias disponíveis do aluno, reavaliando a cada quatro semanas.</p>
+                  </div>
+                  <div class="bloco">
+                    <p class="bloco-titulo">Decisões</p>
+                    <div class="item"><span class="caixa feito">✓</span><span class="txt">Migrar alunos de 3 dias para full body<span class="meta">09:20 · confirmado</span></span></div>
+                    <div class="item"><span class="caixa feito">✓</span><span class="txt">Adotar reavaliação de carga a cada 4 semanas<span class="meta">21:47 · confirmado</span></span></div>
+                  </div>
+                  <div class="bloco">
+                    <p class="bloco-titulo">Ações geradas <span>3</span></p>
+                    <div class="item"><span class="caixa"></span><span class="txt">Refazer as fichas dos 6 alunos de 3 dias<span class="meta">até 05/09 · você</span></span></div>
+                    <div class="item"><span class="caixa"></span><span class="txt">Criar planilha de repetições em reserva<span class="meta">até 02/09 · você</span></span></div>
+                    <div class="item"><span class="caixa"></span><span class="txt">Perguntar sobre volume para iniciantes na próxima<span class="meta">em aberto</span></span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TELA 3 -->
+      <div class="tela" id="s-livro" role="tabpanel" aria-labelledby="t-livro" hidden>
+        <p class="legenda-tela">O livro entra em PDF ou EPUB e sai como protocolo: princípios, passo a passo, erros comuns, métricas e um plano de 30 dias que já nasce como tarefa no seu painel.</p>
+        <div class="janela">
+          <div class="janela-barra"><i></i><i></i><i></i><span class="janela-url">nucleo.humancore.app/framework/supertreinamento</span></div>
+          <div class="app">
+            <aside class="lateral">
+              <div class="marca"><span class="ponto"></span> Núcleo</div>
+              <div class="nav-item">Sessões <span class="tag">12</span></div>
+              <div class="nav-item">Biblioteca <span class="tag">86</span></div>
+              <div class="nav-item ativo">Frameworks <span class="tag">7</span></div>
+              <div class="nav-item">Ações <span class="tag">23</span></div>
+              <div class="nav-item">Revisar hoje <span class="tag">5</span></div>
+            </aside>
+            <div class="conteudo">
+              <div class="conteudo-topo">
+                <div>
+                  <h5>Supertreinamento — framework executável</h5>
+                  <span class="sub">638 páginas · 4 protocolos · 11 checkpoints</span>
+                </div>
+                <button class="botao">Iniciar plano de 30 dias</button>
+              </div>
+              <div class="duas">
+                <div style="display:flex;flex-direction:column;gap:12px">
+                  <div style="display:grid;grid-template-columns:110px 1fr;gap:12px">
+                    <div class="livro-capa"><small>Livro</small><strong>Super&shy;treina&shy;mento</strong><small>Siff · Verkhoshansky</small></div>
+                    <div>
+                      <p class="bloco-titulo" style="margin-bottom:7px">Tese central</p>
+                      <p style="margin:0 0 10px;font-size:13px;line-height:1.5;color:var(--ink-2);font-family:'Familjen Grotesk',sans-serif">Força é uma qualidade treinável por vias específicas; o ganho vem da organização das cargas ao longo do tempo, não do esforço isolado.</p>
+                      <div class="chips">
+                        <span class="chip on">Periodização</span><span class="chip on">Força</span><span class="chip">Recuperação</span><span class="chip">Testagem</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="bloco">
+                    <p class="bloco-titulo">Protocolo 1 — Bloco de força máxima <span>4 sem</span></p>
+                    <div class="item"><span class="caixa feito">✓</span><span class="txt">Testar 1RM ou estimar por 3–5 reps<span class="meta">cap. 7 · p. 214</span></span></div>
+                    <div class="item"><span class="caixa feito">✓</span><span class="txt">Definir intensidade entre 85 e 92%<span class="meta">cap. 7 · p. 219</span></span></div>
+                    <div class="item"><span class="caixa"></span><span class="txt">Limitar volume a 12–18 séries semanais no padrão principal<span class="meta">cap. 8 · p. 241</span></span></div>
+                    <div class="item"><span class="caixa"></span><span class="txt">Semana 4 com carga reduzida em 40%<span class="meta">cap. 9 · p. 288</span></span></div>
+                  </div>
+                  <div class="bloco">
+                    <p class="bloco-titulo">Erros que o livro alerta</p>
+                    <p style="margin:0;font-size:12.5px;color:var(--ink-3);line-height:1.5;font-family:'Familjen Grotesk',sans-serif">Empilhar métodos de choque sem base aeróbia · trocar de bloco antes de estabilizar o ganho · usar falha concêntrica como métrica de esforço em bloco de força.</p>
+                  </div>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:12px;min-width:0">
+                  <div class="bloco">
+                    <p class="bloco-titulo">Plano de 30 dias</p>
+                    <div class="trilha">
+                      <div class="marca-t"><span></span></div>
+                      <div class="passo"><h6>Semana 1 · Diagnóstico</h6><p>Testar padrões principais e registrar linha de base dos 6 alunos piloto.</p></div>
+                      <div class="marca-t"><span></span></div>
+                      <div class="passo"><h6>Semana 2 · Acúmulo</h6><p>Subir volume mantendo intensidade; anotar repetições em reserva.</p></div>
+                      <div class="marca-t"><span></span></div>
+                      <div class="passo"><h6>Semana 3 · Intensificação</h6><p>Reduzir volume, subir carga. Checar sono e dor muscular.</p></div>
+                      <div class="marca-t"><span></span></div>
+                      <div class="passo"><h6>Semana 4 · Reteste</h6><p>Comparar com a linha de base e decidir o próximo bloco.</p></div>
+                    </div>
+                  </div>
+                  <div class="bloco">
+                    <p class="bloco-titulo">Como saber se funcionou</p>
+                    <div class="item"><span class="caixa"></span><span class="txt">Carga do agachamento subiu ≥ 5%<span class="meta">métrica principal</span></span></div>
+                    <div class="item"><span class="caixa"></span><span class="txt">Nenhum aluno com dor persistente &gt; 72h<span class="meta">segurança</span></span></div>
+                    <div class="item"><span class="caixa"></span><span class="txt">Adesão ≥ 85% das sessões<span class="meta">processo</span></span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TELA 4 -->
+      <div class="tela" id="s-acervo" role="tabpanel" aria-labelledby="t-acervo" hidden>
+        <p class="legenda-tela">Tudo que entra no sistema mora aqui: aula, livro, artigo científico, PDF solto, tema a estudar. A busca entende o sentido da pergunta e responde citando as fontes.</p>
+        <div class="janela">
+          <div class="janela-barra"><i></i><i></i><i></i><span class="janela-url">nucleo.humancore.app/biblioteca</span></div>
+          <div class="app">
+            <aside class="lateral">
+              <div class="marca"><span class="ponto"></span> Núcleo</div>
+              <div class="nav-item">Sessões <span class="tag">12</span></div>
+              <div class="nav-item ativo">Biblioteca <span class="tag">86</span></div>
+              <div class="nav-item">Frameworks <span class="tag">7</span></div>
+              <div class="nav-item">Ações <span class="tag">23</span></div>
+              <div class="nav-item">Revisar hoje <span class="tag">5</span></div>
+            </aside>
+            <div class="conteudo">
+              <div class="conteudo-topo">
+                <div><h5>Biblioteca</h5><span class="sub">86 itens · 4 coleções · 1 em processamento</span></div>
+                <button class="botao">Adicionar conteúdo</button>
+              </div>
+              <div class="busca">“o que a literatura diz sobre frequência semanal para hipertrofia?” <span style="color:var(--verde-esc)">— 7 fontes encontradas</span></div>
+              <div class="chips" style="margin-bottom:14px">
+                <span class="chip on">Tudo</span><span class="chip">Aulas</span><span class="chip">Livros</span><span class="chip">Artigos</span><span class="chip">Reuniões</span><span class="chip">A estudar</span>
+              </div>
+              <div class="acervo">
+                <div class="ficha"><span class="tipo art">Artigo · PubMed</span><h6>Resistance training frequency and hypertrophy</h6><p>Meta-análise · 2019 · resumo em PICO pronto</p></div>
+                <div class="ficha"><span class="tipo">Livro</span><h6>Supertreinamento</h6><p>Framework gerado · plano de 30 dias ativo</p></div>
+                <div class="ficha"><span class="tipo">Aula</span><h6>Cinesiologia — Módulo 4</h6><p>47 min · presencial · 9 ações geradas</p></div>
+                <div class="ficha"><span class="tipo art">Artigo · DOI</span><h6>Autorregulação por RIR na prescrição</h6><p>Marcado para leitura crítica</p></div>
+                <div class="ficha"><span class="tipo">Reunião</span><h6>Mentoria — periodização</h6><p>Zoom · 62 min · 2 decisões</p></div>
+                <div class="ficha"><span class="tipo">A estudar</span><h6>Avaliação postural quantitativa</h6><p>Tema aberto · 3 fontes reunidas</p></div>
+                <div class="ficha"><span class="tipo">Aula ao vivo</span><h6>Live: dor lombar e treino</h6><p>YouTube · transcrita · 21 destaques</p></div>
+                <div class="ficha"><span class="tipo">PDF</span><h6>Protocolo interno HumanCore</h6><p>Enviado por você · indexado</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TELA 5 -->
+      <div class="tela" id="s-acao" role="tabpanel" aria-labelledby="t-acao" hidden>
+        <p class="legenda-tela">O painel que fecha o ciclo. Toda tarefa carrega a origem — qual aula, qual minuto, qual página — e o que não avança em duas semanas aparece marcado, para você decidir se corta ou reprograma.</p>
+        <div class="janela">
+          <div class="janela-barra"><i></i><i></i><i></i><span class="janela-url">nucleo.humancore.app/acoes</span></div>
+          <div class="app">
+            <aside class="lateral">
+              <div class="marca"><span class="ponto"></span> Núcleo</div>
+              <div class="nav-item">Sessões <span class="tag">12</span></div>
+              <div class="nav-item">Biblioteca <span class="tag">86</span></div>
+              <div class="nav-item">Frameworks <span class="tag">7</span></div>
+              <div class="nav-item ativo">Ações <span class="tag">23</span></div>
+              <div class="nav-item">Revisar hoje <span class="tag">5</span></div>
+            </aside>
+            <div class="conteudo">
+              <div class="conteudo-topo">
+                <div><h5>Painel de ação</h5><span class="sub">23 ações · 5 vencendo esta semana · 2 paradas</span></div>
+                <button class="botao fantasma">Sincronizar com a agenda</button>
+              </div>
+              <div class="colunas">
+                <div class="coluna">
+                  <p class="bloco-titulo">A fazer <span>9</span></p>
+                  <div class="tarefa"><p>Refazer fichas dos 6 alunos de 3 dias</p><div class="rodape"><span class="origem">Mentoria · 09:20</span><span>05/09</span></div></div>
+                  <div class="tarefa"><p>Montar planilha de repetições em reserva</p><div class="rodape"><span class="origem">Mentoria · 21:47</span><span>02/09</span></div></div>
+                  <div class="tarefa"><p>Ler meta-análise de frequência semanal</p><div class="rodape"><span class="origem">Biblioteca</span><span>03/09</span></div></div>
+                </div>
+                <div class="coluna">
+                  <p class="bloco-titulo">Em andamento <span>4</span></p>
+                  <div class="tarefa"><p>Semana 1 do bloco de força — coletar linha de base</p><div class="rodape"><span class="origem">Supertreinamento · p. 214</span><span>hoje</span></div></div>
+                  <div class="tarefa" style="border-color:var(--ambar)"><p>Aplicar teste postural novo nos alunos</p><div class="rodape"><span class="origem" style="color:var(--ambar)">parada há 16 dias</span><span>atrasada</span></div></div>
+                </div>
+                <div class="coluna">
+                  <p class="bloco-titulo">Feito <span>10</span></p>
+                  <div class="tarefa" style="opacity:.62"><p>Definir intensidade do bloco em 85–92%</p><div class="rodape"><span class="origem">Supertreinamento</span><span>27/08</span></div></div>
+                  <div class="tarefa" style="opacity:.62"><p>Migrar alunos de 3 dias para full body</p><div class="rodape"><span class="origem">Mentoria</span><span>26/08</span></div></div>
+                </div>
+              </div>
+              <div class="bloco" style="margin-top:14px">
+                <p class="bloco-titulo">Revisar hoje <span>memória espaçada</span></p>
+                <div class="item"><span class="caixa"></span><span class="txt">Qual o volume semanal recomendado por grupo muscular em intermediários?<span class="meta">Mentoria · revisão 2 de 5</span></span></div>
+                <div class="item"><span class="caixa"></span><span class="txt">Quando reduzir a carga dentro de um bloco de força?<span class="meta">Supertreinamento · revisão 1 de 5</span></span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">05 · Livro → framework</p>
+    <h2>O que garante que a saída seja útil</h2>
+    <div class="prosa">
+      <p>Um livro de 600 páginas não cabe de uma vez no modelo, e pedir “resuma” devolve texto genérico. O caminho é outro: quebrar o livro em partes, extrair de cada uma só o que é <b>acionável</b>, juntar tudo e obrigar a saída a preencher um formato fixo. Se um campo não puder ser preenchido com base no texto, ele fica vazio — em vez de inventado.</p>
+      <p>Como não consegui ver as imagens dos prompts que você mencionou, este é o formato que eu proponho. Me mande as imagens e eu ajusto para o seu padrão.</p>
+    </div>
+    <pre style="margin-top:20px"><b>{</b>
+  <i>"tese"</i>: <i>"a ideia central em uma frase"</i>,
+  <i>"principios"</i>: [{ <i>"nome"</i>, <i>"explicacao"</i>, <i>"pagina"</i> }],
+  <i>"protocolos"</i>: [{
+      <i>"nome"</i>, <i>"quando_usar"</i>, <i>"passos"</i>: [], <i>"erros_comuns"</i>: [], <i>"fonte"</i>
+  }],
+  <i>"checklists"</i>: [{ <i>"contexto"</i>, <i>"itens"</i>: [] }],
+  <i>"metricas"</i>: [{ <i>"indicador"</i>, <i>"como_medir"</i>, <i>"meta"</i> }],
+  <i>"plano_30_dias"</i>: [{ <i>"semana"</i>, <i>"foco"</i>, <i>"tarefas"</i>: [] }],
+  <i>"perguntas_de_revisao"</i>: [],
+  <i>"o_que_o_livro_nao_responde"</i>: []
+<b>}</b></pre>
+    <p class="prosa" style="margin-top:18px">Dois detalhes fazem toda a diferença na qualidade: <b>toda afirmação carrega página ou minuto de origem</b> — é o que te deixa conferir em vez de confiar — e existe um campo para o que o material <b>não</b> cobre, que é o começo natural da sua próxima busca.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">06 · Execução</p>
+    <h2>Cinco fases, valor em cada uma</h2>
+    <p class="lede prosa">A ordem não é técnica, é de risco: primeiro validamos que o <em>formato da saída</em> serve para você, com zero linha de código. Só depois automatizamos.</p>
+    <div style="margin-top:26px">
+      <div class="fase">
+        <div class="fase-n">FASE 0<b>1 semana</b></div>
+        <div>
+          <h4>Piloto manual, sem código</h4>
+          <p>Você grava uma aula e uma reunião e me manda um livro. Eu rodo o processo à mão e te entrego as saídas. O objetivo é achar o formato certo antes de construir qualquer coisa em cima do errado.</p>
+          <p class="entrega">Entrega: 3 saídas reais (aula, reunião, livro) + formato aprovado por você</p>
+        </div>
+      </div>
+      <div class="fase">
+        <div class="fase-n">FASE 1<b>3 a 4 semanas</b></div>
+        <div>
+          <h4>O produto base na web</h4>
+          <p>Login, envio de áudio, vídeo e PDF, transcrição automática, estruturação, biblioteca com busca e exportação. Já resolve tudo que está gravado ou baixado — a maior parte do seu volume.</p>
+          <p class="entrega">Entrega: app publicado, funcionando com conteúdo seu de verdade</p>
+        </div>
+      </div>
+      <div class="fase">
+        <div class="fase-n">FASE 2<b>3 semanas</b></div>
+        <div>
+          <h4>Captura ao vivo</h4>
+          <p>App de celular com gravação em segundo plano para aula presencial, bot de reunião para Zoom, Meet e Teams com aviso de gravação, e captura de live do YouTube por link.</p>
+          <p class="entrega">Entrega: app nas lojas em teste + bot entrando nas suas reuniões</p>
+        </div>
+      </div>
+      <div class="fase">
+        <div class="fase-n">FASE 3<b>2 semanas</b></div>
+        <div>
+          <h4>Livro vira framework</h4>
+          <p>Leitura de PDF e EPUB, extração em partes, montagem do framework no formato acima, com página de origem em cada item e exportação para Notion ou Markdown.</p>
+          <p class="entrega">Entrega: seus livros de referência convertidos em protocolos</p>
+        </div>
+      </div>
+      <div class="fase">
+        <div class="fase-n">FASE 4<b>2 semanas</b></div>
+        <div>
+          <h4>Camada de execução</h4>
+          <p>Checklists viram tarefas com prazo, sincronizam com a agenda, cobram no WhatsApp o que está parado e trazem de volta as perguntas de revisão em intervalos crescentes.</p>
+          <p class="entrega">Entrega: painel de ação + lembretes + revisão espaçada</p>
+        </div>
+      </div>
+      <div class="fase">
+        <div class="fase-n">EXTRA<b>a decidir</b></div>
+        <div>
+          <h4>Reaproveitamento do conteúdo</h4>
+          <p>A partir do mesmo acervo: roteiro de vídeo, post e material de apoio para aluno. Você já produz conteúdo — cada aula assistida vira insumo em vez de arquivo morto.</p>
+          <p class="entrega">Entrega: gerador de roteiro e de material didático a partir de qualquer item</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">07 · Custo</p>
+    <h2>Quanto custa rodar isso por mês</h2>
+    <p class="lede prosa">Mexa nos controles com o seu volume real. São valores de ordem de grandeza para dimensionar a decisão — os preços exatos precisam ser confirmados nas tabelas oficiais no momento da contratação.</p>
+    <div class="calc" style="margin-top:24px">
+      <div>
+        <div class="campo-calc">
+          <label for="horas">Horas de conteúdo por mês <b><span id="v-horas">40</span> h</b></label>
+          <input type="range" id="horas" min="5" max="160" step="5" value="40">
+        </div>
+        <div class="campo-calc">
+          <label for="pct">Quanto disso é reunião com bot <b><span id="v-pct">30</span>%</b></label>
+          <input type="range" id="pct" min="0" max="100" step="5" value="30">
+        </div>
+        <div class="campo-calc">
+          <label>Motor de transcrição</label>
+          <div class="opcoes-calc" id="motor">
+            <button type="button" data-v="0.26" aria-pressed="true">API premium</button>
+            <button type="button" data-v="0.15" aria-pressed="false">API econômica</button>
+            <button type="button" data-v="0.05" aria-pressed="false">Modelo próprio</button>
+          </div>
+        </div>
+        <p style="font-size:13.5px;color:var(--ink-3);margin:14px 0 0;max-width:52ch">A infraestrutura base — hospedagem, banco, fila e armazenamento — entra fixa em torno de US$ 30/mês e só cresce depois de centenas de horas acumuladas.</p>
+      </div>
+      <div class="resultado">
+        <span class="rot">Custo mensal estimado</span>
+        <span class="valor" id="v-total">US$ 66</span>
+        <span class="brl" id="v-brl">≈ R$ 363 · câmbio ilustrativo 5,50</span>
+        <div class="quebra">
+          <div><span>Transcrição</span><span id="q-stt">US$ 10</span></div>
+          <div><span>Estruturação</span><span id="q-llm">US$ 6</span></div>
+          <div><span>Bot de reunião</span><span id="q-bot">US$ 20</span></div>
+          <div><span>Infra base</span><span id="q-infra">US$ 30</span></div>
+        </div>
+      </div>
+    </div>
+    <p class="prosa" style="margin-top:18px;font-size:15px;color:var(--ink-2)">Para efeito de comparação: o gravador físico que inspirou o pedido custa algumas centenas de dólares no aparelho, mais assinatura anual com limite de horas — e não faz nada dos frameworks, da biblioteca nem da camada de ação.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">08 · Recomendações</p>
+    <h2>O que eu faria diferente do pedido original</h2>
+    <ul class="lista prosa" style="margin-top:20px">
+      <li><b>Começar pelo formato, não pela captura.</b> A captura é o problema mais chato e menos incerto. O que decide se você vai usar o sistema é a qualidade da saída — e isso dá para testar na primeira semana sem escrever código.</li>
+      <li><b>Cortar as plataformas de curso do escopo inicial.</b> É a fonte de maior atrito jurídico e menor retorno. Enquanto isso, capturar o áudio do seu próprio aparelho já resolve na prática, e sem construir nada frágil.</li>
+      <li><b>Toda afirmação com origem rastreável.</b> Resumo sem link para o minuto ou a página vira mais uma coisa em que você não confia inteiramente. Com a origem, o sistema pode até errar de vez em quando — você confere em cinco segundos.</li>
+      <li><b>Não recriar um gerenciador de tarefas.</b> Se você já vive no Google Agenda ou no Notion, as ações devem nascer lá. O Núcleo é a fonte, não o destino.</li>
+      <li><b>Aproveitar o que já existe aqui.</b> O formulário de avaliação da CIT já tem envio de arquivos, validação e identidade visual. A biblioteca reaproveita esse código quase inteiro — e o mesmo login serve para os dois.</li>
+      <li><b>Fechar o ciclo com o aluno.</b> O maior diferencial não é você anotar melhor: é a aula que você assistiu virar protocolo aplicado no treino de alguém, com métrica de acompanhamento. Isso nenhum app genérico faz, porque nenhum sabe que você é da área.</li>
+      <li><b>Um único acervo, várias saídas.</b> Mesmo conteúdo indexado, saídas diferentes: framework para você aplicar, roteiro para o seu canal, material de apoio para o aluno. Custo marginal quase zero depois da fase 1.</li>
+    </ul>
+
+    <h3>O que eu preciso decidir com você antes da fase 1</h3>
+    <div class="grade g2" style="margin-top:14px">
+      <div class="cartao"><h4>Só você ou uma equipe?</h4><p>Muda o modelo de contas, permissões e o custo. Uso individual simplifica bastante a fase 1.</p></div>
+      <div class="cartao"><h4>iPhone ou Android?</h4><p>Se for iPhone e gravação de aula presencial for prioridade, o app nativo precisa entrar antes — o prazo da fase 2 depende disso.</p></div>
+      <div class="cartao"><h4>Onde as tarefas devem viver?</h4><p>Dentro do Núcleo, no Google Agenda, no Notion ou no seu app de tarefas atual. Prefiro integrar ao que você já usa.</p></div>
+      <div class="cartao ambar"><h4>As imagens dos prompts</h4><p>Não chegaram na conversa. Com elas, o formato do framework de livros sai igual ao que você já validou.</p></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <b>Núcleo</b> · proposta para HumanCore CIT · plano, protótipo e estimativas<br>
+    Próximo passo sugerido: fase 0 — você me manda uma gravação e um livro, eu devolvo as três saídas reais em uma semana.
+  </div>
+</footer>
+
+<script>
+(function(){
+  var abas = Array.prototype.slice.call(document.querySelectorAll('.aba'));
+  function mostrar(aba){
+    abas.forEach(function(b){
+      var alvo = document.getElementById(b.getAttribute('aria-controls'));
+      var sel = (b === aba);
+      b.setAttribute('aria-selected', sel ? 'true' : 'false');
+      if (alvo) alvo.hidden = !sel;
+    });
+  }
+  abas.forEach(function(b){
+    b.addEventListener('click', function(){ mostrar(b); });
+    b.addEventListener('keydown', function(e){
+      var i = abas.indexOf(b);
+      if (e.key === 'ArrowRight' || e.key === 'ArrowLeft'){
+        e.preventDefault();
+        var n = abas[(i + (e.key === 'ArrowRight' ? 1 : abas.length - 1)) % abas.length];
+        n.focus(); mostrar(n);
+      }
+    });
+  });
+
+  var horas = document.getElementById('horas');
+  var pct = document.getElementById('pct');
+  var motorBtns = Array.prototype.slice.call(document.querySelectorAll('#motor button'));
+  var taxaSTT = 0.26;
+  var CAMBIO = 5.5, LLM_HORA = 0.15, BOT_HORA = 0.70, INFRA = 30;
+
+  function usd(v){ return 'US$ ' + (v < 10 ? v.toFixed(1) : Math.round(v)); }
+  function calcular(){
+    var h = Number(horas.value), p = Number(pct.value) / 100;
+    var stt = h * taxaSTT, llm = h * LLM_HORA, bot = h * p * BOT_HORA;
+    var total = stt + llm + bot + INFRA;
+    document.getElementById('v-horas').textContent = h;
+    document.getElementById('v-pct').textContent = Number(pct.value);
+    document.getElementById('q-stt').textContent = usd(stt);
+    document.getElementById('q-llm').textContent = usd(llm);
+    document.getElementById('q-bot').textContent = usd(bot);
+    document.getElementById('q-infra').textContent = usd(INFRA);
+    document.getElementById('v-total').textContent = 'US$ ' + Math.round(total);
+    document.getElementById('v-brl').textContent = '≈ R$ ' + Math.round(total * CAMBIO).toLocaleString('pt-BR') + ' · câmbio ilustrativo 5,50';
+  }
+  horas.addEventListener('input', calcular);
+  pct.addEventListener('input', calcular);
+  motorBtns.forEach(function(b){
+    b.addEventListener('click', function(){
+      motorBtns.forEach(function(o){ o.setAttribute('aria-pressed','false'); });
+      b.setAttribute('aria-pressed','true');
+      taxaSTT = Number(b.dataset.v);
+      calcular();
+    });
+  });
+  calcular();
+})();
+</script>
+</body>
+</html>
