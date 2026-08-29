@@ -1,0 +1,716 @@
+<meta charset="utf-8" />
+<title>Livro → Framework</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Literata:opsz,wght@7..72,400;7..72,500;7..72,600&display=swap">
+<style>
+:root{
+  --ground:#f3f7f4; --surface:#ffffff; --surface-2:#e9f0ec;
+  --ink:#101714; --ink-2:#4c5b55; --ink-3:#7c8b84;
+  --line:#dbe4df; --line-forte:#c3d1ca;
+  --verde:#17a06b; --verde-esc:#0d7a50; --verde-tint:#e2f4eb;
+  --ambar:#a86c12; --ambar-tint:#f9efdb;
+  --alerta:#b23a2b; --alerta-tint:#fbe8e5;
+  --codigo-bg:#0f1613; --codigo-ink:#d8e6df; --codigo-chave:#7fdcb0; --codigo-nota:#8fa79c;
+  --sombra:0 1px 2px rgba(16,40,30,.05), 0 8px 28px rgba(16,40,30,.06);
+  --raio:14px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#080d0b; --surface:#101815; --surface-2:#17221d;
+    --ink:#e9f2ed; --ink-2:#a2b2ab; --ink-3:#7a8a83;
+    --line:#22302a; --line-forte:#31423b;
+    --verde:#35d38f; --verde-esc:#9fe8c6; --verde-tint:#0f2b20;
+    --ambar:#e0a344; --ambar-tint:#2b2113;
+    --alerta:#f08b7c; --alerta-tint:#2e1714;
+    --codigo-bg:#0a100d; --codigo-ink:#cfe2d9; --codigo-chave:#7fdcb0; --codigo-nota:#7d938a;
+    --sombra:0 1px 2px rgba(0,0,0,.4), 0 10px 30px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#080d0b; --surface:#101815; --surface-2:#17221d;
+  --ink:#e9f2ed; --ink-2:#a2b2ab; --ink-3:#7a8a83;
+  --line:#22302a; --line-forte:#31423b;
+  --verde:#35d38f; --verde-esc:#9fe8c6; --verde-tint:#0f2b20;
+  --ambar:#e0a344; --ambar-tint:#2b2113;
+  --alerta:#f08b7c; --alerta-tint:#2e1714;
+  --codigo-bg:#0a100d; --codigo-ink:#cfe2d9; --codigo-chave:#7fdcb0; --codigo-nota:#7d938a;
+  --sombra:0 1px 2px rgba(0,0,0,.4), 0 10px 30px rgba(0,0,0,.35);
+}
+
+*{box-sizing:border-box}
+body{background:var(--ground);color:var(--ink);margin:0;font-family:"Literata",Georgia,serif;font-size:16.5px;line-height:1.62;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4,h5,h6,.grotesk{font-family:"Familjen Grotesk","Segoe UI",system-ui,sans-serif;text-wrap:balance}
+.wrap{max-width:1040px;margin:0 auto;padding:0 22px}
+.prosa{max-width:68ch}
+p{margin:0 0 1em}
+a{color:var(--verde-esc);text-underline-offset:2px}
+:focus-visible{outline:2px solid var(--verde);outline-offset:2px;border-radius:4px}
+
+.capa{background:linear-gradient(168deg,#0a0f0d 0%,#0f1a15 58%,#0a0f0d 100%);color:#eaf3ee;padding:48px 0 40px;border-bottom:1px solid #1c2b24}
+.selo{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(159,232,198,.28);background:rgba(53,211,143,.08);color:#9fe8c6;border-radius:999px;padding:5px 13px;font-family:"IBM Plex Mono",monospace;font-size:11.5px;font-weight:500;letter-spacing:.1em;text-transform:uppercase}
+.capa h1{font-size:clamp(34px,5.6vw,54px);line-height:1.04;letter-spacing:-.03em;margin:18px 0 0;font-weight:700;color:#fff}
+.capa h1 em{font-style:normal;color:#35d38f}
+.capa .linha-fina{font-size:clamp(16px,2vw,19px);color:#a9bab2;max-width:58ch;margin:14px 0 0}
+.capa-meta{display:flex;flex-wrap:wrap;gap:8px 26px;margin-top:26px;font-family:"IBM Plex Mono",monospace;font-size:12px;color:#7f9289;letter-spacing:.04em;text-transform:uppercase}
+.capa-meta b{color:#c6d6ce;font-weight:500}
+
+section{padding:52px 0}
+section + section{border-top:1px solid var(--line)}
+.eyebrow{font-family:"IBM Plex Mono",monospace;font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--verde-esc);margin:0 0 10px}
+h2{font-size:clamp(25px,3.4vw,32px);letter-spacing:-.02em;margin:0 0 14px;line-height:1.14}
+h3{font-size:19px;letter-spacing:-.01em;margin:32px 0 10px}
+.lede{font-size:18px;color:var(--ink-2)}
+
+/* passos */
+.passos{display:grid;gap:10px;margin-top:24px}
+.passo-l{display:grid;grid-template-columns:38px 1fr;gap:16px;background:var(--surface);border:1px solid var(--line);border-radius:var(--raio);padding:16px 18px;box-shadow:var(--sombra)}
+.passo-l .num{font-family:"IBM Plex Mono",monospace;font-size:12px;font-weight:600;color:var(--verde-esc);background:var(--verde-tint);border-radius:8px;display:grid;place-items:center;height:28px}
+.passo-l h4{margin:0 0 3px;font-size:16px}
+.passo-l p{margin:0;font-size:14.5px;color:var(--ink-2);line-height:1.5}
+.passo-l .io{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--ink-3);letter-spacing:.04em;margin-top:7px;display:block}
+.passo-l .io b{color:var(--verde-esc);font-weight:500}
+
+/* leis */
+.leis{counter-reset:lei;display:grid;gap:0;margin-top:22px;border:1px solid var(--line);border-radius:var(--raio);overflow:hidden;background:var(--surface);box-shadow:var(--sombra)}
+.lei{counter-increment:lei;display:grid;grid-template-columns:52px 1fr;gap:14px;padding:15px 18px;border-bottom:1px solid var(--line)}
+.lei:last-child{border-bottom:0}
+.lei::before{content:counter(lei,decimal-leading-zero);font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--ink-3);padding-top:3px;letter-spacing:.06em}
+.lei b{font-family:"Familjen Grotesk",sans-serif;font-size:15.5px;display:block;margin-bottom:2px}
+.lei span{font-size:14.5px;color:var(--ink-2);line-height:1.5}
+
+/* matriz por tipo */
+.tipos{display:flex;gap:7px;flex-wrap:wrap;margin:22px 0 18px}
+.tipo-b{font-family:"Familjen Grotesk",sans-serif;font-size:13.5px;font-weight:500;padding:8px 15px;border-radius:999px;border:1px solid var(--line-forte);background:transparent;color:var(--ink-2);cursor:pointer;transition:.16s}
+.tipo-b:hover{border-color:var(--verde);color:var(--ink)}
+.tipo-b[aria-pressed="true"]{background:var(--verde);border-color:var(--verde);color:#04170f;font-weight:600}
+.matriz{display:grid;grid-template-columns:repeat(auto-fill,minmax(158px,1fr));gap:9px}
+.bloco-m{border:1px solid var(--line);border-radius:11px;padding:11px 12px;background:var(--surface);transition:.2s}
+.bloco-m h5{margin:0 0 5px;font-size:13.5px;letter-spacing:-.005em}
+.bloco-m span{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.09em;text-transform:uppercase}
+.bloco-m[data-e="obrigatorio"]{border-color:var(--verde);background:var(--verde-tint)}
+.bloco-m[data-e="obrigatorio"] span{color:var(--verde-esc)}
+.bloco-m[data-e="opcional"] span{color:var(--ink-3)}
+.bloco-m[data-e="vazio"]{opacity:.5;border-style:dashed}
+.bloco-m[data-e="vazio"] span{color:var(--alerta)}
+.explica-tipo{font-size:15px;color:var(--ink-2);margin:0 0 16px;max-width:64ch;min-height:3em}
+
+/* código */
+.codigo-caixa{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--codigo-bg)}
+.codigo-topo{display:flex;justify-content:space-between;align-items:center;padding:9px 12px 9px 16px;border-bottom:1px solid rgba(255,255,255,.07);background:rgba(255,255,255,.03)}
+.codigo-topo span{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#8fa79c}
+.copiar{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;background:transparent;border:1px solid rgba(159,232,198,.3);color:#9fe8c6;border-radius:7px;padding:4px 11px;cursor:pointer;transition:.15s}
+.copiar:hover{background:rgba(53,211,143,.12)}
+.copiar.feito{background:#35d38f;border-color:#35d38f;color:#04170f}
+pre{margin:0;padding:16px 18px;overflow-x:auto;font-family:"IBM Plex Mono",monospace;font-size:12.5px;line-height:1.62;color:var(--codigo-ink);white-space:pre}
+pre .k{color:var(--codigo-chave)}
+pre .c{color:var(--codigo-nota)}
+
+/* abas de prompt */
+.abas{display:flex;gap:6px;flex-wrap:wrap;margin:22px 0 16px}
+.aba{font-family:"Familjen Grotesk",sans-serif;font-size:13px;font-weight:500;padding:8px 13px;border-radius:9px;border:1px solid var(--line-forte);background:transparent;color:var(--ink-2);cursor:pointer;transition:.16s}
+.aba:hover{border-color:var(--verde);color:var(--ink)}
+.aba[aria-selected="true"]{background:var(--verde-tint);border-color:var(--verde);color:var(--verde-esc);font-weight:600}
+.painel-prompt{animation:sobe .24s ease-out}
+@keyframes sobe{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion: reduce){.painel-prompt{animation:none}}
+.prompt-cab{display:flex;gap:18px;flex-wrap:wrap;margin-bottom:14px}
+.prompt-cab div{font-size:14px;color:var(--ink-2);max-width:32ch}
+.prompt-cab b{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--verde-esc);display:block;margin-bottom:2px}
+
+/* tabelas */
+.tabela-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--raio);background:var(--surface);box-shadow:var(--sombra)}
+table{border-collapse:collapse;width:100%;min-width:560px;font-family:"Familjen Grotesk",sans-serif;font-size:14.5px}
+th,td{text-align:left;padding:11px 15px;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.45}
+th{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);font-weight:600;background:var(--surface-2);white-space:nowrap}
+tr:last-child td{border-bottom:0}
+
+.nota{border-left:3px solid var(--ambar);background:var(--ambar-tint);color:var(--ink);padding:14px 16px;border-radius:0 10px 10px 0;font-size:15px}
+.nota strong{font-family:"Familjen Grotesk",sans-serif}
+.lista{padding-left:0;list-style:none;margin:0}
+.lista li{position:relative;padding-left:22px;margin-bottom:9px;font-size:15.5px;color:var(--ink-2);line-height:1.55}
+.lista li::before{content:"";position:absolute;left:4px;top:.62em;width:6px;height:6px;border-radius:2px;background:var(--verde)}
+.lista li b{color:var(--ink);font-family:"Familjen Grotesk",sans-serif;font-weight:600}
+.grade{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.cartao{background:var(--surface);border:1px solid var(--line);border-radius:var(--raio);padding:18px;box-shadow:var(--sombra)}
+.cartao h4{margin:0 0 5px;font-size:15.5px}
+.cartao p{margin:0;font-size:14.5px;color:var(--ink-2);line-height:1.5}
+.cartao.ambar{border-color:var(--ambar);background:var(--ambar-tint)}
+footer{background:#0a0f0d;color:#8ba398;padding:32px 0;font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.04em}
+footer b{color:#9fe8c6;font-weight:500}
+footer a{color:#9fe8c6}
+code{font-family:"IBM Plex Mono",monospace;font-size:12.5px;background:var(--surface-2);border:1px solid var(--line);border-radius:5px;padding:1px 5px}
+</style>
+
+<header class="capa">
+  <div class="wrap">
+    <span class="selo">HumanCore Núcleo · módulo de livros</span>
+    <h1>Do livro fechado<br>ao <em>protocolo aplicado</em>.</h1>
+    <p class="linha-fina">O modelo completo de conversão: seis passos, um formato de saída obrigatório e sete regras que impedem a saída de virar resumo genérico.</p>
+    <div class="capa-meta">
+      <span>Versão · <b>v1, aberta a ajuste</b></span>
+      <span>Arquivos · <b>schema.json + prompts.md</b></span>
+      <span>Falta · <b>as imagens dos seus prompts</b></span>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">Por que não é um prompt só</p>
+    <h2>Seis passos, cada um com uma tarefa</h2>
+    <div class="prosa">
+      <p>Jogar um livro inteiro em um prompt gigante devolve texto plausível e genérico — aquele resumo que serviria para qualquer livro do tema. O modelo abaixo separa o trabalho: primeiro <b>extrair preso ao texto</b>, depois <b>consolidar</b>, depois <b>sintetizar dentro de limites</b> e por fim <b>desconfiar do resultado</b>.</p>
+      <p>O passo 5 é o que mais muda a qualidade e é o que todo mundo pula.</p>
+    </div>
+    <div class="passos">
+      <div class="passo-l"><span class="num">1</span><div><h4>Triagem</h4><p>Lê sumário, prefácio e conclusão para classificar o tipo do livro e mapear onde está o conteúdo aplicável. Uma chamada barata que evita processar capítulo de história igual a capítulo denso.</p><span class="io">entra <b>sumário e bordas do livro</b> · sai <b>tipo + mapa de densidade</b></span></div></div>
+      <div class="passo-l"><span class="num">2</span><div><h4>Extração, bloco a bloco</h4><p>Cada trecho vira unidades soltas — princípio, procedimento, número, erro, métrica — sempre com a citação literal e a página. Bloco sem conteúdo aplicável devolve lista vazia, e isso é resposta certa.</p><span class="io">entra <b>bloco com marcação de página</b> · sai <b>unidades com citação</b></span></div></div>
+      <div class="passo-l"><span class="num">3</span><div><h4>Consolidação</h4><p>O autor repete a ideia central em cinco capítulos. Aqui isso vira um item forte com cinco fontes, em vez de cinco itens. Também é onde aparecem as contradições internas do livro.</p><span class="io">entra <b>todas as unidades</b> · sai <b>grupos ordenados por importância</b></span></div></div>
+      <div class="passo-l"><span class="num">4</span><div><h4>Síntese do framework</h4><p>Preenche o formato de saída com limite rígido: 7 princípios, 5 protocolos, 12 tarefas. O limite é o que obriga a escolher — sem ele, a saída vira sumário reorganizado.</p><span class="io">entra <b>consolidado + seu perfil</b> · sai <b>framework no schema</b></span></div></div>
+      <div class="passo-l"><span class="num">5</span><div><h4>Verificação adversarial</h4><p>Um segundo passe, cético, que só julga: a citação sustenta a afirmação? o número veio do livro? o item é verificável? Na dúvida, remove. Framework menor e confiável vale mais que completo e duvidoso.</p><span class="io">entra <b>framework + fontes</b> · sai <b>manter, reescrever ou remover</b></span></div></div>
+      <div class="passo-l"><span class="num">6</span><div><h4>Aplicação ao seu contexto</h4><p>O mesmo livro gera plano diferente para quem tem 6 alunos e para quem tem 60. Aqui entram sua agenda, suas restrições e o que já está aberto no painel de ação.</p><span class="io">entra <b>framework verificado</b> · sai <b>tarefas com prazo no painel</b></span></div></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">As regras que sustentam tudo</p>
+    <h2>Sete leis</h2>
+    <p class="lede prosa">Estas regras aparecem em todos os prompts. São elas que separam material que você confia de texto que soa bem.</p>
+    <div class="leis">
+      <div class="lei"><div><b>Sem citação, não entra</b><span>Todo item afirmativo carrega página e trecho literal. Item sem fonte é descartado, não “marcado para revisar”.</span></div></div>
+      <div class="lei"><div><b>Citação curta, até 25 palavras</b><span>Serve para você conferir em cinco segundos. O framework nunca substitui o livro — e essa é também a linha que mantém o uso dentro do razoável em direito autoral.</span></div></div>
+      <div class="lei"><div><b>Vocabulário do autor nos nomes</b><span>Se o autor chama de “bloco de choque”, o protocolo se chama assim. A explicação é em linguagem própria; o termo é dele.</span></div></div>
+      <div class="lei"><div><b>Número só se o livro deu número</b><span>Faltou a faixa, a dose, o percentual? Campo vazio e uma entrada em “o que o livro não responde”. Estimativa inventada é o pior defeito possível aqui.</span></div></div>
+      <div class="lei"><div><b>Critério de feito observável</b><span>Todo passo e toda tarefa terminam em algo que outra pessoa consegue verificar. “Entender melhor” não é critério; “planilha preenchida com 6 alunos” é.</span></div></div>
+      <div class="lei"><div><b>Limites rígidos</b><span>7 princípios, 5 protocolos, 12 tarefas. O que ficou de fora vira pergunta de revisão. Sem teto, todo livro devolve 40 itens e nenhum é aplicado.</span></div></div>
+      <div class="lei"><div><b>Vazio é resposta válida</b><span>Livro narrativo não tem protocolo. O modelo devolve protocolos vazio e preenche heurísticas, em vez de inventar passo a passo que o autor não escreveu.</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">Adaptação</p>
+    <h2>Nem todo livro vira protocolo</h2>
+    <p class="lede prosa">Forçar o mesmo formato em qualquer livro é o que gera invenção. O modelo muda o que exige conforme o tipo — escolha um tipo para ver o que ele preenche.</p>
+    <div class="tipos" id="tipos">
+      <button class="tipo-b" type="button" data-t="protocolar" aria-pressed="true">Protocolar</button>
+      <button class="tipo-b" type="button" data-t="conceitual" aria-pressed="false">Conceitual</button>
+      <button class="tipo-b" type="button" data-t="narrativo" aria-pressed="false">Narrativo</button>
+      <button class="tipo-b" type="button" data-t="tecnico" aria-pressed="false">Técnico</button>
+    </div>
+    <p class="explica-tipo" id="explica-tipo"></p>
+    <div class="matriz" id="matriz">
+      <div class="bloco-m" data-b="principios"><h5>Princípios</h5><span></span></div>
+      <div class="bloco-m" data-b="protocolos"><h5>Protocolos</h5><span></span></div>
+      <div class="bloco-m" data-b="heuristicas"><h5>Heurísticas</h5><span></span></div>
+      <div class="bloco-m" data-b="decisoes"><h5>Regras de decisão</h5><span></span></div>
+      <div class="bloco-m" data-b="checklists"><h5>Checklists</h5><span></span></div>
+      <div class="bloco-m" data-b="metricas"><h5>Métricas</h5><span></span></div>
+      <div class="bloco-m" data-b="plano"><h5>Plano de 30 dias</h5><span></span></div>
+      <div class="bloco-m" data-b="perguntas"><h5>Perguntas de revisão</h5><span></span></div>
+      <div class="bloco-m" data-b="glossario"><h5>Glossário</h5><span></span></div>
+      <div class="bloco-m" data-b="lacunas"><h5>O que não responde</h5><span></span></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">Formato de saída</p>
+    <h2>O schema, e ele preenchido</h2>
+    <p class="lede prosa">O modelo é obrigado a devolver exatamente esta estrutura — o que permite validar por programa antes de mostrar qualquer coisa para você. À direita da aba, o mesmo formato preenchido.</p>
+    <div class="abas" role="tablist" aria-label="Formato de saída">
+      <button class="aba" role="tab" id="t-esq" aria-controls="p-esq" aria-selected="true">Estrutura</button>
+      <button class="aba" role="tab" id="t-ex" aria-controls="p-ex" aria-selected="false">Exemplo preenchido</button>
+    </div>
+    <div class="painel-prompt" id="p-esq" role="tabpanel" aria-labelledby="t-esq">
+      <div class="codigo-caixa">
+        <div class="codigo-topo"><span>framework_v1 · estrutura</span><button class="copiar" type="button">Copiar</button></div>
+<pre>{
+  <span class="k">"meta"</span>:      { titulo, autores, ano, paginas, tipo_livro, processado_em }
+  <span class="k">"leitor"</span>:    { objetivo, contexto, nivel, restricoes, tempo_semanal_min }
+  <span class="k">"tese"</span>:      { frase, explicacao, fonte[] }
+
+  <span class="k">"principios"</span>[]  <span class="c">// máx 7 — nome, enunciado, porque_funciona,</span>
+                    <span class="c">//         quando_nao_vale, confianca, fonte[]</span>
+  <span class="k">"protocolos"</span>[]  <span class="c">// máx 5 — quando_usar, pre_requisitos,</span>
+                    <span class="c">//         passos[{ordem, acao, criterio_de_feito}],</span>
+                    <span class="c">//         parametros[], erros_comuns[], fonte[]</span>
+  <span class="k">"heuristicas"</span>[] <span class="c">// substitui protocolos em livro conceitual:</span>
+                    <span class="c">//         gatilho, faca_isto, porque, fonte[]</span>
+  <span class="k">"decisoes"</span>[]    <span class="c">// situacao, se, entao, senao, fonte[]</span>
+  <span class="k">"checklists"</span>[]  <span class="c">// contexto, momento_de_uso, itens[]</span>
+  <span class="k">"metricas"</span>[]    <span class="c">// indicador, como_medir, frequencia, meta,</span>
+                    <span class="c">//         sinal_de_alerta, fonte[]</span>
+
+  <span class="k">"plano_30_dias"</span>[]        <span class="c">// 4 semanas, máx 12 tarefas somadas</span>
+  <span class="k">"perguntas_de_revisao"</span>[] <span class="c">// alimenta a revisão espaçada</span>
+  <span class="k">"glossario"</span>[]
+
+  <span class="k">"o_que_o_livro_nao_responde"</span>[]   <span class="c">// obrigatório, nunca vazio</span>
+  <span class="k">"conflitos_com_outras_fontes"</span>[]  <span class="c">// cruzamento com sua biblioteca</span>
+  <span class="k">"avaliacao"</span>: { densidade_acionavel, cobertura_pct,
+                 itens_sem_fonte, confianca_global }
+}
+
+<span class="c">// toda "fonte" é: [{ pagina, capitulo, citacao_literal (máx 25 palavras) }]</span>
+<span class="c">// itens_sem_fonte diferente de zero REPROVA o processamento</span></pre>
+      </div>
+    </div>
+    <div class="painel-prompt" id="p-ex" role="tabpanel" aria-labelledby="t-ex" hidden>
+      <div class="codigo-caixa">
+        <div class="codigo-topo"><span>exemplo ilustrativo · páginas fictícias</span><button class="copiar" type="button">Copiar</button></div>
+<pre>{
+  <span class="k">"meta"</span>: { <span class="k">"titulo"</span>: "Supertreinamento", <span class="k">"tipo_livro"</span>: "tecnico", <span class="k">"paginas"</span>: 638 },
+  <span class="k">"leitor"</span>: {
+    <span class="k">"objetivo"</span>: "Reorganizar a periodização dos alunos de 3 dias por semana",
+    <span class="k">"contexto"</span>: "Personal trainer, 6 alunos no piloto",
+    <span class="k">"tempo_semanal_min"</span>: 120
+  },
+  <span class="k">"tese"</span>: {
+    <span class="k">"frase"</span>: "O ganho de força vem da organização das cargas no tempo, não do esforço isolado.",
+    <span class="k">"fonte"</span>: [{ <span class="k">"pagina"</span>: 61, <span class="k">"citacao_literal"</span>: "a adaptação depende da sequência e da distribuição das cargas" }]
+  },
+
+  <span class="k">"principios"</span>: [{
+    <span class="k">"nome"</span>: "Sobrecarga progressiva com variação de ênfase",
+    <span class="k">"enunciado"</span>: "Aumentar a exigência aos poucos, trocando a ênfase antes que o estímulo perca efeito.",
+    <span class="k">"quando_nao_vale"</span>: "Em fase de dor persistente ou sono comprometido.",
+    <span class="k">"confianca"</span>: "alta",
+    <span class="k">"fonte"</span>: [{ <span class="k">"pagina"</span>: 214, <span class="k">"citacao_literal"</span>: "..." }]
+  }],
+
+  <span class="k">"protocolos"</span>: [{
+    <span class="k">"nome"</span>: "Bloco de força máxima",
+    <span class="k">"quando_usar"</span>: "Aluno intermediário, após 4 semanas de base, sem dor ativa.",
+    <span class="k">"passos"</span>: [
+      { <span class="k">"ordem"</span>: 1, <span class="k">"acao"</span>: "Estimar 1RM por série de 3 a 5 repetições",
+        <span class="k">"criterio_de_feito"</span>: "Valor registrado na ficha dos 6 alunos" },
+      { <span class="k">"ordem"</span>: 2, <span class="k">"acao"</span>: "Prescrever a semana entre 85 e 92% do estimado",
+        <span class="k">"criterio_de_feito"</span>: "Planilha da semana 1 preenchida" }
+    ],
+    <span class="k">"parametros"</span>: [
+      { <span class="k">"nome"</span>: "Intensidade", <span class="k">"valor"</span>: "85 a 92", <span class="k">"unidade"</span>: "% de 1RM",
+        <span class="k">"fonte"</span>: [{ <span class="k">"pagina"</span>: 219, <span class="k">"citacao_literal"</span>: "..." }] }
+    ],
+    <span class="k">"erros_comuns"</span>: ["Usar falha concêntrica como medida de esforço em bloco de força"],
+    <span class="k">"confianca"</span>: "alta"
+  }],
+
+  <span class="k">"decisoes"</span>: [{
+    <span class="k">"situacao"</span>: "Aluno chega relatando dor há mais de 72 horas",
+    <span class="k">"se"</span>: "A dor limita o padrão principal",
+    <span class="k">"entao"</span>: "Reduzir carga em 40% e manter o padrão",
+    <span class="k">"senao"</span>: "Seguir a progressão prevista",
+    <span class="k">"fonte"</span>: [{ <span class="k">"pagina"</span>: 288, <span class="k">"citacao_literal"</span>: "..." }]
+  }],
+
+  <span class="k">"metricas"</span>: [{
+    <span class="k">"indicador"</span>: "Carga do agachamento",
+    <span class="k">"como_medir"</span>: "Estimativa de 1RM na semana 1 e na semana 4",
+    <span class="k">"meta"</span>: "Aumento de 5% ou mais",
+    <span class="k">"sinal_de_alerta"</span>: "Queda com dor associada"
+  }],
+
+  <span class="k">"plano_30_dias"</span>: [{
+    <span class="k">"semana"</span>: 1, <span class="k">"foco"</span>: "Diagnóstico",
+    <span class="k">"revisao_da_semana"</span>: "Todos os 6 alunos têm linha de base registrada?",
+    <span class="k">"tarefas"</span>: [{
+      <span class="k">"titulo"</span>: "Testar padrões principais dos 6 alunos do piloto",
+      <span class="k">"esforco_min"</span>: 90, <span class="k">"dia_sugerido"</span>: "terça",
+      <span class="k">"criterio_de_feito"</span>: "6 fichas com carga estimada e data"
+    }]
+  }],
+
+  <span class="k">"o_que_o_livro_nao_responde"</span>: [{
+    <span class="k">"pergunta"</span>: "Como ajustar o bloco para quem treina só 3 dias por semana?",
+    <span class="k">"por_que_importa"</span>: "É o caso da maior parte dos meus alunos",
+    <span class="k">"onde_procurar"</span>: "Meta-análises de frequência semanal na biblioteca"
+  }],
+
+  <span class="k">"avaliacao"</span>: { <span class="k">"densidade_acionavel"</span>: 8, <span class="k">"itens_sem_fonte"</span>: 0, <span class="k">"confianca_global"</span>: "alta" }
+}</pre>
+      </div>
+    </div>
+    <div class="nota prosa" style="margin-top:16px"><strong>Sobre o exemplo:</strong> a estrutura é real e é a que o sistema vai gerar; os números de página são ilustrativos, colocados por mim para mostrar o formato. No sistema, eles vêm da leitura do arquivo — e é justamente por isso que dá para conferir.</div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">Os prompts</p>
+    <h2>Prontos para usar hoje, na mão</h2>
+    <p class="lede prosa">Você não precisa esperar o sistema ficar pronto para testar o modelo. Copie os prompts abaixo e rode com um livro que você conheça bem — assim você julga a qualidade sabendo a resposta certa.</p>
+    <div class="abas" role="tablist" aria-label="Passos do modelo">
+      <button class="aba" role="tab" id="a1" aria-controls="pr1" aria-selected="true">1 · Triagem</button>
+      <button class="aba" role="tab" id="a2" aria-controls="pr2" aria-selected="false">2 · Extração</button>
+      <button class="aba" role="tab" id="a3" aria-controls="pr3" aria-selected="false">3 · Consolidação</button>
+      <button class="aba" role="tab" id="a4" aria-controls="pr4" aria-selected="false">4 · Síntese</button>
+      <button class="aba" role="tab" id="a5" aria-controls="pr5" aria-selected="false">5 · Verificação</button>
+      <button class="aba" role="tab" id="a6" aria-controls="pr6" aria-selected="false">6 · Aplicação</button>
+    </div>
+
+    <div class="painel-prompt" id="pr1" role="tabpanel" aria-labelledby="a1">
+      <div class="prompt-cab">
+        <div><b>Entra</b>sumário, prefácio, introdução e conclusão</div>
+        <div><b>Sai</b>tipo do livro e mapa de densidade por capítulo</div>
+        <div><b>Custo</b>uma chamada curta, barata</div>
+      </div>
+      <div class="codigo-caixa"><div class="codigo-topo"><span>passo 1 · triagem</span><button class="copiar" type="button">Copiar</button></div>
+<pre>Você vai preparar a leitura de um livro que será convertido em material aplicável.
+
+Recebe apenas: sumário, prefácio, introdução e conclusão.
+
+TAREFAS
+1. Classifique o livro em: protocolar, conceitual, narrativo, tecnico ou misto.
+   - protocolar: ensina procedimentos com passos e números
+   - conceitual: ensina um modo de pensar, sem passo a passo
+   - narrativo: ensina por histórias e casos
+   - tecnico: referência acadêmica, densa em evidência
+2. Escreva a tese provável do livro em uma frase.
+3. Para cada capítulo do sumário, atribua densidade acionável de 0 a 10 e diga em
+   uma linha o que se espera extrair dele.
+4. Aponte os capítulos que podem ser lidos em varredura rápida.
+5. Liste os termos próprios do autor que devem ser preservados na saída final.
+
+REGRAS
+- Baseie-se somente nos trechos recebidos. Onde não houver base, escreva "indeterminado".
+- Não resuma o livro. Você está planejando a leitura, não fazendo a leitura.
+
+SAÍDA: JSON no formato TRIAGEM.
+
+&lt;material&gt;
+{{sumario_prefacio_introducao_conclusao}}
+&lt;/material&gt;</pre></div>
+    </div>
+
+    <div class="painel-prompt" id="pr2" role="tabpanel" aria-labelledby="a2" hidden>
+      <div class="prompt-cab">
+        <div><b>Entra</b>um bloco do livro com marcação de página</div>
+        <div><b>Sai</b>unidades com citação literal e página</div>
+        <div><b>Custo</b>roda uma vez por bloco — o passo mais caro</div>
+      </div>
+      <div class="codigo-caixa"><div class="codigo-topo"><span>passo 2 · extração</span><button class="copiar" type="button">Copiar</button></div>
+<pre>Você está extraindo unidades aplicáveis de um trecho de livro.
+
+CONTEXTO: livro do tipo {{tipo_livro}}, tese provável: {{tese}}.
+O trecho vem marcado com [p.N] indicando a página.
+
+Para cada unidade encontrada, devolva:
+- tipo: principio | procedimento | parametro | evidencia | erro | metrica |
+        heuristica | definicao | decisao
+- enunciado: a ideia em suas palavras, no máximo 30 palavras
+- citacao_literal: até 25 palavras copiadas exatamente do trecho, que sustentam
+  o enunciado
+- pagina: o número da marcação mais próxima
+- confianca: alta se o autor afirma diretamente, media se você juntou dois
+  trechos, baixa se é interpretação
+
+REGRAS
+- Extraia apenas o que está neste trecho. Não use conhecimento externo sobre o tema.
+- Não resuma o trecho. Ou a unidade é aplicável, ou não entra.
+- Não repita a mesma ideia em duas unidades.
+- Números, faixas e doses só entram se aparecerem escritos no texto.
+- Se o trecho for só história, exemplo ou digressão, devolva lista vazia. Lista
+  vazia é uma resposta correta e esperada em boa parte dos blocos.
+
+SAÍDA: array JSON de UNIDADE. Nada além do JSON.
+
+&lt;trecho&gt;
+{{bloco_com_marcacao_de_pagina}}
+&lt;/trecho&gt;</pre></div>
+    </div>
+
+    <div class="painel-prompt" id="pr3" role="tabpanel" aria-labelledby="a3" hidden>
+      <div class="prompt-cab">
+        <div><b>Entra</b>todas as unidades do livro inteiro</div>
+        <div><b>Sai</b>grupos sem repetição, ordenados por importância</div>
+        <div><b>Custo</b>uma chamada, entrada longa</div>
+      </div>
+      <div class="codigo-caixa"><div class="codigo-topo"><span>passo 3 · consolidação</span><button class="copiar" type="button">Copiar</button></div>
+<pre>Você recebe todas as unidades extraídas de um livro, com id, tipo, página e citação.
+
+TAREFAS
+1. Agrupe as unidades que dizem a mesma coisa. O grupo mantém TODAS as páginas
+   como fonte.
+2. Ordene os grupos por importância, calculada como:
+   recorrência no livro x centralidade em relação à tese x aplicabilidade prática.
+3. Marque contradições internas: pontos onde o próprio livro se contradiz.
+4. Descarte exemplos isolados que não sustentam nenhuma regra.
+
+REGRAS
+- Não crie unidades novas. Não reescreva enunciados além do necessário para
+  fundir duplicatas.
+- Se duas unidades se parecem mas têm condição de uso diferente, mantenha separadas.
+
+SAÍDA: JSON no formato CONSOLIDADO.
+
+&lt;unidades&gt;
+{{unidades_de_todos_os_blocos}}
+&lt;/unidades&gt;</pre></div>
+    </div>
+
+    <div class="painel-prompt" id="pr4" role="tabpanel" aria-labelledby="a4" hidden>
+      <div class="prompt-cab">
+        <div><b>Entra</b>consolidado, triagem e seu perfil</div>
+        <div><b>Sai</b>o framework no schema, validável por programa</div>
+        <div><b>Custo</b>uma chamada — é o passo principal</div>
+      </div>
+      <div class="codigo-caixa"><div class="codigo-topo"><span>passo 4 · síntese do framework</span><button class="copiar" type="button">Copiar</button></div>
+<pre>Você vai montar o framework executável de um livro, para uma pessoa específica aplicar.
+
+LIVRO: {{titulo}}, tipo {{tipo_livro}}.
+QUEM VAI APLICAR: {{perfil_do_leitor}}
+OBJETIVO DECLARADO: {{objetivo}}
+RESTRIÇÕES: {{restricoes}}
+
+Preencha o schema FRAMEWORK_V1 usando exclusivamente as unidades consolidadas.
+
+LIMITES RÍGIDOS
+- No máximo 7 princípios.
+- No máximo 5 protocolos.
+- No máximo 12 tarefas somadas no plano de 30 dias.
+Estes limites existem para forçar escolha. Se sobrar coisa boa de fora, ela vai
+para perguntas_de_revisao, não para dentro dos limites.
+
+REGRAS DE PREENCHIMENTO
+- Todo item afirmativo carrega fonte com página e citação literal. Item sem fonte
+  não entra.
+- Preserve o vocabulário do autor nos nomes; explique com suas palavras nos
+  enunciados.
+- Todo passo e toda tarefa terminam em criterio_de_feito observável por outra
+  pessoa. "Entender melhor" não é critério. "Planilha preenchida com 6 alunos" é.
+- Números só onde o livro deu número. Faltou número? Campo vazio e uma entrada em
+  o_que_o_livro_nao_responde.
+- Livro conceitual ou narrativo: deixe protocolos vazio e preencha heuristicas.
+  Não invente passo a passo que o autor não escreveu.
+- O plano de 30 dias precisa caber em {{tempo_semanal_min}} minutos por semana e
+  respeitar as restrições acima.
+- o_que_o_livro_nao_responde é obrigatório e nunca vem vazio. Nenhum livro cobre tudo.
+
+SAÍDA: JSON válido conforme FRAMEWORK_V1. Nada além do JSON.
+
+&lt;consolidado&gt;
+{{consolidado}}
+&lt;/consolidado&gt;</pre></div>
+    </div>
+
+    <div class="painel-prompt" id="pr5" role="tabpanel" aria-labelledby="a5" hidden>
+      <div class="prompt-cab">
+        <div><b>Entra</b>o framework e as unidades originais</div>
+        <div><b>Sai</b>veredito item a item: manter, reescrever ou remover</div>
+        <div><b>Custo</b>uma chamada — o passo que ninguém faz</div>
+      </div>
+      <div class="codigo-caixa"><div class="codigo-topo"><span>passo 5 · verificação adversarial</span><button class="copiar" type="button">Copiar</button></div>
+<pre>Você é um revisor cético. Seu trabalho é achar problema, não elogiar.
+
+Recebe um framework gerado a partir de um livro e as unidades originais com citações.
+
+Para CADA item do framework, responda:
+1. A citação anexada sustenta mesmo a afirmação, ou foi esticada?
+2. Todo número presente aparece no livro, ou apareceu do nada?
+3. O item é acionável e verificável, ou é conselho vago?
+4. Veredito: manter | reescrever | remover, com o motivo em uma linha.
+
+Depois:
+- Liste tudo que foi afirmado sem base nas unidades.
+- Complete o_que_o_livro_nao_responde com as lacunas que você percebeu.
+- Dê confianca_global e a contagem de itens_sem_fonte.
+
+REGRAS
+- Não conserte os itens. Apenas julgue.
+- Na dúvida entre manter e remover, remova. Framework menor e confiável vale mais
+  que framework completo e duvidoso.
+
+SAÍDA: JSON no formato VERIFICACAO.
+
+&lt;framework&gt;{{framework}}&lt;/framework&gt;
+&lt;unidades&gt;{{consolidado}}&lt;/unidades&gt;</pre></div>
+    </div>
+
+    <div class="painel-prompt" id="pr6" role="tabpanel" aria-labelledby="a6" hidden>
+      <div class="prompt-cab">
+        <div><b>Entra</b>framework verificado e seu contexto real</div>
+        <div><b>Sai</b>tarefas com prazo, prontas para o painel</div>
+        <div><b>Custo</b>uma chamada curta</div>
+      </div>
+      <div class="codigo-caixa"><div class="codigo-topo"><span>passo 6 · aplicação ao seu contexto</span><button class="copiar" type="button">Copiar</button></div>
+<pre>Você vai converter um framework já verificado em tarefas para o painel de ação.
+
+PERFIL: {{perfil_do_leitor}}
+AGENDA DISPONÍVEL: {{tempo_semanal_min}} minutos por semana
+JÁ EM ANDAMENTO: {{acoes_abertas_no_painel}}
+
+TAREFAS
+1. Escolha o que aplicar primeiro pelo critério: maior efeito com menor custo de
+   mudança.
+2. Distribua nas 4 semanas respeitando dependências entre tarefas.
+3. Para cada tarefa: título no imperativo, esforço em minutos, dia sugerido e
+   critério de feito observável.
+4. Aponte o que do livro NÃO deve ser aplicado agora, e por quê.
+5. Se algo colidir com uma ação já aberta no painel, diga qual e proponha ordem.
+
+REGRAS
+- Máximo 12 tarefas. Se não coube, não entra: entra em "aplicar depois".
+- Nenhuma tarefa maior que 90 minutos. Quebre em partes.
+- Toda tarefa aponta o item do framework e a página de origem.
+
+SAÍDA: JSON no formato PLANO_APLICADO.</pre></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">Aceite</p>
+    <h2>Como saber se ficou bom</h2>
+    <p class="lede prosa">Seis testes. Se algum falhar, o problema está no modelo, não no livro — e a correção é no prompt do passo correspondente.</p>
+    <div class="tabela-wrap" style="margin-top:20px">
+      <table>
+        <thead><tr><th>Teste</th><th>Como fazer</th><th>Se falhar, ajustar</th></tr></thead>
+        <tbody>
+          <tr><td><b>Zero itens sem fonte</b></td><td>Campo <code>itens_sem_fonte</code> na avaliação</td><td>Passo 4 — regra de fonte obrigatória</td></tr>
+          <tr><td><b>Citação confere</b></td><td>Abra o livro em 3 páginas citadas ao acaso</td><td>Passo 2 — citação literal exata</td></tr>
+          <tr><td><b>Tem tarefa para esta semana</b></td><td>Olhe a semana 1 do plano</td><td>Passo 6 — esforço e agenda</td></tr>
+          <tr><td><b>As lacunas te interessam</b></td><td>Leia “o que o livro não responde”</td><td>Passo 5 — verificação preencheu raso</td></tr>
+          <tr><td><b>Nada genérico</b></td><td>Algum item caberia em qualquer livro do tema?</td><td>Passo 3 — ordenação por importância</td></tr>
+          <tr><td><b>Dá para medir em 30 dias</b></td><td>As métricas respondem sozinhas se funcionou</td><td>Passo 4 — critério de feito</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Custo e tempo por livro</h3>
+    <div class="grade">
+      <div class="cartao"><h4>Um livro de 600 páginas</h4><p>Passa cerca de três vezes pelo modelo: extrair, consolidar e verificar. O passo 2 é o caro, porque roda por bloco.</p></div>
+      <div class="cartao"><h4>Ordem de grandeza</h4><p>Poucos dólares por livro, uma vez só — o framework fica salvo. Vale confirmar os preços vigentes antes de processar a estante inteira.</p></div>
+      <div class="cartao"><h4>Tempo</h4><p>Entre 5 e 15 minutos por livro, rodando os blocos em paralelo. Você recebe aviso quando terminar.</p></div>
+      <div class="cartao ambar"><h4>Regra de bolso</h4><p>Comece por três livros que você já leu. É a única forma de julgar a qualidade da saída — em livro novo, tudo parece bom.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">Próximo passo</p>
+    <h2>O que eu preciso de você</h2>
+    <ul class="lista prosa" style="margin-top:18px">
+      <li><b>As imagens dos prompts.</b> Não chegaram na conversa. Com elas eu comparo campo a campo com este modelo e junto o que for melhor dos dois — o que você já validou tem precedência.</li>
+      <li><b>Três livros para o teste.</b> De preferência já lidos por você, e de tipos diferentes: um protocolar, um conceitual e um técnico. É assim que a gente descobre onde o modelo quebra.</li>
+      <li><b>Seu perfil, escrito uma vez.</b> Objetivo, número de alunos, tempo semanal, restrições. Isso entra nos passos 4 e 6 e é o que separa plano aplicável de plano genérico.</li>
+      <li><b>Para onde vai a saída.</b> Notion, Google Docs, Markdown ou dentro do próprio Núcleo. Muda o formato de entrega, não o modelo.</li>
+    </ul>
+    <div class="nota prosa" style="margin-top:20px"><strong>Enquanto isso:</strong> os prompts acima já funcionam soltos, sem nenhum sistema. Rode o passo 1 com o sumário de um livro seu e me mande o resultado — em uma rodada a gente já ajusta o vocabulário do modelo para o seu jeito de trabalhar.</div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <b>Livro → Framework</b> · modelo v1 · HumanCore Núcleo<br>
+    Versionado em <b>nucleo/modelo-livro/</b> — schema.json e prompts.md acompanham esta página e evoluem junto com o plano.
+  </div>
+</footer>
+
+<script>
+(function(){
+  /* ---- abas genéricas ---- */
+  function ligarAbas(lista){
+    lista.forEach(function(b){
+      b.addEventListener('click', function(){ selecionar(lista, b); });
+      b.addEventListener('keydown', function(e){
+        if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+        e.preventDefault();
+        var i = lista.indexOf(b);
+        var n = lista[(i + (e.key === 'ArrowRight' ? 1 : lista.length - 1)) % lista.length];
+        n.focus(); selecionar(lista, n);
+      });
+    });
+  }
+  function selecionar(lista, aba){
+    lista.forEach(function(b){
+      var alvo = document.getElementById(b.getAttribute('aria-controls'));
+      var sel = (b === aba);
+      b.setAttribute('aria-selected', sel ? 'true' : 'false');
+      if (alvo) alvo.hidden = !sel;
+    });
+  }
+  Array.prototype.forEach.call(document.querySelectorAll('[role="tablist"]'), function(tl){
+    ligarAbas(Array.prototype.slice.call(tl.querySelectorAll('.aba')));
+  });
+
+  /* ---- copiar ---- */
+  Array.prototype.forEach.call(document.querySelectorAll('.copiar'), function(botao){
+    botao.addEventListener('click', function(){
+      var pre = botao.closest('.codigo-caixa').querySelector('pre');
+      var texto = pre.innerText;
+      function ok(){
+        botao.textContent = 'Copiado';
+        botao.classList.add('feito');
+        setTimeout(function(){ botao.textContent = 'Copiar'; botao.classList.remove('feito'); }, 1800);
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(texto).then(ok, function(){ manual(texto, ok); });
+      } else { manual(texto, ok); }
+    });
+  });
+  function manual(texto, ok){
+    var ta = document.createElement('textarea');
+    ta.value = texto;
+    ta.setAttribute('readonly','');
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); ok(); } catch (e) { /* sem permissão: seleção fica no texto */ }
+    document.body.removeChild(ta);
+  }
+
+  /* ---- matriz por tipo de livro ---- */
+  var MAPA = {
+    protocolar: {
+      texto: 'Livro que ensina procedimento. É o caso mais fácil: passos, faixas e erros comuns estão escritos. O modelo exige protocolos completos e cobra parâmetros numéricos.',
+      b: { principios:'obrigatorio', protocolos:'obrigatorio', heuristicas:'opcional', decisoes:'obrigatorio', checklists:'obrigatorio', metricas:'obrigatorio', plano:'obrigatorio', perguntas:'obrigatorio', glossario:'opcional', lacunas:'obrigatorio' }
+    },
+    conceitual: {
+      texto: 'Livro que ensina um modo de pensar. Não tem passo a passo — e forçar um é onde a invenção começa. O modelo troca protocolos por heurísticas: gatilho, o que fazer, por quê.',
+      b: { principios:'obrigatorio', protocolos:'vazio', heuristicas:'obrigatorio', decisoes:'obrigatorio', checklists:'opcional', metricas:'opcional', plano:'obrigatorio', perguntas:'obrigatorio', glossario:'obrigatorio', lacunas:'obrigatorio' }
+    },
+    narrativo: {
+      texto: 'Livro que ensina por histórias. A regra está implícita no caso contado. O modelo extrai a regra e mantém o caso como fonte — mas não promete protocolo nem métrica que o autor não deu.',
+      b: { principios:'opcional', protocolos:'vazio', heuristicas:'obrigatorio', decisoes:'obrigatorio', checklists:'vazio', metricas:'vazio', plano:'opcional', perguntas:'obrigatorio', glossario:'vazio', lacunas:'obrigatorio' }
+    },
+    tecnico: {
+      texto: 'Referência acadêmica, densa em evidência. Aqui o valor está nos números e nas condições de validade. O modelo cobra métricas e o campo "quando não vale" em todo princípio.',
+      b: { principios:'obrigatorio', protocolos:'opcional', heuristicas:'opcional', decisoes:'obrigatorio', checklists:'opcional', metricas:'obrigatorio', plano:'opcional', perguntas:'obrigatorio', glossario:'obrigatorio', lacunas:'obrigatorio' }
+    }
+  };
+  var ROTULO = { obrigatorio:'Obrigatório', opcional:'Se houver base', vazio:'Fica vazio' };
+  var botoesTipo = Array.prototype.slice.call(document.querySelectorAll('#tipos .tipo-b'));
+  var blocos = Array.prototype.slice.call(document.querySelectorAll('#matriz .bloco-m'));
+  var explica = document.getElementById('explica-tipo');
+  function pintar(tipo){
+    var d = MAPA[tipo];
+    explica.textContent = d.texto;
+    blocos.forEach(function(bl){
+      var e = d.b[bl.dataset.b] || 'opcional';
+      bl.setAttribute('data-e', e);
+      bl.querySelector('span').textContent = ROTULO[e];
+    });
+  }
+  botoesTipo.forEach(function(b){
+    b.addEventListener('click', function(){
+      botoesTipo.forEach(function(o){ o.setAttribute('aria-pressed','false'); });
+      b.setAttribute('aria-pressed','true');
+      pintar(b.dataset.t);
+    });
+  });
+  pintar('protocolar');
+})();
+</script>

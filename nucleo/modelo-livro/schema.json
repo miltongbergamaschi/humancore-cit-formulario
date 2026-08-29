@@ -1,0 +1,311 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Framework Executável de Livro — HumanCore Núcleo v1",
+  "description": "Formato de saída obrigatório para a conversão de um livro em material aplicável. Todo item afirmativo precisa de fonte; sem fonte, o item não entra.",
+  "type": "object",
+  "required": ["meta", "tese", "avaliacao", "o_que_o_livro_nao_responde"],
+  "properties": {
+
+    "meta": {
+      "type": "object",
+      "required": ["titulo", "tipo_livro", "processado_em"],
+      "properties": {
+        "titulo": { "type": "string" },
+        "autores": { "type": "array", "items": { "type": "string" } },
+        "ano": { "type": "integer" },
+        "edicao": { "type": "string" },
+        "idioma": { "type": "string" },
+        "paginas": { "type": "integer" },
+        "tipo_livro": {
+          "type": "string",
+          "enum": ["protocolar", "conceitual", "narrativo", "tecnico", "misto"],
+          "description": "Define quais blocos são obrigatórios. Ver tabela de adaptação por tipo."
+        },
+        "processado_em": { "type": "string", "format": "date-time" },
+        "versao_modelo": { "type": "string" }
+      }
+    },
+
+    "leitor": {
+      "type": "object",
+      "description": "Contexto de quem vai aplicar. Sem isto, o plano de 30 dias vira genérico.",
+      "properties": {
+        "objetivo": { "type": "string" },
+        "contexto": { "type": "string" },
+        "nivel": { "type": "string", "enum": ["iniciante", "intermediario", "avancado"] },
+        "restricoes": { "type": "array", "items": { "type": "string" } },
+        "tempo_semanal_min": { "type": "integer" }
+      }
+    },
+
+    "tese": {
+      "type": "object",
+      "required": ["frase", "fonte"],
+      "properties": {
+        "frase": { "type": "string", "maxLength": 220 },
+        "explicacao": { "type": "string" },
+        "fonte": { "$ref": "#/$defs/fontes" }
+      }
+    },
+
+    "principios": {
+      "type": "array",
+      "maxItems": 7,
+      "description": "Limite rígido. Mais de 7 vira sumário, não framework.",
+      "items": {
+        "type": "object",
+        "required": ["nome", "enunciado", "fonte", "confianca"],
+        "properties": {
+          "id": { "type": "string" },
+          "nome": { "type": "string", "description": "Preservar o vocabulário do autor." },
+          "enunciado": { "type": "string" },
+          "porque_funciona": { "type": "string" },
+          "quando_nao_vale": { "type": "string" },
+          "confianca": { "$ref": "#/$defs/confianca" },
+          "fonte": { "$ref": "#/$defs/fontes" }
+        }
+      }
+    },
+
+    "protocolos": {
+      "type": "array",
+      "maxItems": 5,
+      "description": "Vazio é resposta válida em livro narrativo ou conceitual. Não forçar passo a passo onde o livro não deu.",
+      "items": {
+        "type": "object",
+        "required": ["nome", "quando_usar", "passos", "fonte", "confianca"],
+        "properties": {
+          "id": { "type": "string" },
+          "nome": { "type": "string" },
+          "objetivo": { "type": "string" },
+          "quando_usar": { "type": "string" },
+          "pre_requisitos": { "type": "array", "items": { "type": "string" } },
+          "passos": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["ordem", "acao", "criterio_de_feito"],
+              "properties": {
+                "ordem": { "type": "integer" },
+                "acao": { "type": "string" },
+                "detalhe": { "type": "string" },
+                "criterio_de_feito": { "type": "string", "description": "Observável por terceiro. 'Entender melhor' não é critério." }
+              }
+            }
+          },
+          "parametros": {
+            "type": "array",
+            "description": "Só preencher com números que aparecem no livro. Nada de estimativa.",
+            "items": {
+              "type": "object",
+              "required": ["nome", "valor", "fonte"],
+              "properties": {
+                "nome": { "type": "string" },
+                "valor": { "type": "string" },
+                "unidade": { "type": "string" },
+                "fonte": { "$ref": "#/$defs/fontes" }
+              }
+            }
+          },
+          "erros_comuns": { "type": "array", "items": { "type": "string" } },
+          "variacoes": { "type": "array", "items": { "type": "string" } },
+          "confianca": { "$ref": "#/$defs/confianca" },
+          "fonte": { "$ref": "#/$defs/fontes" }
+        }
+      }
+    },
+
+    "heuristicas": {
+      "type": "array",
+      "description": "Substitui protocolos em livros conceituais e narrativos: regra de bolso com gatilho.",
+      "items": {
+        "type": "object",
+        "required": ["gatilho", "faca_isto", "fonte"],
+        "properties": {
+          "gatilho": { "type": "string", "description": "A situação concreta que dispara a regra." },
+          "faca_isto": { "type": "string" },
+          "porque": { "type": "string" },
+          "fonte": { "$ref": "#/$defs/fontes" }
+        }
+      }
+    },
+
+    "decisoes": {
+      "type": "array",
+      "description": "Regras se/então extraídas do livro. É o que transforma leitura em julgamento aplicado.",
+      "items": {
+        "type": "object",
+        "required": ["situacao", "se", "entao", "fonte"],
+        "properties": {
+          "situacao": { "type": "string" },
+          "se": { "type": "string" },
+          "entao": { "type": "string" },
+          "senao": { "type": "string" },
+          "fonte": { "$ref": "#/$defs/fontes" }
+        }
+      }
+    },
+
+    "checklists": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["contexto", "momento_de_uso", "itens"],
+        "properties": {
+          "id": { "type": "string" },
+          "contexto": { "type": "string" },
+          "momento_de_uso": { "type": "string", "enum": ["antes", "durante", "depois", "recorrente"] },
+          "itens": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["texto"],
+              "properties": {
+                "texto": { "type": "string" },
+                "criterio": { "type": "string" },
+                "fonte": { "$ref": "#/$defs/fontes" }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "metricas": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["indicador", "como_medir", "fonte"],
+        "properties": {
+          "indicador": { "type": "string" },
+          "como_medir": { "type": "string" },
+          "frequencia": { "type": "string" },
+          "meta": { "type": "string" },
+          "sinal_de_alerta": { "type": "string" },
+          "fonte": { "$ref": "#/$defs/fontes" }
+        }
+      }
+    },
+
+    "plano_30_dias": {
+      "type": "array",
+      "maxItems": 4,
+      "description": "Quatro semanas, no máximo 12 tarefas no total. O limite é o que força a priorização.",
+      "items": {
+        "type": "object",
+        "required": ["semana", "foco", "tarefas"],
+        "properties": {
+          "semana": { "type": "integer", "minimum": 1, "maximum": 4 },
+          "foco": { "type": "string" },
+          "revisao_da_semana": { "type": "string", "description": "A pergunta que você responde no domingo para saber se avançou." },
+          "tarefas": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["titulo", "criterio_de_feito", "fonte"],
+              "properties": {
+                "titulo": { "type": "string" },
+                "descricao": { "type": "string" },
+                "esforco_min": { "type": "integer" },
+                "dia_sugerido": { "type": "string" },
+                "depende_de": { "type": "string" },
+                "criterio_de_feito": { "type": "string" },
+                "fonte": { "$ref": "#/$defs/fontes" }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "perguntas_de_revisao": {
+      "type": "array",
+      "description": "Alimentam a revisão espaçada. Pergunta fechada, resposta curta, fonte conferível.",
+      "items": {
+        "type": "object",
+        "required": ["pergunta", "resposta", "fonte"],
+        "properties": {
+          "pergunta": { "type": "string" },
+          "resposta": { "type": "string" },
+          "intervalo_inicial_dias": { "type": "integer", "default": 2 },
+          "fonte": { "$ref": "#/$defs/fontes" }
+        }
+      }
+    },
+
+    "glossario": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["termo", "definicao", "fonte"],
+        "properties": {
+          "termo": { "type": "string" },
+          "definicao": { "type": "string" },
+          "fonte": { "$ref": "#/$defs/fontes" }
+        }
+      }
+    },
+
+    "o_que_o_livro_nao_responde": {
+      "type": "array",
+      "description": "Campo obrigatório. É a agenda da próxima busca na biblioteca.",
+      "items": {
+        "type": "object",
+        "required": ["pergunta"],
+        "properties": {
+          "pergunta": { "type": "string" },
+          "por_que_importa": { "type": "string" },
+          "onde_procurar": { "type": "string" }
+        }
+      }
+    },
+
+    "conflitos_com_outras_fontes": {
+      "type": "array",
+      "description": "Preenchido no cruzamento com o acervo já indexado, não pela leitura isolada.",
+      "items": {
+        "type": "object",
+        "required": ["afirmacao", "conflita_com"],
+        "properties": {
+          "afirmacao": { "type": "string" },
+          "conflita_com": { "type": "string" },
+          "observacao": { "type": "string" }
+        }
+      }
+    },
+
+    "avaliacao": {
+      "type": "object",
+      "required": ["densidade_acionavel", "confianca_global"],
+      "properties": {
+        "densidade_acionavel": { "type": "integer", "minimum": 0, "maximum": 10, "description": "Quanto do livro virou coisa aplicável. Abaixo de 4, avisar que o livro é de leitura, não de aplicação." },
+        "cobertura_do_livro_pct": { "type": "integer" },
+        "itens_removidos_na_verificacao": { "type": "integer" },
+        "itens_sem_fonte": { "type": "integer", "description": "Tem que ser zero. Diferente de zero reprova o processamento." },
+        "confianca_global": { "$ref": "#/$defs/confianca" }
+      }
+    }
+  },
+
+  "$defs": {
+    "confianca": {
+      "type": "string",
+      "enum": ["alta", "media", "baixa"],
+      "description": "alta = o autor afirma diretamente; media = inferido de mais de um trecho; baixa = interpretação."
+    },
+    "fontes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["citacao_literal"],
+        "properties": {
+          "pagina": { "type": "integer" },
+          "localizacao": { "type": "string", "description": "Para EPUB sem paginação fixa." },
+          "capitulo": { "type": "string" },
+          "citacao_literal": { "type": "string", "maxLength": 200, "description": "Máximo de 25 palavras, copiadas exatamente. Serve para conferir, não para substituir o livro." }
+        }
+      }
+    }
+  }
+}
