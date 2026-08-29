@@ -119,6 +119,47 @@ legível para eu ler. Ao final, me diga a sua avaliação: densidade acionável 
 
 ---
 
+## Prompt C — conferir preços e limites antes de construir
+
+> Os números do plano têm data e os planos gratuitos mudam. Rode esta pesquisa
+> antes da fase 1 — três respostas dela podem mudar a arquitetura.
+
+```
+Preciso conferir preços e limites atuais antes de construir um sistema pessoal
+de transcrição e organização de estudo. Pesquise na web e devolva cada número
+com link da fonte e data da página. Onde não achar valor oficial, escreva "não
+confirmado" — não estime.
+
+1. Transcrição de fala para texto por API: preço por minuto ou por hora de
+   áudio em Deepgram, AssemblyAI, OpenAI, Google e Azure. Diga se o preço muda
+   com separação de falantes e se há crédito inicial gratuito, de quanto.
+2. Preço por milhão de tokens, entrada e saída, dos modelos Claude atuais.
+3. Whisper rodando localmente: diferença de qualidade em português entre os
+   tamanhos de modelo, memória de vídeo necessária para cada um, velocidade
+   esperada com e sem placa de vídeo, e qual projeto usar hoje (faster-whisper,
+   whisper.cpp ou outro). Como fazer separação de falantes offline e o quanto
+   isso complica.
+4. Planos gratuitos da Vercel e do Supabase: armazenamento, banda, tamanho
+   máximo de upload e tempo máximo de execução de função. Responda
+   explicitamente: dá para subir um arquivo de áudio de 1 GB e rodar um
+   processamento de 20 minutos dentro do plano gratuito? Se não der, qual o
+   caminho mais barato que dá.
+5. Como capturar o áudio que sai do meu computador, para gravar aula online em
+   SEU_SISTEMA_OPERACIONAL: o caminho mais simples e os programas necessários.
+6. Gravar áudio em segundo plano no celular com a tela apagada: o que iOS e
+   Android permitem hoje, o que o Expo/React Native suporta, e como instalar um
+   app só no meu aparelho sem publicar em loja.
+7. Legendas automáticas do YouTube: como obter dentro dos termos de uso, e qual
+   a qualidade em português.
+8. Zoom e Google Meet: em quais planos existe gravação local e transcrição
+   automática hoje.
+
+Converta tudo que der para dólar por hora de áudio, para eu comparar. No fim,
+liste separadamente o que você não conseguiu confirmar.
+```
+
+---
+
 ## Depois de rodar
 
 Volte aqui com o resultado. Com o framework do livro em mãos, ajustamos o modelo
