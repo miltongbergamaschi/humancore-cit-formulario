@@ -435,6 +435,21 @@ footer b{color:#9fe8c6;font-weight:500}
 .anota:last-child{margin-bottom:0}
 .anota .quando{font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:var(--verde-esc);letter-spacing:.06em}
 .anota p{margin:2px 0 0;font-size:13px;line-height:1.5;color:var(--ink-2);font-family:"Familjen Grotesk",sans-serif}
+.destaque{
+  background:var(--verde-tint);border:1px solid var(--verde);border-radius:var(--raio);
+  padding:20px 22px;margin:22px 0 0;
+}
+.destaque h3{margin:0 0 8px;font-size:20px;color:var(--verde-esc)}
+.destaque p{margin:0;font-size:16px;color:var(--ink);max-width:62ch}
+.destaque p + p{margin-top:9px}
+.caminho{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:22px}
+.caminho > div{background:var(--surface);border:1px solid var(--line);border-radius:var(--raio);padding:18px;box-shadow:var(--sombra)}
+.caminho .preco{font-family:"Familjen Grotesk",sans-serif;font-size:26px;font-weight:700;letter-spacing:-.02em;display:block;margin-bottom:2px}
+.caminho .preco.gratis{color:var(--verde-esc)}
+.caminho .un{font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:var(--ink-3);letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:10px}
+.caminho h4{margin:0 0 5px;font-size:15.5px}
+.caminho p{margin:0;font-size:14px;color:var(--ink-2);line-height:1.5}
+.caminho .contra{display:block;margin-top:8px;font-size:13px;color:var(--ink-3);border-top:1px dashed var(--line);padding-top:8px}
 </style>
 
 <header class="capa">
@@ -444,9 +459,9 @@ footer b{color:#9fe8c6;font-weight:500}
     <p class="linha-fina">Grava as aulas e reuniões que você assiste, transcreve, estrutura o conteúdo, transforma livros em protocolo e guarda suas anotações num lugar só. Uso pessoal, nada publicado.</p>
     <div class="capa-meta">
       <span>Uso · <b>só você</b></span>
-      <span>Escopo · <b>plano + protótipo</b></span>
-      <span>Estimativa · <b>7 a 9 semanas</b></span>
+      <span>Construção · <b>7 a 9 semanas</b></span>
       <span>Usável a partir da · <b>semana 4</b></span>
+      <span>Custo mensal · <b>US$ 0 a 25</b></span>
     </div>
   </div>
 </header>
@@ -457,7 +472,7 @@ footer b{color:#9fe8c6;font-weight:500}
   <div class="wrap">
     <p class="eyebrow">01 · O que o sistema faz</p>
     <h2>Cinco funções, um caminho só</h2>
-    <p class="lede prosa">Como é para você estudar e aplicar — não para vender e não para os alunos — o sistema fica bem menor: sem contas, sem times, sem loja de aplicativo. Sobra o que interessa.</p>
+    <p class="lede prosa">Como é para você estudar e aplicar — não para vender e não para os alunos — o sistema fica pequeno: sem contas, sem times, sem loja de aplicativo, sem bot entrando em reunião.</p>
     <div class="grade g4" style="margin-top:24px">
       <div class="cartao">
         <div class="icone">01</div>
@@ -490,38 +505,113 @@ footer b{color:#9fe8c6;font-weight:500}
 
 <section>
   <div class="wrap">
-    <p class="eyebrow">02 · O que mudou com suas respostas</p>
-    <h2>Três decisões que encolheram o projeto</h2>
-    <div class="prosa">
-      <p>Tirar o bot de reunião, o uso por terceiros e o módulo de idioma cortou justamente as partes mais caras, mais frágeis e mais burocráticas. O que sobrou é mais rápido de construir e mais barato de manter.</p>
-    </div>
-    <div class="grade g2" style="margin:22px 0 20px">
-      <div class="cartao">
-        <h4>Sem bot na reunião</h4>
-        <p>Some a integração mais cara e a que mais quebra. No lugar: você grava o áudio do próprio computador, ou usa a gravação local que o Zoom e o Meet já fazem, e joga o arquivo no sistema. Menos automático, muito mais simples — e sem custo por hora de reunião.</p>
-      </div>
-      <div class="cartao">
-        <h4>Uso pessoal, nada publicado</h4>
-        <p>Sem contas, sem permissões, sem termos de uso, sem tratar dado de aluno. O material fica no seu acervo privado e é usado por você para estudar — que é o cenário mais tranquilo tanto do lado legal quanto do lado técnico.</p>
-      </div>
-      <div class="cartao">
-        <h4>Sem curso de inglês</h4>
-        <p>Nada de vocabulário, cartão, treino de fala ou tarefa de idioma. Aula em inglês é transcrita como qualquer outra e vira anotação no caderno. Foi a fase inteira que saiu do plano — duas semanas a menos.</p>
-      </div>
-      <div class="cartao ambar">
-        <h4>O que continua valendo</h4>
-        <p>Não quebrar proteção de vídeo de plataforma paga, e avisar quando houver outras pessoas na gravação. Fora isso, o terreno está limpo.</p>
-      </div>
+    <p class="eyebrow">02 · Custo</p>
+    <h2>Tem custo para transcrever?</h2>
+    <div class="destaque">
+      <h3>Tem, mas é pequeno — e existe caminho de custo zero.</h3>
+      <p>Transcrever uma hora de áudio custa entre <b>nada e US$ 0,36</b>, dependendo de onde o processamento roda. Não existe assinatura nem mensalidade: você paga por hora processada, e só quando usa.</p>
+      <p>Para o seu volume provável — 30 horas de aula por mês e dois livros — o sistema inteiro fica entre <b>US$ 5 e US$ 25 por mês</b>, transcrição, organização e hospedagem incluídas. Menos que uma assinatura de streaming.</p>
     </div>
 
-    <h3>De onde vem cada conteúdo</h3>
-    <div class="tabela-wrap">
+    <h3>Três caminhos para a transcrição</h3>
+    <div class="caminho">
+      <div>
+        <span class="preco gratis">US$ 0</span>
+        <span class="un">por hora de áudio</span>
+        <h4>No seu computador</h4>
+        <p>O modelo Whisper roda na sua máquina. Custo por hora: zero, só energia. A qualidade em português do modelo grande é equivalente à das APIs pagas.</p>
+        <span class="contra">Em troca: precisa de uma máquina razoável (placa de vídeo ajuda muito), a máquina fica ocupada durante o processamento e a instalação é mais chata. Separar quem falou é mais difícil offline.</span>
+      </div>
+      <div>
+        <span class="preco gratis">US$ 0</span>
+        <span class="un">quando já vem pronta</span>
+        <h4>Transcrição que já existe</h4>
+        <p>Vídeo do YouTube quase sempre já tem legenda automática — é só puxar. Zoom e Meet também geram transcrição própria em alguns planos.</p>
+        <span class="contra">Em troca: a qualidade em português varia bastante, e não serve para aula presencial nem para áudio que você mesmo gravou.</span>
+      </div>
+      <div>
+        <span class="preco">US$ 0,16 a 0,36</span>
+        <span class="un">por hora de áudio</span>
+        <h4>API na nuvem</h4>
+        <p>Você manda o arquivo, recebe o texto pronto com pontuação, marcação de tempo e separação de falantes. Sem instalar nada, sem ocupar sua máquina.</p>
+        <span class="contra">Em troca: o áudio sai do seu computador e vai para o provedor. A maioria oferece crédito inicial gratuito que já cobre as primeiras dezenas de horas.</span>
+      </div>
+    </div>
+    <p class="prosa" style="margin-top:16px;font-size:14.5px;color:var(--ink-3)">Os preços de transcrição acima são ordem de grandeza — variam por provedor e por recurso ativado, e precisam ser confirmados na tabela vigente antes de contratar.</p>
+
+    <h3>E a parte que organiza o conteúdo?</h3>
+    <div class="prosa">
+      <p>Essa é a segunda conta, e é onde o custo realmente varia. Uma hora de aula rende cerca de <b>15 mil tokens</b> de transcrição. Organizar isso — resumo, decisões, ações, com uma segunda passada de conferência — custa por hora de conteúdo:</p>
+    </div>
+    <div class="tabela-wrap" style="margin:16px 0 18px">
+      <table>
+        <thead><tr><th>Modelo</th><th>Preço por milhão de tokens</th><th>Custo por hora de aula</th><th>Quando usar</th></tr></thead>
+        <tbody>
+          <tr><td><b>Haiku 4.5</b></td><td>US$ 1 entrada · US$ 5 saída</td><td><b>~US$ 0,03</b></td><td>Transcrição limpa, aula simples, volume alto</td></tr>
+          <tr><td><b>Sonnet 5</b></td><td>US$ 2 entrada · US$ 10 saída</td><td><b>~US$ 0,10</b></td><td>Padrão recomendado: bom equilíbrio</td></tr>
+          <tr><td><b>Opus 5</b></td><td>US$ 5 entrada · US$ 25 saída</td><td><b>~US$ 0,30</b></td><td>Conteúdo denso, livro técnico, quando o resumo precisa acertar</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="prosa" style="font-size:14.5px;color:var(--ink-3)">Conta feita com duas passadas por conteúdo — uma para estruturar, outra para conferir o que foi afirmado. Um livro inteiro passa três vezes pelo modelo e custa entre US$ 0,80 e US$ 4,30, uma vez só: o framework fica salvo.</p>
+
+    <h3>Sua conta, com seus números</h3>
+    <div class="calc" style="margin-top:18px">
+      <div>
+        <div class="campo-calc">
+          <label for="horas">Horas de aula e reunião por mês <b><span id="v-horas">30</span> h</b></label>
+          <input type="range" id="horas" min="5" max="120" step="5" value="30">
+        </div>
+        <div class="campo-calc">
+          <label for="livros">Livros processados por mês <b><span id="v-livros">2</span></b></label>
+          <input type="range" id="livros" min="0" max="10" step="1" value="2">
+        </div>
+        <div class="campo-calc">
+          <label>Onde a transcrição roda</label>
+          <div class="opcoes-calc" id="motor">
+            <button type="button" data-v="0" aria-pressed="false">Seu computador</button>
+            <button type="button" data-v="0.16" aria-pressed="true">Nuvem econômica</button>
+            <button type="button" data-v="0.36" aria-pressed="false">Nuvem completa</button>
+          </div>
+        </div>
+        <div class="campo-calc">
+          <label>Modelo que organiza</label>
+          <div class="opcoes-calc" id="modelo">
+            <button type="button" data-h="0.03" data-l="0.8" aria-pressed="false">Haiku 4.5</button>
+            <button type="button" data-h="0.10" data-l="1.7" aria-pressed="true">Sonnet 5</button>
+            <button type="button" data-h="0.30" data-l="4.3" aria-pressed="false">Opus 5</button>
+          </div>
+        </div>
+        <p style="font-size:13.5px;color:var(--ink-3);margin:14px 0 0;max-width:52ch">A hospedagem e o banco de uso pessoal cabem nos planos gratuitos ou mais baratos: cerca de US$ 3 por mês, subindo só depois de centenas de horas guardadas.</p>
+      </div>
+      <div class="resultado">
+        <span class="rot">Custo mensal estimado</span>
+        <span class="valor" id="v-total">US$ 14</span>
+        <span class="brl" id="v-brl">≈ R$ 77 · câmbio ilustrativo 5,50</span>
+        <div class="quebra">
+          <div><span>Transcrição</span><span id="q-stt">US$ 4.8</span></div>
+          <div><span>Organização</span><span id="q-llm">US$ 3</span></div>
+          <div><span>Livros</span><span id="q-livro">US$ 3.4</span></div>
+          <div><span>Infra</span><span id="q-infra">US$ 3</span></div>
+        </div>
+      </div>
+    </div>
+    <p class="prosa" style="margin-top:18px;font-size:15px;color:var(--ink-2)">Para comparar: o gravador físico que inspirou o pedido custa algumas centenas de dólares no aparelho, mais assinatura anual com teto de horas — e não faz framework de livro, nem biblioteca, nem caderno, nem painel de ação.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">03 · Entradas</p>
+    <h2>De onde vem cada conteúdo</h2>
+    <p class="lede prosa">Sem bot entrando em reunião: aula online e reunião entram pela gravação que você mesmo faz, ou pela que a própria plataforma já gera.</p>
+    <div class="tabela-wrap" style="margin-top:22px">
       <table>
         <thead><tr><th>Fonte</th><th>Como entra</th><th>Viabilidade</th><th>Observação</th></tr></thead>
         <tbody>
           <tr><td><b>Aula presencial</b></td><td>App no celular gravando em segundo plano</td><td><span class="pill ok">Alta</span></td><td>No iPhone precisa de app instalado, não serve site salvo na tela</td></tr>
           <tr><td><b>Aula online e reunião</b><br><span class="sub">Zoom, Meet, Teams</span></td><td>Gravação do áudio do computador, ou a gravação local que a própria plataforma faz</td><td><span class="pill ok">Alta</span></td><td>Havendo outras pessoas, avise que está gravando</td></tr>
-          <tr><td><b>YouTube, ao vivo ou gravado</b></td><td>Colar o link; usa as legendas quando existem</td><td><span class="pill ok">Alta</span></td><td>Estudo pessoal, sem redistribuir</td></tr>
+          <tr><td><b>YouTube, ao vivo ou gravado</b></td><td>Colar o link; usa a legenda automática quando existe, e aí a transcrição sai de graça</td><td><span class="pill ok">Alta</span></td><td>Estudo pessoal, sem redistribuir</td></tr>
           <tr><td><b>Plataformas de curso</b><br><span class="sub">Hotmart, Kiwify, Udemy…</span></td><td>Captura do áudio do seu aparelho enquanto você assiste ao curso que comprou</td><td><span class="pill ok">Alta</span></td><td>Guardar transcrição e notas, nunca o vídeo</td></tr>
           <tr><td><b>Baixar o vídeo do curso</b></td><td>—</td><td><span class="pill nao">Fora</span></td><td>Quebrar a proteção do vídeo continua fora, mesmo em uso pessoal</td></tr>
           <tr><td><b>Livros, artigos, PDFs</b></td><td>Envio direto na biblioteca</td><td><span class="pill ok">Alta</span></td><td>Vira framework executável pelo modelo de livros</td></tr>
@@ -533,7 +623,7 @@ footer b{color:#9fe8c6;font-weight:500}
 
 <section>
   <div class="wrap">
-    <p class="eyebrow">03 · Como funciona por dentro</p>
+    <p class="eyebrow">04 · Como funciona por dentro</p>
     <h2>Um trilho, várias entradas</h2>
     <p class="lede prosa">Toda fonte cai no mesmo caminho. Adicionar uma origem nova é escrever só o primeiro passo — o resto já está pronto.</p>
     <div class="fluxo" style="margin-top:24px" role="list">
@@ -541,7 +631,7 @@ footer b{color:#9fe8c6;font-weight:500}
       <div class="fluxo-seta" aria-hidden="true">→</div>
       <div class="fluxo-no" role="listitem"><span class="n">Fila</span><strong>Processamento</strong><span class="det">Corte em partes, retomada de falha</span></div>
       <div class="fluxo-seta" aria-hidden="true">→</div>
-      <div class="fluxo-no" role="listitem"><span class="n">Áudio</span><strong>Transcrição</strong><span class="det">Português ou inglês, com tempo</span></div>
+      <div class="fluxo-no" role="listitem"><span class="n">Áudio</span><strong>Transcrição</strong><span class="det">Local ou na nuvem, com marcação de tempo</span></div>
       <div class="fluxo-seta" aria-hidden="true">→</div>
       <div class="fluxo-no" role="listitem"><span class="n">Sentido</span><strong>Estruturação</strong><span class="det">Resumo, ações, origem de cada item</span></div>
       <div class="fluxo-seta" aria-hidden="true">→</div>
@@ -556,8 +646,8 @@ footer b{color:#9fe8c6;font-weight:500}
           <tr><td>Web</td><td>Next.js em hospedagem gratuita</td><td>Mesmo tipo de front do formulário atual; no plano pessoal, custo zero</td></tr>
           <tr><td>Banco e arquivos</td><td>Postgres gerenciado com busca vetorial</td><td>Um serviço só resolve dados, arquivos e busca por significado</td></tr>
           <tr><td>Fila</td><td>Tarefas em segundo plano com retomada</td><td>Transcrever 2h de aula não cabe numa requisição web</td></tr>
-          <tr><td>Transcrição</td><td>API na nuvem, com opção de rodar no seu computador depois</td><td>Começa simples; se o volume crescer, o modelo local zera o custo por hora</td></tr>
-          <tr><td>Estruturação</td><td>Modelo de linguagem com saída em formato fixo</td><td>Schema validado evita resumo bonito e inútil</td></tr>
+          <tr><td>Transcrição</td><td>Chave trocável entre nuvem e modelo local</td><td>Começa na nuvem pela simplicidade; se o volume crescer, troca para local e o custo por hora zera</td></tr>
+          <tr><td>Estruturação</td><td>Modelo de linguagem com saída em formato fixo</td><td>Schema validado evita resumo bonito e inútil; o modelo também é trocável por conteúdo</td></tr>
           <tr><td>Celular</td><td>App em React Native, instalado direto no seu aparelho</td><td>Sem publicar em loja: é só para você, então é build pessoal</td></tr>
           <tr><td>Acesso</td><td>Uma senha só, sem sistema de contas</td><td>Um usuário. Cada camada a menos é uma semana a menos</td></tr>
         </tbody>
@@ -568,7 +658,7 @@ footer b{color:#9fe8c6;font-weight:500}
 
 <section>
   <div class="wrap">
-    <p class="eyebrow">04 · Layout</p>
+    <p class="eyebrow">05 · Layout</p>
     <h2>Como ficaria na tela</h2>
     <p class="lede prosa">Seis telas, na ordem de um dia normal de estudo. Clique nas abas — é a interface proposta, com conteúdo de exemplo do seu contexto.</p>
 
@@ -893,14 +983,13 @@ footer b{color:#9fe8c6;font-weight:500}
     </div>
   </div>
 </section>
-
 <section>
   <div class="wrap">
-    <p class="eyebrow">05 · Livro → framework</p>
+    <p class="eyebrow">06 · Livro → framework</p>
     <h2>O modelo dos livros já está montado</h2>
     <div class="prosa">
       <p>Um livro de 600 páginas não cabe de uma vez no modelo, e pedir “resuma” devolve texto genérico. O caminho é outro: quebrar em partes, extrair de cada uma só o que é <b>acionável</b>, consolidar e obrigar a saída a preencher um formato fixo — com página e citação em cada item, e um campo para o que o livro <b>não</b> responde.</p>
-      <p><a href="https://claude.ai/code/artifact/749f3124-4303-4517-b280-616f9559fc75"><b>O modelo completo está detalhado à parte</b></a>: os seis passos, o schema inteiro, as sete regras e os prompts prontos para copiar. Dá para testar hoje, na mão, sem esperar o sistema.</p>
+      <p><a href="https://claude.ai/code/artifact/749f3124-4303-4517-b280-616f9559fc75"><b>O modelo completo está detalhado à parte</b></a>: os seis passos, o schema inteiro, as sete regras e os prompts prontos para copiar. Dá para testar hoje, na mão, sem esperar o sistema — custa entre US$ 0,80 e US$ 4,30 por livro, uma vez só.</p>
       <p>Quando você me mandar as imagens dos prompts que já usa, comparo campo a campo e junto o que for melhor dos dois.</p>
     </div>
   </div>
@@ -908,7 +997,7 @@ footer b{color:#9fe8c6;font-weight:500}
 
 <section>
   <div class="wrap">
-    <p class="eyebrow">06 · Execução</p>
+    <p class="eyebrow">07 · Execução</p>
     <h2>Quatro fases, usável a partir da quarta semana</h2>
     <p class="lede prosa">A ordem é de risco, não de dificuldade: primeiro validamos que o formato da saída serve para você, sem escrever código. Depois automatizamos o que você mais usa.</p>
     <div style="margin-top:26px">
@@ -916,8 +1005,8 @@ footer b{color:#9fe8c6;font-weight:500}
         <div class="fase-n">FASE 0<b>1 semana</b></div>
         <div>
           <h4>Piloto manual, sem código</h4>
-          <p>Você grava uma aula e me manda um livro. Eu rodo o processo à mão e devolvo as saídas. Serve para achar o formato certo antes de construir em cima do errado.</p>
-          <p class="entrega">Entrega: 3 saídas reais + formato aprovado por você</p>
+          <p>Você grava uma aula e me manda um livro. Eu rodo o processo à mão e devolvo as saídas. Serve para achar o formato certo antes de construir em cima do errado — e custa alguns centavos.</p>
+          <p class="entrega">Entrega: saídas reais + formato aprovado por você</p>
         </div>
       </div>
       <div class="fase">
@@ -952,48 +1041,7 @@ footer b{color:#9fe8c6;font-weight:500}
           <p class="entrega">Entrega: painel de ação + fila diária de revisão</p>
         </div>
       </div>
-      </div>
-  </div>
-</section>
-
-<section>
-  <div class="wrap">
-    <p class="eyebrow">07 · Custo</p>
-    <h2>Quanto custa manter isso rodando</h2>
-    <p class="lede prosa">Sem bot e sem usuários, o custo despenca. Mexa nos controles com seu volume real — são valores de ordem de grandeza, a confirmar nas tabelas vigentes na hora de contratar.</p>
-    <div class="calc" style="margin-top:24px">
-      <div>
-        <div class="campo-calc">
-          <label for="horas">Horas de aula e reunião por mês <b><span id="v-horas">30</span> h</b></label>
-          <input type="range" id="horas" min="5" max="120" step="5" value="30">
-        </div>
-        <div class="campo-calc">
-          <label for="livros">Livros processados por mês <b><span id="v-livros">2</span></b></label>
-          <input type="range" id="livros" min="0" max="10" step="1" value="2">
-        </div>
-        <div class="campo-calc">
-          <label>Onde a transcrição roda</label>
-          <div class="opcoes-calc" id="motor">
-            <button type="button" data-v="0.26" aria-pressed="true">Nuvem, melhor qualidade</button>
-            <button type="button" data-v="0.15" aria-pressed="false">Nuvem, econômica</button>
-            <button type="button" data-v="0.02" aria-pressed="false">Seu computador</button>
-          </div>
-        </div>
-        <p style="font-size:13.5px;color:var(--ink-3);margin:14px 0 0;max-width:52ch">A infraestrutura de uso pessoal cabe nos planos gratuitos ou mais baratos de hospedagem e banco: cerca de US$ 5 por mês, subindo só depois de centenas de horas guardadas. Rodando a transcrição no seu computador, o custo por hora quase some — em troca de deixar a máquina trabalhando.</p>
-      </div>
-      <div class="resultado">
-        <span class="rot">Custo mensal estimado</span>
-        <span class="valor" id="v-total">US$ 20</span>
-        <span class="brl" id="v-brl">≈ R$ 110 · câmbio ilustrativo 5,50</span>
-        <div class="quebra">
-          <div><span>Transcrição</span><span id="q-stt">US$ 8</span></div>
-          <div><span>Estruturação</span><span id="q-llm">US$ 5</span></div>
-          <div><span>Livros</span><span id="q-livro">US$ 2</span></div>
-          <div><span>Infra base</span><span id="q-infra">US$ 5</span></div>
-        </div>
-      </div>
     </div>
-    <p class="prosa" style="margin-top:18px;font-size:15px;color:var(--ink-2)">Para comparar: o gravador físico que inspirou o pedido custa algumas centenas de dólares no aparelho, mais assinatura anual com teto de horas — e não faz framework de livro, nem biblioteca, nem caderno, nem painel de ação.</p>
   </div>
 </section>
 
@@ -1002,18 +1050,20 @@ footer b{color:#9fe8c6;font-weight:500}
     <p class="eyebrow">08 · Recomendações</p>
     <h2>O que eu faria no seu lugar</h2>
     <ul class="lista prosa" style="margin-top:20px">
+      <li><b>Começar na nuvem, deixar a porta aberta para o local.</b> A transcrição na nuvem custa centavos e funciona no primeiro dia. Se o volume crescer, trocar para o modelo no seu computador é mudar uma configuração — desde que a troca esteja prevista desde o começo, e por isso ela entra na fase 1.</li>
+      <li><b>Modelo mais barato para aula simples, melhor para livro.</b> A escolha não precisa ser única: transcrição limpa de aula expositiva sai bem com o modelo econômico; livro técnico e conteúdo denso merecem o modelo bom. A diferença de custo é de dez vezes.</li>
       <li><b>Começar pelo formato, não pela captura.</b> A captura é chata mas previsível. O que decide se você vai usar o sistema é a qualidade da saída — e isso dá para testar na primeira semana, sem código.</li>
       <li><b>Guardar transcrição, descartar áudio.</b> Depois de processado, o áudio bruto só ocupa espaço: a transcrição e as suas anotações são o que você vai reabrir. Apagar o áudio em 30 dias mantém o custo baixo e a casa arrumada.</li>
       <li><b>Uma tarefa por sessão, não dez.</b> A tentação é gerar 15 ações por aula. Duas semanas depois, são 90 ações abandonadas. Prefiro o sistema devolver no máximo três, e cobrar as três.</li>
       <li><b>Anotar durante, não depois.</b> A anotação boa nasce no minuto em que a dúvida aparece. Por isso o caderno fica colado na transcrição, com o horário marcado — e por isso ele não cobra nada de você depois.</li>
       <li><b>Não recriar gerenciador de tarefas.</b> Se você já vive no Google Agenda, as ações devem nascer lá. O Núcleo é a fonte, não o destino.</li>
-      <li><b>Exportar sempre em Markdown.</b> Uso pessoal e sistema feito sob medida combinam com um risco: ficar preso. Exportação simples resolve, e custa pouco de fazer desde o começo.</li>
-      <li><b>Aproveitar o que já existe aqui.</b> O formulário da CIT já tem envio de arquivo, validação e a identidade visual. A biblioteca reaproveita quase tudo isso.</li>
+      <li><b>Exportar sempre em Markdown.</b> Uso pessoal e sistema sob medida combinam com um risco: ficar preso. Exportação simples resolve, e custa pouco de fazer desde o começo.</li>
     </ul>
 
     <h3>O que ainda preciso saber</h3>
     <div class="grade g2" style="margin-top:14px">
       <div class="cartao"><h4>iPhone ou Android?</h4><p>Muda como o app da fase 2 é instalado no seu aparelho. No iPhone é um pouco mais burocrático — nada impeditivo, mas o prazo muda.</p></div>
+      <div class="cartao"><h4>Que computador você tem?</h4><p>Se tiver placa de vídeo dedicada ou for Mac com chip da Apple, a transcrição local vira opção real e o custo por hora zera.</p></div>
       <div class="cartao"><h4>Onde as tarefas devem viver?</h4><p>Dentro do Núcleo, no Google Agenda ou no Notion. Prefiro integrar ao que você já usa a inventar mais um lugar para você esquecer.</p></div>
       <div class="cartao ambar"><h4>As imagens dos prompts</h4><p>Continuam não tendo chegado na conversa. Com elas, o modelo de livros sai igual ao formato que você já validou.</p></div>
     </div>
@@ -1024,8 +1074,8 @@ footer b{color:#9fe8c6;font-weight:500}
 
 <footer>
   <div class="wrap">
-    <b>Núcleo</b> · sistema pessoal de estudo · plano, protótipo e estimativas<br>
-    Próximo passo: fase 0 — você me manda uma gravação e um livro, e eu devolvo as saídas reais em uma semana.
+    <b>Núcleo</b> · sistema pessoal de estudo · plano, protótipo e custos<br>
+    Próximo passo: fase 0 — você me manda uma gravação e um livro, e eu devolvo as saídas reais em uma semana, por alguns centavos.
   </div>
 </footer>
 
@@ -1055,13 +1105,17 @@ footer b{color:#9fe8c6;font-weight:500}
   var horas = document.getElementById('horas');
   var livros = document.getElementById('livros');
   var motorBtns = Array.prototype.slice.call(document.querySelectorAll('#motor button'));
-  var taxaSTT = 0.26;
-  var CAMBIO = 5.5, LLM_HORA = 0.15, POR_LIVRO = 1.2, INFRA = 5;
+  var modeloBtns = Array.prototype.slice.call(document.querySelectorAll('#modelo button'));
+  var taxaSTT = 0.16, taxaLLM = 0.10, porLivro = 1.7;
+  var CAMBIO = 5.5, INFRA = 3;
 
-  function usd(v){ return 'US$ ' + (v > 0 && v < 10 ? v.toFixed(1) : Math.round(v)); }
+  function usd(v){
+    if (v === 0) return 'US$ 0';
+    return 'US$ ' + (v < 10 ? v.toFixed(1) : Math.round(v));
+  }
   function calcular(){
     var h = Number(horas.value), l = Number(livros.value);
-    var stt = h * taxaSTT, llm = h * LLM_HORA, liv = l * POR_LIVRO;
+    var stt = h * taxaSTT, llm = h * taxaLLM, liv = l * porLivro;
     var total = stt + llm + liv + INFRA;
     document.getElementById('v-horas').textContent = h;
     document.getElementById('v-livros').textContent = l;
@@ -1072,16 +1126,18 @@ footer b{color:#9fe8c6;font-weight:500}
     document.getElementById('v-total').textContent = 'US$ ' + Math.round(total);
     document.getElementById('v-brl').textContent = '≈ R$ ' + Math.round(total * CAMBIO).toLocaleString('pt-BR') + ' · câmbio ilustrativo 5,50';
   }
-  horas.addEventListener('input', calcular);
-  livros.addEventListener('input', calcular);
-  motorBtns.forEach(function(b){
-    b.addEventListener('click', function(){
-      motorBtns.forEach(function(o){ o.setAttribute('aria-pressed','false'); });
-      b.setAttribute('aria-pressed','true');
-      taxaSTT = Number(b.dataset.v);
-      calcular();
+  function grupo(botoes, aoEscolher){
+    botoes.forEach(function(b){
+      b.addEventListener('click', function(){
+        botoes.forEach(function(o){ o.setAttribute('aria-pressed','false'); });
+        b.setAttribute('aria-pressed','true');
+        aoEscolher(b);
+        calcular();
+      });
     });
-  });
+  }
+  grupo(motorBtns, function(b){ taxaSTT = Number(b.dataset.v); });
+  grupo(modeloBtns, function(b){ taxaLLM = Number(b.dataset.h); porLivro = Number(b.dataset.l); });
   calcular();
 })();
 </script>
