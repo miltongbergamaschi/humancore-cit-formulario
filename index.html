@@ -442,6 +442,7 @@
 
 <script type="module">
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import heic2any from "https://esm.sh/heic2any@0.0.4";
 
 // Chave publica (anon/publishable) - segura para expor no navegador, protegida por RLS.
 const SUPABASE_URL = "https://eyvmakflvvwkujzrlfco.supabase.co";
@@ -594,22 +595,34 @@ document.querySelectorAll('input[name="local_treino"]').forEach((r) =>
 // Usar .click() explicito no input real (em vez de confiar so no comportamento nativo
 // do <label for>) e cobrir "drop" como caminho alternativo corrige o caso de aparelhos/
 // navegadores onde tocar no seletor de arquivo nao abre a janela nativa.
-// HEIC/HEIF (formato padrao de foto no iPhone) nao e aceito pela IA que analisa as
-// fotos - sem esse bloqueio, o aluno so descobre depois de responder tudo, quando a
-// avaliacao inteira falha (caso real: aluno enviou 3 fotos em HEIC e a avaliacao
-// travou com erro da API, sem nenhum aviso antes). Bloqueando aqui, na hora da
-// selecao do arquivo, o aluno corrige antes de perder tempo preenchendo o resto.
+// HEIC/HEIF nao e aceito pela IA que analisa as fotos - NAO e exclusivo de iPhone,
+// como o aviso antigo dizia (varios Samsung recentes tambem salvam nesse formato,
+// com a opcao de camera "imagens de alta eficiencia"/HEIF ligada; caso real: Ana
+// Pessoa, 31/08/2026, aparelho Samsung, ficou confusa com o aviso mencionando
+// iPhone). Em vez de so bloquear e pedir pro aluno mudar a config da camera e
+// reenviar, convertemos pra JPEG aqui mesmo no navegador (heic2any, decodifica
+// HEIC via WASM) - o aluno nem percebe que o arquivo original era HEIC. So cai no
+// aviso antigo (avisarHeicNaoConvertido) se a conversao em si falhar.
 function ehHeic(arquivo) {
   const nome = (arquivo.name || "").toLowerCase();
   const tipo = (arquivo.type || "").toLowerCase();
   return nome.endsWith(".heic") || nome.endsWith(".heif") || tipo.includes("heic") || tipo.includes("heif");
 }
 
-function avisarHeic() {
+async function converterHeicParaJpeg(arquivo) {
+  const resultado = await heic2any({ blob: arquivo, toType: "image/jpeg", quality: 0.85 });
+  const blob = Array.isArray(resultado) ? resultado[0] : resultado;
+  const novoNome = arquivo.name.replace(/\.(heic|heif)$/i, "") + ".jpg";
+  return new File([blob], novoNome, { type: "image/jpeg" });
+}
+
+function avisarHeicNaoConvertido() {
   alert(
-    'Esse arquivo está no formato HEIC (padrão de foto do iPhone) e não pode ser usado aqui.\n\n' +
+    'Essa foto está num formato (HEIC/HEIF) que não conseguimos converter automaticamente aqui.\n\n' +
+    'Isso acontece em alguns iPhones e também em alguns Samsung (opção de câmera "imagens de alta eficiência").\n\n' +
     'No iPhone: Ajustes > Câmera > Formatos > escolha "Mais Compatível", tire a foto de novo e envie.\n' +
-    'Ou: abra a foto no aplicativo Fotos, toque em Compartilhar e escolha "Copiar foto" / salve como JPEG antes de enviar.'
+    'No Samsung: Câmera > Configurações > Formatos de imagem/vídeo > desligue "Imagens de alta eficiência".\n' +
+    'Ou: abra a foto no app de Fotos, toque em Compartilhar e escolha "Copiar foto" / salve como JPEG antes de enviar.'
   );
 }
 
@@ -620,14 +633,25 @@ function configurarDropzoneUnica(dropzoneEl) {
   const nomeEl = dropzoneEl.querySelector(".dropzone-nome-arquivo");
   const removerBtn = dropzoneEl.querySelector(".botao-remover");
 
-  function atualizar() {
-    const arquivo = input.files?.[0];
+  async function atualizar() {
+    let arquivo = input.files?.[0];
     if (arquivo && ehHeic(arquivo)) {
-      avisarHeic();
-      input.value = "";
-      conteudo.classList.remove("escondido");
-      preview.classList.add("escondido");
-      return;
+      conteudo.classList.add("escondido");
+      preview.classList.remove("escondido");
+      nomeEl.textContent = "Convertendo foto...";
+      try {
+        arquivo = await converterHeicParaJpeg(arquivo);
+        const dt = new DataTransfer();
+        dt.items.add(arquivo);
+        input.files = dt.files;
+      } catch (erro) {
+        console.error("Falha ao converter HEIC:", erro);
+        avisarHeicNaoConvertido();
+        input.value = "";
+        conteudo.classList.remove("escondido");
+        preview.classList.add("escondido");
+        return;
+      }
     }
     if (arquivo) {
       nomeEl.textContent = arquivo.name;
@@ -666,16 +690,34 @@ function configurarDropzoneMultipla(dropzoneEl) {
   const conteudo = dropzoneEl.querySelector(".dropzone-conteudo");
   const lista = dropzoneEl.querySelector(".dropzone-lista");
 
-  // Remove qualquer arquivo HEIC/HEIF da selecao (ver ehHeic/avisarHeic acima) antes
-  // de renderizar a lista - permite os demais arquivos normalmente, so avisa uma vez.
-  function removerHeicDaSelecao() {
+  // Converte qualquer arquivo HEIC/HEIF da selecao pra JPEG (ver converterHeicParaJpeg
+  // acima) antes de renderizar a lista - so remove o arquivo (com aviso) se a
+  // conversao daquele arquivo especifico falhar; os demais seguem normalmente.
+  async function converterHeicNaSelecao() {
     const arquivos = Array.from(input.files ?? []);
     const teveHeic = arquivos.some(ehHeic);
     if (!teveHeic) return;
+    lista.innerHTML = '<div class="dropzone-item"><span>Convertendo foto(s)...</span></div>';
+    conteudo.classList.add("escondido");
+    lista.classList.remove("escondido");
+    const finais = [];
+    let falhouAlguma = false;
+    for (const arquivo of arquivos) {
+      if (!ehHeic(arquivo)) {
+        finais.push(arquivo);
+        continue;
+      }
+      try {
+        finais.push(await converterHeicParaJpeg(arquivo));
+      } catch (erro) {
+        console.error("Falha ao converter HEIC:", erro);
+        falhouAlguma = true;
+      }
+    }
     const dt = new DataTransfer();
-    arquivos.filter((a) => !ehHeic(a)).forEach((a) => dt.items.add(a));
+    finais.forEach((a) => dt.items.add(a));
     input.files = dt.files;
-    avisarHeic();
+    if (falhouAlguma) avisarHeicNaoConvertido();
   }
 
   function renderizar() {
@@ -707,13 +749,13 @@ function configurarDropzoneMultipla(dropzoneEl) {
     }
     input.click();
   });
-  input.addEventListener("change", () => {
-    removerHeicDaSelecao();
+  input.addEventListener("change", async () => {
+    await converterHeicNaSelecao();
     renderizar();
   });
   dropzoneEl.addEventListener("dragover", (e) => { e.preventDefault(); dropzoneEl.classList.add("dropzone-ativa"); });
   dropzoneEl.addEventListener("dragleave", () => dropzoneEl.classList.remove("dropzone-ativa"));
-  dropzoneEl.addEventListener("drop", (e) => {
+  dropzoneEl.addEventListener("drop", async (e) => {
     e.preventDefault();
     dropzoneEl.classList.remove("dropzone-ativa");
     if (!e.dataTransfer.files.length) return;
@@ -721,7 +763,7 @@ function configurarDropzoneMultipla(dropzoneEl) {
     Array.from(input.files ?? []).forEach((f) => dt.items.add(f));
     Array.from(e.dataTransfer.files).forEach((f) => dt.items.add(f));
     input.files = dt.files;
-    removerHeicDaSelecao();
+    await converterHeicNaSelecao();
     renderizar();
   });
 }
