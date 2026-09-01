@@ -509,35 +509,39 @@ footer b{color:#9fe8c6;font-weight:500}
     <h2>Tem custo para transcrever?</h2>
     <div class="destaque">
       <h3>Tem, mas é pequeno — e existe caminho de custo zero.</h3>
-      <p>Transcrever uma hora de áudio custa entre <b>nada e US$ 0,36</b>, dependendo de onde o processamento roda. Não existe assinatura nem mensalidade: você paga por hora processada, e só quando usa.</p>
+      <p>Transcrever uma hora de áudio custa entre <b>nada e US$ 0,36</b>, dependendo de onde o processamento roda. Não existe assinatura nem mensalidade: você paga por hora processada, e só quando usa — e os créditos iniciais dos fornecedores cobrem os primeiros meses.</p>
       <p>Para o seu volume provável — 30 horas de aula por mês e dois livros — o sistema inteiro fica entre <b>US$ 5 e US$ 25 por mês</b>, transcrição, organização e hospedagem incluídas. Menos que uma assinatura de streaming.</p>
     </div>
 
     <h3>Três caminhos para a transcrição</h3>
+    <p class="prosa" style="margin:0 0 16px;font-size:14.5px;color:var(--ink-3)">Preços conferidos em 01/09/2026. O levantamento com fontes está em <span class="mono" style="font-size:13px">nucleo/pesquisa-precos.md</span>.</p>
     <div class="caminho">
       <div>
         <span class="preco gratis">US$ 0</span>
         <span class="un">por hora de áudio</span>
         <h4>No seu computador</h4>
-        <p>O modelo Whisper roda na sua máquina. Custo por hora: zero, só energia. A qualidade em português do modelo grande é equivalente à das APIs pagas.</p>
-        <span class="contra">Em troca: precisa de uma máquina razoável (placa de vídeo ajuda muito), a máquina fica ocupada durante o processamento e a instalação é mais chata. Separar quem falou é mais difícil offline.</span>
+        <p>O modelo grande do Whisper roda na sua máquina, com qualidade equivalente à das APIs pagas. Com placa de vídeo dedicada, 1h de aula sai em ~9 minutos; num Mac com chip Apple, em ~6.</p>
+        <span class="contra">Em troca: <b>só processador não serve</b> — 1h de aula levaria uma 2h30 de processamento. Precisa de 6 GB de memória de vídeo, ou de um Mac com 16 GB de RAM. Separar quem falou offline exige ferramenta extra.</span>
       </div>
       <div>
-        <span class="preco gratis">US$ 0</span>
-        <span class="un">quando já vem pronta</span>
-        <h4>Transcrição que já existe</h4>
-        <p>Vídeo do YouTube quase sempre já tem legenda automática — é só puxar. Zoom e Meet também geram transcrição própria em alguns planos.</p>
-        <span class="contra">Em troca: a qualidade em português varia bastante, e não serve para aula presencial nem para áudio que você mesmo gravou.</span>
-      </div>
-      <div>
-        <span class="preco">US$ 0,16 a 0,36</span>
+        <span class="preco">US$ 0,15 a 0,21</span>
         <span class="un">por hora de áudio</span>
-        <h4>API na nuvem</h4>
-        <p>Você manda o arquivo, recebe o texto pronto com pontuação, marcação de tempo e separação de falantes. Sem instalar nada, sem ocupar sua máquina.</p>
-        <span class="contra">Em troca: o áudio sai do seu computador e vai para o provedor. A maioria oferece crédito inicial gratuito que já cobre as primeiras dezenas de horas.</span>
+        <h4>Nuvem econômica</h4>
+        <p>Manda o arquivo, recebe o texto com pontuação e marcação de tempo. Separar quem falou custa uns centavos a mais por hora. Sem instalar nada, sem ocupar sua máquina.</p>
+        <span class="contra">Em troca: o áudio sai do seu computador. Os créditos iniciais dos fornecedores — um deles dá US$ 200 — cobrem centenas de horas, então os primeiros meses saem de graça mesmo aqui.</span>
+      </div>
+      <div>
+        <span class="preco">US$ 0,26 a 0,36</span>
+        <span class="un">por hora de áudio</span>
+        <h4>Nuvem completa</h4>
+        <p>Os serviços mais caros e mais precisos, com todos os recursos ligados. Valem para gravação ruim: aula com barulho de fundo, várias pessoas falando junto, áudio abafado.</p>
+        <span class="contra">Em troca: mais que o dobro do preço da opção econômica, para um ganho que só aparece quando o áudio é difícil.</span>
       </div>
     </div>
-    <p class="prosa" style="margin-top:16px;font-size:14.5px;color:var(--ink-3)">Os preços de transcrição acima são ordem de grandeza — variam por provedor e por recurso ativado, e precisam ser confirmados na tabela vigente antes de contratar.</p>
+
+    <div class="nota prosa" style="margin-top:18px">
+      <strong>Duas coisas que a pesquisa derrubou:</strong> não existe caminho oficial para baixar a legenda automática de um vídeo do YouTube de outra pessoa — a API só entrega legenda de vídeo que você é dono, e o endpoint que todo mundo usa não é documentado. E o plano gratuito do Zoom grava localmente mas <b>não</b> transcreve; transcrição nativa do Zoom e do Meet só existe em planos pagos de empresa. Ou seja: quem transcreve é sempre o nosso sistema, nunca a plataforma. A ideia de “transcrição que já vem pronta, de graça” caiu.
+    </div>
 
     <h3>E a parte que organiza o conteúdo?</h3>
     <div class="prosa">
@@ -582,7 +586,7 @@ footer b{color:#9fe8c6;font-weight:500}
             <button type="button" data-h="0.30" data-l="4.3" aria-pressed="false">Opus 5</button>
           </div>
         </div>
-        <p style="font-size:13.5px;color:var(--ink-3);margin:14px 0 0;max-width:52ch">A hospedagem e o banco de uso pessoal cabem nos planos gratuitos ou mais baratos: cerca de US$ 3 por mês, subindo só depois de centenas de horas guardadas.</p>
+        <p style="font-size:13.5px;color:var(--ink-3);margin:14px 0 0;max-width:52ch">Como só o texto vai para a nuvem, a hospedagem e o banco cabem nos planos gratuitos. Reservei US$ 3 por mês de margem — o plano gratuito do banco pausa o projeto depois de 7 dias sem uso, e a versão paga resolve isso quando incomodar.</p>
       </div>
       <div class="resultado">
         <span class="rot">Custo mensal estimado</span>
@@ -610,8 +614,8 @@ footer b{color:#9fe8c6;font-weight:500}
         <thead><tr><th>Fonte</th><th>Como entra</th><th>Viabilidade</th><th>Observação</th></tr></thead>
         <tbody>
           <tr><td><b>Aula presencial</b></td><td>App no celular gravando em segundo plano</td><td><span class="pill ok">Alta</span></td><td>No iPhone precisa de app instalado, não serve site salvo na tela</td></tr>
-          <tr><td><b>Aula online e reunião</b><br><span class="sub">Zoom, Meet, Teams</span></td><td>Gravação do áudio do computador, ou a gravação local que a própria plataforma faz</td><td><span class="pill ok">Alta</span></td><td>Havendo outras pessoas, avise que está gravando</td></tr>
-          <tr><td><b>YouTube, ao vivo ou gravado</b></td><td>Colar o link; usa a legenda automática quando existe, e aí a transcrição sai de graça</td><td><span class="pill ok">Alta</span></td><td>Estudo pessoal, sem redistribuir</td></tr>
+          <tr><td><b>Aula online e reunião</b><br><span class="sub">Zoom, Meet, Teams</span></td><td>Gravação do áudio do computador, ou a gravação local do Zoom</td><td><span class="pill ok">Alta</span></td><td>Gravação local não vem transcrita; quem transcreve é o sistema. Havendo outras pessoas, avise</td></tr>
+          <tr><td><b>YouTube, ao vivo ou gravado</b></td><td>Capturar o áudio enquanto você assiste, como qualquer outra fonte</td><td><span class="pill ok">Alta</span></td><td>Não existe caminho oficial para a legenda automática de vídeo de terceiros</td></tr>
           <tr><td><b>Plataformas de curso</b><br><span class="sub">Hotmart, Kiwify, Udemy…</span></td><td>Captura do áudio do seu aparelho enquanto você assiste ao curso que comprou</td><td><span class="pill ok">Alta</span></td><td>Guardar transcrição e notas, nunca o vídeo</td></tr>
           <tr><td><b>Baixar o vídeo do curso</b></td><td>—</td><td><span class="pill nao">Fora</span></td><td>Quebrar a proteção do vídeo continua fora, mesmo em uso pessoal</td></tr>
           <tr><td><b>Livros, artigos, PDFs</b></td><td>Envio direto na biblioteca</td><td><span class="pill ok">Alta</span></td><td>Vira framework executável pelo modelo de livros</td></tr>
@@ -624,14 +628,17 @@ footer b{color:#9fe8c6;font-weight:500}
 <section>
   <div class="wrap">
     <p class="eyebrow">04 · Como funciona por dentro</p>
-    <h2>Um trilho, várias entradas</h2>
+    <h2>O áudio fica com você; a nuvem só guarda texto</h2>
     <p class="lede prosa">Toda fonte cai no mesmo caminho. Adicionar uma origem nova é escrever só o primeiro passo — o resto já está pronto.</p>
+    <div class="nota prosa" style="margin:18px 0 4px">
+      <strong>Isto mudou depois da pesquisa.</strong> Os planos gratuitos não aguentam áudio: a hospedagem web aceita requisição de 4,5 MB e função de 10 segundos, e o banco gratuito aceita arquivo de até 50 MB, com 1 GB no total. Subir 1 GB de gravação e processar por 20 minutos ali é impossível. Então o arranjo se inverte: <b>o arquivo de áudio e a transcrição rodam no seu computador; para a nuvem sobe só o texto.</b> Uma transcrição de 1h ocupa uns 60 KB — os 500 MB do plano gratuito comportam milhares de aulas. Além de caber, o áudio nunca sai da sua máquina.
+    </div>
     <div class="fluxo" style="margin-top:24px" role="list">
       <div class="fluxo-no" role="listitem"><span class="n">Entrada</span><strong>Captura</strong><span class="det">Celular, áudio do computador, link, arquivo</span></div>
       <div class="fluxo-seta" aria-hidden="true">→</div>
-      <div class="fluxo-no" role="listitem"><span class="n">Fila</span><strong>Processamento</strong><span class="det">Corte em partes, retomada de falha</span></div>
+      <div class="fluxo-no" role="listitem"><span class="n">Sua máquina</span><strong>Processamento</strong><span class="det">Transcreve, corta em partes, retoma falha</span></div>
       <div class="fluxo-seta" aria-hidden="true">→</div>
-      <div class="fluxo-no" role="listitem"><span class="n">Áudio</span><strong>Transcrição</strong><span class="det">Local ou na nuvem, com marcação de tempo</span></div>
+      <div class="fluxo-no" role="listitem"><span class="n">Texto</span><strong>Sobe o resultado</strong><span class="det">Só a transcrição vai para a nuvem</span></div>
       <div class="fluxo-seta" aria-hidden="true">→</div>
       <div class="fluxo-no" role="listitem"><span class="n">Sentido</span><strong>Estruturação</strong><span class="det">Resumo, ações, origem de cada item</span></div>
       <div class="fluxo-seta" aria-hidden="true">→</div>
@@ -644,9 +651,9 @@ footer b{color:#9fe8c6;font-weight:500}
         <thead><tr><th>Camada</th><th>Escolha</th><th>Por quê</th></tr></thead>
         <tbody>
           <tr><td>Web</td><td>Next.js em hospedagem gratuita</td><td>Mesmo tipo de front do formulário atual; no plano pessoal, custo zero</td></tr>
-          <tr><td>Banco e arquivos</td><td>Postgres gerenciado com busca vetorial</td><td>Um serviço só resolve dados, arquivos e busca por significado</td></tr>
-          <tr><td>Fila</td><td>Tarefas em segundo plano com retomada</td><td>Transcrever 2h de aula não cabe numa requisição web</td></tr>
-          <tr><td>Transcrição</td><td>Chave trocável entre nuvem e modelo local</td><td>Começa na nuvem pela simplicidade; se o volume crescer, troca para local e o custo por hora zera</td></tr>
+          <tr><td>Banco</td><td>Postgres gerenciado com busca vetorial</td><td>Guarda texto, anotações e índice de busca. Só texto cabe folgado no plano gratuito. O áudio fica no seu disco</td></tr>
+          <tr><td>Processamento</td><td>Um serviço pequeno rodando no seu computador, com fila e retomada</td><td>Função de hospedagem gratuita morre em 10 segundos. Transcrever 2h de aula precisa de máquina de verdade — e a sua já está ligada</td></tr>
+          <tr><td>Transcrição</td><td>Chave trocável entre nuvem e modelo local</td><td>Sua máquina decide se chama a API ou roda o Whisper local. Trocar é mudar uma variável, não reescrever o sistema</td></tr>
           <tr><td>Estruturação</td><td>Modelo de linguagem com saída em formato fixo</td><td>Schema validado evita resumo bonito e inútil; o modelo também é trocável por conteúdo</td></tr>
           <tr><td>Celular</td><td>App em React Native, instalado direto no seu aparelho</td><td>Sem publicar em loja: é só para você, então é build pessoal</td></tr>
           <tr><td>Acesso</td><td>Uma senha só, sem sistema de contas</td><td>Um usuário. Cada camada a menos é uma semana a menos</td></tr>
