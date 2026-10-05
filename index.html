@@ -179,6 +179,17 @@
   }
   #tela-obrigado h2 { font-size: 22px; margin: 0 0 8px; }
   #tela-obrigado p { color: #a9b2ad; font-size: 14.5px; line-height: 1.5; }
+
+  /* Aviso de falha no envio (05/10/2026): fica logo acima do botão Enviar, onde o aluno
+     está olhando. Antes o erro saía só no topo da página e ninguém via (caso Gleice). */
+  #aviso-envio {
+    margin: 0 0 16px; padding: 16px; border-radius: 12px; background: var(--erro-bg);
+    border: 2px solid var(--erro); color: var(--erro); scroll-margin-top: 24px;
+  }
+  #aviso-envio .aviso-titulo { margin: 0 0 8px; font-size: 16px; font-weight: 700; }
+  #aviso-envio p { margin: 0 0 8px; font-size: 14px; line-height: 1.5; }
+  #aviso-envio ol { margin: 0 0 8px; padding-left: 20px; font-size: 14px; line-height: 1.6; }
+  #aviso-envio .aviso-rodape { margin: 0; font-size: 13px; opacity: 0.9; }
 </style>
 </head>
 <body>
@@ -434,6 +445,8 @@
       <p class="progresso-frase">Analisando seus dados</p>
       <div class="progresso-trilha"><div class="progresso-preenchimento" id="progresso-preenchimento"></div></div>
     </div>
+
+    <div id="aviso-envio" class="escondido" role="alert"></div>
 
     <button type="submit" id="botao-enviar">Enviar avaliação</button>
   </form>
@@ -922,10 +935,62 @@ async function subirArquivo(arquivoOriginal, caminhoBase) {
 // tentar subir arquivo de novo, senao quebra. Essa flag lembra que ja passou dessa etapa.
 const CHAVE_JA_ENVIADO = `avaliacao_ja_enviada_${token}`;
 
+// Aviso de falha logo acima do botão Enviar (05/10/2026). Monta com textContent:
+// o nome do arquivo vem do aparelho do aluno e não pode virar HTML.
+const avisoEnvioEl = document.getElementById("aviso-envio");
+function elemento(tag, classe, texto) {
+  const el = document.createElement(tag);
+  if (classe) el.className = classe;
+  if (texto) el.textContent = texto;
+  return el;
+}
+function esconderAvisoEnvio() {
+  avisoEnvioEl.classList.add("escondido");
+  avisoEnvioEl.replaceChildren();
+}
+function mostrarAvisoEnvio(erro) {
+  avisoEnvioEl.replaceChildren();
+  if (erro.validacao) {
+    avisoEnvioEl.append(elemento("p", "aviso-titulo", "⚠️ Falta uma informação"), elemento("p", "", erro.message));
+  } else if (erro.exame) {
+    const passos = elemento("ol");
+    passos.append(
+      elemento("li", "", "Toque em \"Remover\" ao lado desse exame"),
+      elemento("li", "", "Toque em \"Enviar avaliação\" de novo"),
+      elemento("li", "", "Depois mande o exame pelo WhatsApp"),
+    );
+    const linha = elemento("p", "", "O exame ");
+    linha.append(elemento("b", "", erro.exame), " não conseguiu ser enviado.");
+    avisoEnvioEl.append(
+      elemento("p", "aviso-titulo", "⚠️ Sua avaliação ainda não foi enviada"),
+      linha,
+      elemento("p", "", "Para concluir:"),
+      passos,
+      elemento("p", "aviso-rodape", "Suas respostas continuam preenchidas."),
+    );
+  } else {
+    avisoEnvioEl.append(
+      elemento("p", "aviso-titulo", "⚠️ Sua avaliação ainda não foi enviada"),
+      elemento("p", "", "O envio foi interrompido, geralmente por falha na internet."),
+      elemento("p", "", "Confira sua conexão e toque em \"Enviar avaliação\" de novo. Se continuar dando erro, avise a gente pelo WhatsApp."),
+      elemento("p", "aviso-rodape", "Suas respostas continuam preenchidas."),
+    );
+    console.error("Falha no envio da avaliação:", erro);
+  }
+  avisoEnvioEl.classList.remove("escondido");
+  avisoEnvioEl.scrollIntoView({ behavior: "smooth", block: "center" });
+}
+function erroDeValidacao(mensagem) {
+  const erro = new Error(mensagem);
+  erro.validacao = true;
+  return erro;
+}
+
 document.getElementById("form-avaliacao").addEventListener("submit", async (evento) => {
   evento.preventDefault();
   const botao = document.getElementById("botao-enviar");
   botao.disabled = true;
+  esconderAvisoEnvio();
   mostrarBarraProgresso();
   definirProgresso(4);
 
@@ -937,13 +1002,13 @@ document.getElementById("form-avaliacao").addEventListener("submit", async (even
       const fotoLateral = document.getElementById("foto_lateral").files[0];
       const fotoPosterior = document.getElementById("foto_posterior").files[0];
       if (!fotoFrontal || !fotoLateral || !fotoPosterior) {
-        throw new Error("Envie as 3 fotos posturais (frontal, lateral e posterior) antes de continuar.");
+        throw erroDeValidacao("Envie as 3 fotos posturais (frontal, lateral e posterior) antes de continuar.");
       }
 
       // "local_treino" agora e checkbox (selecao multipla) - sem "required" nativo do
       // navegador, precisa validar manualmente que pelo menos 1 opcao foi marcada.
       if (valoresGrupo("local_treino").length === 0) {
-        throw new Error("Selecione pelo menos um local onde você vai treinar.");
+        throw erroDeValidacao("Selecione pelo menos um local onde você vai treinar.");
       }
 
       mostrarMensagem("Enviando fotos, aguarde…", "progresso");
@@ -959,7 +1024,14 @@ document.getElementById("form-avaliacao").addEventListener("submit", async (even
 
       const caminhosExames = [];
       for (let i = 0; i < arquivosExames.length; i++) {
-        caminhosExames.push(await subirArquivo(arquivosExames[i], `${token}/exame_${i + 1}`));
+        try {
+          caminhosExames.push(await subirArquivo(arquivosExames[i], `${token}/exame_${i + 1}`));
+        } catch (erroExame) {
+          // Marca qual exame falhou para o aviso dizer o nome do arquivo.
+          const erro = new Error(erroExame?.message ?? String(erroExame));
+          erro.exame = arquivosExames[i].name;
+          throw erro;
+        }
       }
 
       clearInterval(progressoTimer);
@@ -1003,7 +1075,9 @@ document.getElementById("form-avaliacao").addEventListener("submit", async (even
     document.getElementById("tela-obrigado").style.display = "block";
   } catch (erro) {
     esconderBarraProgresso();
-    mostrarMensagem(`Não foi possível concluir: ${erro.message}. Seus dados de texto ficam salvos neste aparelho — tente reenviar.`, "erro");
+    mensagemEl.className = ""; // o aviso agora fica perto do botão, não no topo
+    mensagemEl.textContent = "";
+    mostrarAvisoEnvio(erro);
     botao.disabled = false;
   }
 });
