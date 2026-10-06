@@ -464,8 +464,9 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import heic2any from "https://esm.sh/heic2any@0.0.4";
 
 // Chave publica (anon/publishable) - segura para expor no navegador, protegida por RLS.
-const SUPABASE_URL = "https://eyvmakflvvwkujzrlfco.supabase.co";
-const SUPABASE_ANON_KEY = "sb_publishable_euGSZs-c7kXBPO9M0RExzA_FdzP5M1W";
+// Desde 05/10/2026 a avaliação vive no projeto do CRM (antes: eyvmakflvvwkujzrlfco).
+const SUPABASE_URL = "https://ngyljbatwxqdcqsgtndv.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_KwnVdNb5y_B5kSUNr4VkQQ_VsmOn_y3";
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 const params = new URLSearchParams(location.search);
